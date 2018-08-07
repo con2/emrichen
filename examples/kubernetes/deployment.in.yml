@@ -1,0 +1,57 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kompassi
+spec:
+  selector:
+    matchLabels:
+      stack: kompassi
+      component: kompassi
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        stack: kompassi
+        component: kompassi
+    spec:
+      containers:
+      - name: master
+        image: !Var image
+        imagePullPolicy: Always
+        resources: {}
+        ports:
+        - containerPort: 8000
+        env:
+          !Var environment
+      volumes:
+      - name: kompassi-media
+        persistentVolumeClaim:
+          claimName: kompassi-media
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: celery
+spec:
+  selector:
+    matchLabels:
+      stack: kompassi
+      component: celery
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        stack: kompassi
+        component: celery
+    spec:
+      containers:
+      - name: master
+        image: !Var image
+        command: ["/usr/src/app/docker-entrypoint.sh"]
+        args: ["celery", "-A", "kompassi.celery_app:app", "worker"]
+        imagePullPolicy: Always
+        resources: {}
+        env:
+          !Var environment

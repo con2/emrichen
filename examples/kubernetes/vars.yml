@@ -1,0 +1,36 @@
+environment:
+  - name: KOMPASSI_POSTGRESQL_HOSTNAME
+    value: postgres
+  - name: KOMPASSI_POSTGRESQL_DATABASE
+    value: kompassi
+  - name: KOMPASSI_POSTGRESQL_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: postgres
+        key: username
+  - name: KOMPASSI_POSTGRESQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: postgres
+        key: password
+  - name: KOMPASSI_RABBITMQ_HOSTNAME
+    value: rabbitmq
+  - name: KOMPASSI_RABBITMQ_VHOST
+    value: kompassi
+  - name: KOMPASSI_RABBITMQ_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: rabbitmq
+        key: username
+  - name: KOMPASSI_RABBITMQ_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: rabbitmq
+        key: password
+  - name: SECRET_KEY
+    valueFrom:
+      secretKeyRef:
+        name: kompassi
+        key: secretKey
+  - name: ALLOWED_HOSTS
+    value: "*"
