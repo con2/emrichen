@@ -18,7 +18,7 @@ Python 3.6+ required.
 
 ## CLI
 
-    usage: emrichen [-h] [--variable-file VARIABLE_FILES] [--define VAR=VALUE]
+    usage: emrichen [-h] [--var-file VAR_FILES] [--define VAR=VALUE]
                     [--output-file OUTPUT_FILE] [--include-env]
                     [template_file]
 
@@ -30,7 +30,7 @@ Python 3.6+ required.
 
     optional arguments:
       -h, --help            show this help message and exit
-      --variable-file VARIABLE_FILES, -f VARIABLE_FILES
+      --var-file VAR_FILES, -f VAR_FILES
                             A YAML file containing an object whose top-level keys
                             will be defined as variables. May be specified
                             multiple times.
