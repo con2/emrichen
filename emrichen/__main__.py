@@ -6,9 +6,9 @@ from . import emrichen
 
 
 parser = argparse.ArgumentParser(
-    description="A YAML to YAML preprocessor.",
-    prog="emrichen",
-    epilog="Variable precedence: -D > -e > -f",
+    description='A YAML to YAML preprocessor.',
+    prog='emrichen',
+    epilog='Variable precedence: -D > -e > -f',
 )
 parser.add_argument(
     'template_file',
@@ -20,6 +20,7 @@ parser.add_argument(
 parser.add_argument(
     '--var-file', '-f',
     dest='var_files',
+    metavar='VAR_FILE',
     type=argparse.FileType('r'),
     action='append',
     default=[],
@@ -65,5 +66,5 @@ def main():
     args.output_file.write(output)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

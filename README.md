@@ -30,7 +30,7 @@ Python 3.6+ required.
 
     optional arguments:
       -h, --help            show this help message and exit
-      --var-file VAR_FILES, -f VAR_FILES
+      --var-file VAR_FILE, -f VAR_FILE
                             A YAML file containing an object whose top-level keys
                             will be defined as variables. May be specified
                             multiple times.
