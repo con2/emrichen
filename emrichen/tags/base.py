@@ -1,7 +1,14 @@
 import yaml
 
 
-class BaseTag:
+class BaseMeta(type):
+    def __new__(meta, name, bases, class_dict):
+        cls = type.__new__(meta, name, bases, class_dict)
+        yaml.SafeLoader.add_constructor(f'!{name}', cls.load)
+        return cls
+
+
+class BaseTag(metaclass=BaseMeta):
     __slots__ = ['data']
 
     def __init__(self, data):
@@ -15,7 +22,3 @@ class BaseTag:
         data = loader.construct_scalar(node)
         assert isinstance(data, str)
         return cls(data)
-
-    @classmethod
-    def register_tag(cls):
-        yaml.SafeLoader.add_constructor(f'!{cls.__name__}', cls.load)
