@@ -1,10 +1,10 @@
-import yaml
+tag_registry = {}
 
 
 class BaseMeta(type):
     def __new__(meta, name, bases, class_dict):
         cls = type.__new__(meta, name, bases, class_dict)
-        yaml.SafeLoader.add_constructor(f'!{name}', cls.load)
+        tag_registry[name] = cls
         return cls
 
 
