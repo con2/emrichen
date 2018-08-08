@@ -13,6 +13,8 @@ Python 3.6+ required.
 ## Supported tags
 
 * `!Var VAR_NAME` – replaced with the value of the variable
+* `!Format FORMAT_STRING` – interpolate strings using [Python format strings](https://docs.python.org/3/library/string.html#formatstrings) such as `"{foo} {bar!d}"`
+    * **NOTE:** When the format string starts with `{`, you need to quote it in order to avoid being interpreted as a YAML object.
 
 ## CLI
 
@@ -44,7 +46,7 @@ Python 3.6+ required.
 ### Examples
 
     cd examples/kubernetes
-    emrichen -f vars.yml -D image=tracon/kompassi:build-256 deployment.in.yml
+    emrichen -f vars.yml -D tag=build-256 deployment.in.yml
 
 ## Python API
 

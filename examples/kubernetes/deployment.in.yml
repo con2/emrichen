@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: master
-        image: !Var image
+        image: !Format "tracon/kompassi:{tag}"
         imagePullPolicy: Always
         resources: {}
         ports:
@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
       - name: master
-        image: !Var image
+        image: !Format "tracon/kompassi:{tag}"
         command: ["/usr/src/app/docker-entrypoint.sh"]
         args: ["celery", "-A", "kompassi.celery_app:app", "worker"]
         imagePullPolicy: Always
