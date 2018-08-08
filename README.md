@@ -18,30 +18,31 @@ Python 3.6+ required.
 
 ## CLI
 
-    usage: emrichen [-h] [--variables-file VARIABLES_FILE] [--define VAR=VALUE]
-                    [--output-file OUTPUT_FILE]
+    usage: emrichen [-h] [--variable-file VARIABLE_FILES] [--define VAR=VALUE]
+                    [--output-file OUTPUT_FILE] [--include-env]
                     [template_file]
 
     A YAML to YAML preprocessor.
 
     positional arguments:
-    template_file         The YAML template to process. If unspecified, the
+      template_file         The YAML template to process. If unspecified, the
                             template is read from stdin.
 
     optional arguments:
-    -h, --help            show this help message and exit
-    --variables-file VARIABLES_FILE, -f VARIABLES_FILE
+      -h, --help            show this help message and exit
+      --variable-file VARIABLE_FILES, -f VARIABLE_FILES
                             A YAML file containing an object whose top-level keys
                             will be defined as variables. May be specified
-                            multiple times. If the same variable is specified in
-                            multiple sources, the last one takest precedence.
-    --define VAR=VALUE, -D VAR=VALUE
+                            multiple times.
+      --define VAR=VALUE, -D VAR=VALUE
                             Defines a single variable. May be specified multiple
-                            times. Variables specified via -D take precedence over
-                            those specified via variable files.
-    --output-file OUTPUT_FILE, -o OUTPUT_FILE
+                            times.
+      --output-file OUTPUT_FILE, -o OUTPUT_FILE
                             Output file. If unspecified, the template output is
                             written into stdout.
+      --include-env, -e     Expose process environment variables to the template.
+
+    Variable precedence: -D > -e > -f
 
 ### Examples
 
