@@ -34,9 +34,7 @@ parser.add_argument(
     metavar='VAR=VALUE',
     action='append',
     default=[],
-    help=(
-        'Defines a single variable. May be specified multiple times.'
-    ),
+    help='Defines a single variable. May be specified multiple times.',
 )
 parser.add_argument(
     '--output-file', '-o',
