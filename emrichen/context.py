@@ -2,6 +2,8 @@ from collections.abc import Mapping, Sequence
 
 import yaml
 
+from emrichen.loader import RichLoader
+
 
 class Context(object):
     """
@@ -44,7 +46,7 @@ class Context(object):
         """
         for variables in variable_sources:
             if not isinstance(variables, Mapping):
-                variables = yaml.safe_load(variables)
+                variables = yaml.load(variables, RichLoader)
 
             self.variables.update(variables)
 
