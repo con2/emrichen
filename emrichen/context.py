@@ -16,6 +16,9 @@ class Context(object):
     def __getitem__(self, key):
         return self.variables[key]
 
+    def __contains__(self, key):
+        return key in self.variables
+
     def enrich(self, value):
         """
         Given a YAML value, performs our registered transformations on it.
@@ -51,3 +54,7 @@ class Context(object):
                     self.variables.update(yaml_document)
 
         self.variables.update(override_variables)
+
+    def subcontext(self, override_variables):
+        # TODO: this could use less copying, but that's a future optimization
+        return self.__class__(dict(self.variables, **override_variables))
