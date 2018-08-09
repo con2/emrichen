@@ -1,0 +1,8 @@
+!Loop
+  over: !Var people
+  as: person
+  index_as: id
+  template:
+    id: !Var id
+    given_name: !Lookup person.first_name
+    surname: !Lookup person.last_name
