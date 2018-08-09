@@ -22,7 +22,7 @@ def emrichen(template, *variable_sources, **override_variables):
     variables.
     """
     c = Context(*variable_sources, **override_variables)
-    t = Template(template)
+    t = Template.parse(template, 'yaml')
 
     return t.render(c)
 

@@ -1,0 +1,7 @@
+{
+  "foo": "bar",
+  "quux": {
+    "xyzzy": {"!Var": "kitten"},
+    "klik": {"!Format": "{kitten} says {sound}"}
+  }
+}

@@ -1,13 +1,16 @@
-import yaml
-import pyaml
-
-from .loader import RichLoader
+from .output import render
 from .context import Context
+from .input import parse
 
 
 class Template(object):
     def __init__(self, template):
-        self.template = list(yaml.load_all(template, Loader=RichLoader))
+        if not isinstance(template, list):
+            raise TypeError(
+                f'`template` must be a list of objects; {template!r} is not. '
+                f'Are you maybe looking for Template.parse()?'
+            )
+        self.template = template
 
     def enrich(self, context):
         if not isinstance(context, Context):
@@ -15,6 +18,10 @@ class Template(object):
 
         return context.enrich(self.template)
 
-    def render(self, context):
+    def render(self, context, format='yaml'):
         enriched = self.enrich(context)
-        return yaml.dump_all(enriched, Dumper=pyaml.PrettyYAMLDumper, default_flow_style=False)
+        return render(enriched, format)
+
+    @classmethod
+    def parse(cls, data, format):
+        return cls(template=parse(data, format=format))
