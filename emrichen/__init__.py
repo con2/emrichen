@@ -3,12 +3,7 @@ from .template import Template
 from .tags import Var
 
 
-__all__ = [
-    'Context',
-    'Template',
-    'Var',
-    'emrichen',
-]
+__all__ = ['Context', 'Template', 'Var', 'emrichen']
 
 
 def emrichen(template, *variable_sources, **override_variables):
@@ -25,4 +20,3 @@ def emrichen(template, *variable_sources, **override_variables):
     t = Template.parse(template, 'yaml')
 
     return t.render(c)
-
