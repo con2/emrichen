@@ -1,8 +1,6 @@
 from collections.abc import Mapping, Sequence
 
-import yaml
-
-from emrichen.loader import RichLoader
+from emrichen.input import parse
 
 
 class Context(object):
@@ -10,6 +8,7 @@ class Context(object):
     The Context loads variables from various variable sources and enriches
     YAML values using them.
     """
+
     def __init__(self, *variable_sources, **override_variables):
         self.variables = dict()
         self.add_variables(*variable_sources, **override_variables)
@@ -46,7 +45,7 @@ class Context(object):
         """
         for variables in variable_sources:
             if not isinstance(variables, Mapping):
-                variables = yaml.load(variables, RichLoader)
+                variables = parse(variables, 'yaml')[0]
 
             self.variables.update(variables)
 
