@@ -44,9 +44,10 @@ class Context(object):
         variables.
         """
         for variables in variable_sources:
-            if not isinstance(variables, Mapping):
-                variables = parse(variables, 'yaml')[0]
-
-            self.variables.update(variables)
+            if isinstance(variables, Mapping):
+                self.variables.update(variables)
+            else:
+                for yaml_document in parse(variables, 'yaml'):
+                    self.variables.update(yaml_document)
 
         self.variables.update(override_variables)
