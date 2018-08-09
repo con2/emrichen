@@ -1,0 +1,68 @@
+import pytest
+
+from emrichen import Context, Template
+
+LOOKUP_TEST_CONTEXT = {
+    'people': [
+        {'first_name': 'Minnie', 'last_name': 'Duck'},
+        {'first_name': 'Popuko', 'last_name': 'Pipimi'},
+    ]
+}
+
+
+def test_lookup_all():
+    template = Template.parse(
+        '''
+first_names: !LookupAll people[*].first_name
+last_names: !LookupAll people[*].last_name
+''',
+        'yaml',
+    )
+    ctx = Context(LOOKUP_TEST_CONTEXT)
+    output = template.render(ctx)
+    assert (
+        output.strip()
+        == '''
+first_names:
+- Minnie
+- Popuko
+last_names:
+- Duck
+- Pipimi
+'''.strip()
+    )
+
+
+def test_lookup():
+    template = Template.parse(
+        '''
+people:
+  !Loop
+    over: !Var people
+    as: person
+    template:
+      - !Lookup person.last_name
+      - !Lookup person.first_name
+''',
+        'yaml',
+    )
+    ctx = Context(LOOKUP_TEST_CONTEXT)
+    output = template.render(ctx)
+    assert (
+        output.strip()
+        == '''
+people:
+- - Duck
+  - Minnie
+- - Pipimi
+  - Popuko
+'''.strip()
+    )
+
+
+def test_lookup_no_match():
+    template = Template.parse('''!Lookup people..nep''', 'yaml')
+    with pytest.raises(KeyError) as ei:
+        ctx = Context(LOOKUP_TEST_CONTEXT)
+        template.render(ctx)
+    assert 'no matches for' in str(ei.value)

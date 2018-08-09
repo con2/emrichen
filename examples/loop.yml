@@ -1,0 +1,11 @@
+domains:
+  !Loop
+    over: !Var domain_names
+    as: domain_name
+    index_as: domain_index
+    template:
+      apiVersion: v1
+      kind: DomainName
+      metadata:
+        name: !Var domain_name
+        index: !Var domain_index

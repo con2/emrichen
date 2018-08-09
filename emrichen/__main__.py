@@ -3,9 +3,10 @@ import os
 import sys
 
 from .context import Context
-from .template import Template
 from .input import PARSERS
 from .output import RENDERERS
+from .template import Template
+
 
 def get_parser():
     parser = argparse.ArgumentParser(
@@ -31,7 +32,8 @@ def get_parser():
         ),
     )
     parser.add_argument(
-        '--var-file', '-f',
+        '--var-file',
+        '-f',
         dest='var_files',
         metavar='VAR_FILE',
         type=argparse.FileType('r'),
@@ -40,17 +42,19 @@ def get_parser():
         help=(
             'A YAML file containing an object whose top-level keys will be defined as variables. '
             'May be specified multiple times.'
-        )
+        ),
     )
     parser.add_argument(
-        '--define', '-D',
+        '--define',
+        '-D',
         metavar='VAR=VALUE',
         action='append',
         default=[],
         help='Defines a single variable. May be specified multiple times.',
     )
     parser.add_argument(
-        '--output-file', '-o',
+        '--output-file',
+        '-o',
         type=argparse.FileType('w'),
         default=sys.stdout,
         help='Output file. If unspecified, the template output is written into stdout.',
@@ -65,7 +69,8 @@ def get_parser():
         ),
     )
     parser.add_argument(
-        '--include-env', '-e',
+        '--include-env',
+        '-e',
         action='store_true',
         default=False,
         help='Expose process environment variables to the template.',
@@ -93,14 +98,12 @@ def main(args=None):
     if args.include_env:
         variable_sources.append(os.environ)
 
-    args.output_format = (
-        args.output_format or
-        determine_format(args.output_file, RENDERERS, default='yaml')
+    args.output_format = args.output_format or determine_format(
+        args.output_file, RENDERERS, default='yaml'
     )
 
-    args.template_format = (
-        args.template_format or
-        determine_format(args.template_file, PARSERS, default='yaml')
+    args.template_format = args.template_format or determine_format(
+        args.template_file, PARSERS, default='yaml'
     )
 
     context = Context(*variable_sources, **override_variables)

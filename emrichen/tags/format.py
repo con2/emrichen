@@ -1,5 +1,3 @@
-import yaml
-
 from .base import BaseTag
 
 

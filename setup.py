@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-import os
-from setuptools import setup, find_packages
-
+from setuptools import find_packages, setup
 
 setup(
     name='emrichen',
@@ -20,7 +18,7 @@ setup(
             'emrichen = emrichen.__main__:main',
         ]
     },
-    install_requires=["PyYAML", "pyaml"],
+    install_requires=["PyYAML", "pyaml", "jsonpath-rw~=1.4.0"],
     tests_require=["pytest"],
     setup_requires=["pytest-runner"],
 )
