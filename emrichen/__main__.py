@@ -2,8 +2,10 @@ import argparse
 import os
 import sys
 
-from . import emrichen
-
+from .context import Context
+from .template import Template
+from .input import PARSERS
+from .output import RENDERERS
 
 parser = argparse.ArgumentParser(
     description='A YAML to YAML preprocessor.',
@@ -16,6 +18,16 @@ parser.add_argument(
     type=argparse.FileType('r'),
     default=sys.stdin,
     help='The YAML template to process. If unspecified, the template is read from stdin.',
+)
+
+parser.add_argument(
+    '--template-format',
+    choices=PARSERS,
+    default=None,
+    help=(
+        'Template format. If unspecified, attempted to be autodetected from the '
+        'input filename (but defaults to YAML).'
+    ),
 )
 parser.add_argument(
     '--var-file', '-f',
@@ -43,11 +55,28 @@ parser.add_argument(
     help='Output file. If unspecified, the template output is written into stdout.',
 )
 parser.add_argument(
+    '--output-format',
+    choices=RENDERERS,
+    default=None,
+    help=(
+        'Output format. If unspecified, attempted to be autodetected from the '
+        'output filename (but defaults to YAML).'
+    ),
+)
+parser.add_argument(
     '--include-env', '-e',
     action='store_true',
     default=False,
     help='Expose process environment variables to the template.',
 )
+
+
+def determine_format(filelike, choices, default):
+    if hasattr(filelike, 'name'):
+        ext = os.path.splitext(filelike.name)[1].lstrip('.').lower()
+        if ext in choices:
+            return ext
+    return default
 
 
 def main():
@@ -59,7 +88,19 @@ def main():
     if args.include_env:
         variable_sources.append(os.environ)
 
-    output = emrichen(args.template_file, *variable_sources, **override_variables)
+    args.output_format = (
+        args.output_format or
+        determine_format(args.output_file, RENDERERS, default='yaml')
+    )
+
+    args.template_format = (
+        args.template_format or
+        determine_format(args.template_file, PARSERS, default='yaml')
+    )
+
+    context = Context(*variable_sources, **override_variables)
+    template = Template.parse(args.template_file, format=args.template_format)
+    output = template.render(context, format=args.output_format)
 
     args.output_file.write(output)
 
