@@ -1,9 +1,26 @@
 import json
 from collections import OrderedDict
+from functools import partial
 
 import yaml
 
 from .tags.base import tag_registry
+
+
+def _construct_tagless_yaml(loader, node):
+    # From yaml.constructor.BaseConstructor#construct_object
+    if isinstance(node, yaml.ScalarNode):
+        constructor = loader.construct_scalar
+    elif isinstance(node, yaml.SequenceNode):
+        constructor = loader.construct_sequence
+    elif isinstance(node, yaml.MappingNode):
+        constructor = loader.construct_mapping
+    return constructor(node)
+
+
+def _load_yaml_tag(tag, loader, node):
+    data = _construct_tagless_yaml(loader, node)
+    return tag(data)
 
 
 class RichLoader(yaml.SafeLoader):
@@ -14,14 +31,15 @@ class RichLoader(yaml.SafeLoader):
     def add_tag_constructors(self):
         self.yaml_constructors = self.yaml_constructors.copy()  # Grab an instance copy from the class
         for name, tag in tag_registry.items():
-            self.yaml_constructors[f'!{name}'] = tag.load
+            self.yaml_constructors[f'!{name}'] = partial(_load_yaml_tag, tag)
 
 
 def _hydrate_json_object(pairs):
     if len(pairs) == 1:
-        key, value = pairs[0]
+        key, data = pairs[0]
         if key.startswith('!') and key[1:] in tag_registry:
-            return tag_registry[key[1:]](value)
+            tag = tag_registry[key[1:]]
+            return tag(data)
     return OrderedDict(pairs)
 
 
