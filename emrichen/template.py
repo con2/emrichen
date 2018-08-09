@@ -1,6 +1,6 @@
-from .output import render
 from .context import Context
 from .input import parse
+from .output import render
 
 
 class Template(object):

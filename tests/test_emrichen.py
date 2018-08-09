@@ -1,4 +1,4 @@
-from emrichen import emrichen, Template, Context
+from emrichen import Context, Template, emrichen
 
 TEMPLATE = """
 ---

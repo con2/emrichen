@@ -3,9 +3,10 @@ import os
 import sys
 
 from .context import Context
-from .template import Template
 from .input import PARSERS
 from .output import RENDERERS
+from .template import Template
+
 
 def get_parser():
     parser = argparse.ArgumentParser(
