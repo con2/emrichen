@@ -18,7 +18,7 @@ setup(
             'emrichen = emrichen.__main__:main',
         ]
     },
-    install_requires=["PyYAML", "pyaml"],
+    install_requires=["PyYAML", "pyaml", "jsonpath-rw~=1.4.0"],
     tests_require=["pytest"],
     setup_requires=["pytest-runner"],
 )
