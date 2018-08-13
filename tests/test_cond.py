@@ -7,8 +7,8 @@ def test_if():
   a: !Lookup chance
   op: gt
   b: .5
-  true: !Format "This is {person.name}, hello"
-  false: No chance
+  then: !Format "This is {person.name}, hello"
+  else: No chance
 ''', 'yaml')
     base = {'person': {'name': 'dog'}}
     assert template.enrich(dict(base, chance=.99))[0] == 'This is dog, hello'
@@ -49,7 +49,7 @@ result: !If
   a: !Lookup chance
   op: gt
   b: .5
-  true: !Format "This is {person.name}, hello"
+  then: !Format "This is {person.name}, hello"
 ''', 'yaml')
     base = {'person': {'name': 'dog'}}
     assert template.render(dict(base, chance=.99)).strip() == 'result: This is dog, hello'

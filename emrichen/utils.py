@@ -15,10 +15,3 @@ def maybe_enrich(context, value, first=False):
             else:
                 return Void
     return value
-
-
-def get_first_key(dct, keys, default=None):
-    for key in keys:
-        if key in dct:
-            return dct[key]
-    return default

@@ -1,6 +1,6 @@
 from ..condition import evaluate_condition
 from ..void import Void
-from ..utils import maybe_template, maybe_enrich, get_first_key
+from ..utils import maybe_template, maybe_enrich
 from .base import BaseTag
 
 
@@ -8,8 +8,11 @@ class If(BaseTag):
     value_types = (dict,)
 
     def enrich(self, context):
-        true_template = maybe_template(get_first_key(self.data, ('true', True), default=Void))
-        false_template = maybe_template(get_first_key(self.data, ('false', False), default=Void))
+        if not ('then' in self.data or 'else' in self.data):
+            raise ValueError(f'{self}: missing both then and else')
+
+        true_template = maybe_template(self.data.get('then'), Void)
+        false_template = maybe_template(self.data.get('else'), Void)
 
         if evaluate_condition(context, self.data):
             return maybe_enrich(context, true_template, first=True)
