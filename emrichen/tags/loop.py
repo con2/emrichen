@@ -29,7 +29,6 @@ class Loop(BaseTag):
 
     def enrich(self, context):
         from ..context import Context
-        from ..template import Template
 
         as_ = str(self.data.get('as', 'item'))
         index_as = str(self.data.get('index_as') or '')
@@ -38,7 +37,6 @@ class Loop(BaseTag):
         template = self.data.get('template')
         if template is None:
             raise ValueError(f'{self}: missing template')
-        template = Template([template])
 
         output = []
         iterable, is_mapping = self.get_iterable(context)
@@ -46,7 +44,7 @@ class Loop(BaseTag):
             subcontext = {as_: value}
             if index_as:
                 subcontext[index_as] = index
-            value = template.enrich(Context(context, subcontext))[0]
+            value = Context(context, subcontext).enrich(template)
             if compact and not value:
                 continue
             output.append(value)
