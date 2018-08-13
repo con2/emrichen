@@ -15,6 +15,7 @@ Python 3.6+ required.
 | Tag | Arguments | Example | Description |
 |-----|-----------|---------|-------------|
 | `!Defaults` | A dict of variable definitions | See `examples/defaults/` | Defines default values for variables. These will be overridden by any other variable source. **NOTE:** `!Defaults` must appear in a document of its own in the template file (ie. separated by `---`). The document containing `!Defaults` will be erased from the output. |
+| `!Error` | Error message | `!Error "Must define either foo or bar, not both"` | If the `!Error` tag is present in the template after resolving all conditionals, it will cause the template rendering to exit with error emitting the specified error message. |
 | `!Format` | Format string | `!Var "{foo} {bar!d}"` | Interpolate strings using [Python format strings](https://docs.python.org/3/library/string.html#formatstrings). JSONPath supported in variable lookup (eg. `{people[0].first_name}` will do the right thing). **NOTE:** When the format string starts with `{`, you need to quote it in order to avoid being interpreted as a YAML object.
 | `!Lookup` | JSONPath expression | `!Lookup people[0].first_name` | Performs a JSONPath lookup returning the first match. If there is no match, an error is raised. |
 | `!LookupAll` | JSONPath expression | `!Lookup people[*].first_name` | Performs a JSONPath lookup returning all matches as a list. If no matches are found, the empty list `[]` is returned. |
