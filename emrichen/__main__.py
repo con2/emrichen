@@ -12,7 +12,7 @@ def get_parser():
     parser = argparse.ArgumentParser(
         description='A YAML to YAML preprocessor.',
         prog='emrichen',
-        epilog='Variable precedence: -D > -e > -f',
+        epilog='Variable precedence: -D > -e > -f > !Defaults',
     )
     parser.add_argument(
         'template_file',
