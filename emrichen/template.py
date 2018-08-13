@@ -1,6 +1,7 @@
 from .context import Context
 from .input import parse
 from .output import render
+from .tags import Defaults
 
 
 class Template(object):
@@ -10,11 +11,11 @@ class Template(object):
                 f'`template` must be a list of objects; {template!r} is not. '
                 f'Are you maybe looking for Template.parse()?'
             )
-        self.template = template
+
+        self.template, self.defaults = extract_defaults(template)
 
     def enrich(self, context):
-        if not isinstance(context, Context):
-            context = Context(context)
+        context = Context(self.defaults, context)
 
         return context.enrich(self.template)
 
@@ -25,3 +26,14 @@ class Template(object):
     @classmethod
     def parse(cls, data, format):
         return cls(template=parse(data, format=format))
+
+
+def extract_defaults(template):
+    defaults = {}
+    for doc in template:
+        if isinstance(doc, Defaults):
+            defaults.update(doc.data)
+
+    template = [doc for doc in template if not isinstance(doc, Defaults)]
+
+    return template, defaults

@@ -1,0 +1,6 @@
+!Defaults
+foo: bar
+quux: 5
+---
+is_this: !Var foo
+how_about_quux: !Var quux

@@ -14,11 +14,12 @@ Python 3.6+ required.
 
 | Tag | Arguments | Example | Description |
 |-----|-----------|---------|-------------|
-| `!Var` | Variable name | `!Var image_name` | Replaced with the value of the variable. |
+| `!Defaults` | A dict of variable definitions | See `examples/defaults/` | Defines default values for variables. These will be overridden by any other variable source. **NOTE:** `!Defaults` must appear in a document of its own in the template file (ie. separated by `---`). The document containing `!Defaults` will be erased from the output. |
 | `!Format` | Format string | `!Var "{foo} {bar!d}"` | Interpolate strings using [Python format strings](https://docs.python.org/3/library/string.html#formatstrings). **NOTE:** When the format string starts with `{`, you need to quote it in order to avoid being interpreted as a YAML object.
 | `!Lookup` | JSONPath expression | `!Lookup people[0].first_name` | Performs a JSONPath lookup returning the first match. If there is no match, an error is raised. |
 | `!LookupAll` | JSONPath expression | `!Lookup people[*].first_name` | Performs a JSONPath lookup returning all matches as a list. If no matches are found, the empty list `[]` is returned. |
 | `!Loop` | `over:` (required) The data to iterate over (a literal list or dict, or `!Var`)<br>`as`: (optional, default `item`) The variable name given to the current value<br>`index_as:` (optional) The variable name given to the loop index. If `over` is a list, this is a numeric index starting from `0`. If `over` is a dict, this is the dict key.<br>`template:` (required) The template to process for each iteration of the loop. | See `examples/loop/`. | Loops over a list or dict and renders a template for each iteration. The output is always a list.
+| `!Var` | Variable name | `!Var image_name` | Replaced with the value of the variable. |
 
 ## CLI
 
@@ -46,7 +47,7 @@ Python 3.6+ required.
                             written into stdout.
       --include-env, -e     Expose process environment variables to the template.
 
-    Variable precedence: -D > -e > -f
+    Variable precedence: -D > -e > -f > !Defaults
 
 ### Examples
 
