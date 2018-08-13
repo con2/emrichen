@@ -3,21 +3,14 @@ from collections.abc import Mapping, Sequence
 from emrichen.input import parse
 
 
-class Context(object):
+class Context(dict):
     """
     The Context loads variables from various variable sources and enriches
     YAML values using them.
     """
 
     def __init__(self, *variable_sources, **override_variables):
-        self.variables = dict()
         self.add_variables(*variable_sources, **override_variables)
-
-    def __getitem__(self, key):
-        return self.variables[key]
-
-    def __contains__(self, key):
-        return key in self.variables
 
     def enrich(self, value):
         """
@@ -48,13 +41,13 @@ class Context(object):
         """
         for variables in variable_sources:
             if isinstance(variables, Mapping):
-                self.variables.update(variables)
+                self.update(variables)
             else:
                 for yaml_document in parse(variables, 'yaml'):
-                    self.variables.update(yaml_document)
+                    self.update(yaml_document)
 
-        self.variables.update(override_variables)
+        self.update(override_variables)
 
     def subcontext(self, override_variables):
         # TODO: this could use less copying, but that's a future optimization
-        return self.__class__(dict(self.variables, **override_variables))
+        return self.__class__(dict(self, **override_variables))
