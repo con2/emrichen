@@ -1,6 +1,7 @@
 from collections.abc import Mapping, Sequence
 
-from emrichen.input import parse
+from .input import parse
+from .void import Void
 
 
 class Context(dict):
@@ -24,9 +25,19 @@ class Context(dict):
             return value
 
         elif isinstance(value, Mapping):
-            return {key: self.enrich(val) for (key, val) in value.items()}
+            out = {}
+            for key, val in value.items():
+                val = self.enrich(val)
+                if val is not Void:
+                    out[key] = val
+            return out
         elif isinstance(value, Sequence):
-            return [self.enrich(item) for item in value]
+            out = []
+            for item in value:
+                item = self.enrich(item)
+                if item is not Void:
+                    out.append(item)
+            return out
         else:
             return value
 
