@@ -16,7 +16,6 @@ class Template(object):
 
     def enrich(self, context):
         context = Context(self.defaults, context)
-
         return context.enrich(self.template)
 
     def render(self, context, format='yaml'):

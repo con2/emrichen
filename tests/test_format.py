@@ -1,7 +1,7 @@
 from emrichen import Context, Template
 
 
-def test_lookup():
+def test_format():
     template = Template.parse(
         '!Format "This tests formatting. {person.name!s} {chance:.0%} == {chance:.5f}"', 'yaml'
     )
