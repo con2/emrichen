@@ -16,11 +16,14 @@ Python 3.6+ required.
 |-----|-----------|---------|-------------|
 | `!Defaults` | A dict of variable definitions | See `examples/defaults/` | Defines default values for variables. These will be overridden by any other variable source. **NOTE:** `!Defaults` must appear in a document of its own in the template file (ie. separated by `---`). The document containing `!Defaults` will be erased from the output. |
 | `!Error` | Error message | `!Error "Must define either foo or bar, not both"` | If the `!Error` tag is present in the template after resolving all conditionals, it will cause the template rendering to exit with error emitting the specified error message. |
-| `!Format` | Format string | `!Var "{foo} {bar!d}"` | Interpolate strings using [Python format strings](https://docs.python.org/3/library/string.html#formatstrings). JSONPath supported in variable lookup (eg. `{people[0].first_name}` will do the right thing). **NOTE:** When the format string starts with `{`, you need to quote it in order to avoid being interpreted as a YAML object.
+| `!Filter` | TBD | See `tests/test_cond.py` | Takes in a list and only returns elements that pass a predicate. |
+| `!Format` | Format string | `!Var "{foo} {bar!d}"` | Interpolate strings using [Python format strings](https://docs.python.org/3/library/string.html#formatstrings). JSONPath supported in variable lookup (eg. `{people[0].first_name}` will do the right thing). **NOTE:** When the format string starts with `{`, you need to quote it in order to avoid being interpreted as a YAML object. |
+| `!If` | TBD | See `tests/test_cond.py` | Returns one of two values based on a condition. |
 | `!Lookup` | JSONPath expression | `!Lookup people[0].first_name` | Performs a JSONPath lookup returning the first match. If there is no match, an error is raised. |
 | `!LookupAll` | JSONPath expression | `!Lookup people[*].first_name` | Performs a JSONPath lookup returning all matches as a list. If no matches are found, the empty list `[]` is returned. |
 | `!Loop` | `over:` (required) The data to iterate over (a literal list or dict, or `!Var`)<br>`as`: (optional, default `item`) The variable name given to the current value<br>`index_as:` (optional) The variable name given to the loop index. If `over` is a list, this is a numeric index starting from `0`. If `over` is a dict, this is the dict key.<br>`template:` (required) The template to process for each iteration of the loop. | See `examples/loop/`. | Loops over a list or dict and renders a template for each iteration. The output is always a list.
 | `!Var` | Variable name | `!Var image_name` | Replaced with the value of the variable. |
+| `!Void` | None | `foo: !Void` | The dict key, list item or YAML document that resolves to `!Void` is removed from the output. |
 
 ## CLI
 
