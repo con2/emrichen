@@ -1,0 +1,60 @@
+!Defaults
+zero: []
+
+# succ :: Peano -> Peano
+# succ x = [x]
+succ: [!Var x]
+
+# NOTE: Does not work as of 2018-08-14, see #15
+# pred :: Peano -> Peano
+# pred [] = undefined
+# pred [x] = x
+pred: !Lookup x[0]
+
+one: !With
+  vars:
+    x: !Var zero
+  template: !Var succ
+
+two: !With
+  vars:
+    x: !Var one
+  template: !Var succ
+
+three: !With
+  vars:
+    x: !Var two
+  template: !Var succ
+
+# plus :: Peano -> Peano -> Peano
+# plus a b
+#   | b == zero = a
+#   | otherwise = plus (succ a) (pred b)
+plus: !If
+  a: !Var b
+  op: ==
+  b: !Var zero
+  then: !Var a
+  else: !With
+    vars:
+      a: !With
+        vars:
+          x: !Var a
+        template: !Var succ
+      b: !With
+        vars:
+          x: !Var b
+        template: !Var pred
+    template: !Var plus
+
+---
+# NOTE: Theoretical at this point, blows the stack even for 0 + 0. Try again when we have a working !Var pred.
+# five: !With
+#   vars:
+#     a: !Var two
+#     b: !Var three
+#   template: !Var plus
+two: !With
+  vars:
+    x: !Var one
+  template: !Var succ

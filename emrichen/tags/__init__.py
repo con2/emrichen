@@ -7,6 +7,7 @@ from .lookup import Lookup, LookupAll
 from .loop import Loop
 from .var import Var
 from .void import Void
+from .with_ import With
 
 __all__ = [
     'Defaults',
@@ -19,4 +20,5 @@ __all__ = [
     'Loop',
     'Var',
     'Void',
+    'With',
 ]
