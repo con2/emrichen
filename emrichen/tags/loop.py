@@ -3,6 +3,25 @@ from collections import Mapping, Sequence
 from .base import BaseTag
 
 
+def get_iterable(tag, over, context):
+    if isinstance(over, str) and over in context:
+        # This does mean you can't explicitly iterate over strings that are keys
+        # in the context, but if you really do need to do that, you may need to
+        # rethink your approach anyway.
+        raise ValueError(
+            f'{tag}: `over` value exists within the context; did you mean `!Var {over}`?'
+        )
+
+    if hasattr(over, 'enrich'):
+        over = over.enrich(context)
+    if isinstance(over, Mapping):
+        return over.items()
+    elif isinstance(over, Sequence):
+        return enumerate(over)
+
+    raise ValueError(f'{tag}: over value {over} is not iterable')
+
+
 class Loop(BaseTag):
     value_types = (dict,)
 
@@ -31,21 +50,4 @@ class Loop(BaseTag):
         return output
 
     def get_iterable(self, context):
-        over = self.data.get('over')
-
-        if isinstance(over, str) and over in context:
-            # This does mean you can't explicitly iterate over strings that are keys
-            # in the context, but if you really do need to do that, you may need to
-            # rethink your approach anyway.
-            raise ValueError(
-                f'{self}: `over` value exists within the context; did you mean `!Var {over}`?'
-            )
-
-        if hasattr(over, 'enrich'):
-            over = over.enrich(context)
-        if isinstance(over, Mapping):
-            return over.items()
-        elif isinstance(over, Sequence):
-            return enumerate(over)
-
-        raise ValueError(f'{self}: over value {over} is not iterable')
+        return get_iterable(self, self.data.get('over'), context)
