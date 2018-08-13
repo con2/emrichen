@@ -15,7 +15,7 @@ def test_if():
     assert template.enrich(dict(base, chance=.5))[0] == 'No chance'
 
 
-def test_filter():
+def test_filter_list():
     template = Template.parse('''
 !Filter
   over:
@@ -29,6 +29,18 @@ def test_filter():
     a: !Lookup item
 ''', 'yaml')
     assert template.enrich({})[0] == ['valid', 'hello', 'SSEJ']
+
+
+def test_filter_dict():
+    template = Template.parse('''
+!Filter
+  over:
+    'yes': true
+    no: 0
+    nope: false
+    oui: 1
+''', 'yaml')
+    assert template.enrich({})[0] == {'oui': 1, 'yes': True}
 
 
 def test_if_void():
