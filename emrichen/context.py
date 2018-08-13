@@ -47,7 +47,3 @@ class Context(dict):
                     self.update(yaml_document)
 
         self.update(override_variables)
-
-    def subcontext(self, override_variables):
-        # TODO: this could use less copying, but that's a future optimization
-        return self.__class__(dict(self, **override_variables))

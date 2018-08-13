@@ -7,21 +7,24 @@ class Loop(BaseTag):
     value_types = (dict,)
 
     def enrich(self, context):
+        from ..context import Context
+        from ..template import Template
+
         as_ = str(self.data.get('as', 'item'))
         index_as = str(self.data.get('index_as') or '')
-        from ..template import Template
+        compact = bool(self.data.get('compact'))
 
         template = self.data.get('template')
         if template is None:
             raise ValueError(f'{self}: missing template')
         template = Template([template])
-        compact = bool(self.data.get('compact'))
+
         output = []
         for index, value in self.get_iterable(context):
             subcontext = {as_: value}
             if index_as:
                 subcontext[index_as] = index
-            value = template.enrich(context.subcontext(subcontext))[0]
+            value = template.enrich(Context(context, subcontext))[0]
             if compact and not value:
                 continue
             output.append(value)
