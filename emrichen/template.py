@@ -12,7 +12,7 @@ class Template(object):
                 f'Are you maybe looking for Template.parse()?'
             )
 
-        self.template, self.defaults = self.extract_defaults(template)
+        self.template, self.defaults = extract_defaults(template)
 
     def enrich(self, context):
         context = Context(self.defaults, context)
@@ -27,13 +27,13 @@ class Template(object):
     def parse(cls, data, format):
         return cls(template=parse(data, format=format))
 
-    @classmethod
-    def extract_defaults(cls, template):
-        defaults = {}
-        for doc in template:
-            if isinstance(doc, Defaults):
-                defaults.update(doc.data)
 
-        template = [doc for doc in template if not isinstance(doc, Defaults)]
+def extract_defaults(template):
+    defaults = {}
+    for doc in template:
+        if isinstance(doc, Defaults):
+            defaults.update(doc.data)
 
-        return template, defaults
+    template = [doc for doc in template if not isinstance(doc, Defaults)]
+
+    return template, defaults
