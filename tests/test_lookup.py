@@ -66,3 +66,17 @@ def test_lookup_no_match():
         ctx = Context(LOOKUP_TEST_CONTEXT)
         template.render(ctx)
     assert 'no matches for' in str(ei.value)
+
+
+@pytest.mark.xfail
+def test_late_enrich():
+    template = Template.parse('''
+!Defaults
+x:
+  y: 5
+z: !Var x
+---
+workie: !Lookup x.y
+no_workie: !Lookup z.y
+''', format='yaml')
+    assert template.enrich({}) == [{'workie': 5, 'no_workie': 5}]
