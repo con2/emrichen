@@ -1,5 +1,6 @@
 from .defaults import Defaults
 from .error import Error
+from .exists import Exists
 from .filter import Filter
 from .format import Format
 from .if_ import If
@@ -12,6 +13,7 @@ from .with_ import With
 __all__ = [
     'Defaults',
     'Error',
+    'Exists',
     'Filter',
     'Format',
     'If',

@@ -16,6 +16,7 @@ Python 3.6+ required.
 |-----|-----------|---------|-------------|
 | `!Defaults` | A dict of variable definitions | See `examples/defaults/` | Defines default values for variables. These will be overridden by any other variable source. **NOTE:** `!Defaults` must appear in a document of its own in the template file (ie. separated by `---`). The document containing `!Defaults` will be erased from the output. |
 | `!Error` | Error message | `!Error "Must define either foo or bar, not both"` | If the `!Error` tag is present in the template after resolving all conditionals, it will cause the template rendering to exit with error emitting the specified error message. |
+| `!Exists` | JSONPath expression | `!Exists foo` | Returns `true` if the JSONPath expression returns one or more matches, `false` otherwise. |
 | `!Filter` | TBD | See `tests/test_cond.py` | Takes in a list and only returns elements that pass a predicate. |
 | `!Format` | Format string | `!Var "{foo} {bar!d}"` | Interpolate strings using [Python format strings](https://docs.python.org/3/library/string.html#formatstrings). JSONPath supported in variable lookup (eg. `{people[0].first_name}` will do the right thing). **NOTE:** When the format string starts with `{`, you need to quote it in order to avoid being interpreted as a YAML object. |
 | `!If` | TBD | See `tests/test_cond.py` | Returns one of two values based on a condition. |
