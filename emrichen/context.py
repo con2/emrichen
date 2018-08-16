@@ -58,3 +58,8 @@ class Context(dict):
                     self.update(yaml_document)
 
         self.update(override_variables)
+
+
+class VariableExtractorContext(Context):
+    def __missing__(self, key):
+        return "fill me in"

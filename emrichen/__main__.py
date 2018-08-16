@@ -23,6 +23,17 @@ def get_parser():
     )
 
     parser.add_argument(
+        '--print-vars',
+        dest='action',
+        default='render',
+        action='store_const',
+        const='print_vars',
+        help=(
+            'Instead of rendering the template, prints the vars used by the template in YAML or '
+            'JSON format you can use as a var file.'
+        ),
+    )
+    parser.add_argument(
         '--template-format',
         choices=PARSERS,
         default=None,
@@ -108,9 +119,16 @@ def main(args=None):
 
     context = Context(*variable_sources, **override_variables)
     template = Template.parse(args.template_file, format=args.template_format)
-    output = template.render(context, format=args.output_format)
+
+    if args.action == 'render':
+        output = template.render(context, format=args.output_format)
+    elif args.action == 'print_vars':
+        output = template.print_vars(context, format=args.output_format)
+    else:
+        raise NotImplementedError(args.action)
 
     args.output_file.write(output)
+
 
 
 if __name__ == '__main__':

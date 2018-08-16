@@ -1,4 +1,4 @@
-from .context import Context
+from .context import Context, VariableExtractorContext
 from .input import parse
 from .output import render
 from .tags import Defaults
@@ -21,6 +21,15 @@ class Template(object):
     def render(self, context, format='yaml'):
         enriched = self.enrich(context)
         return render(enriched, format)
+
+    def get_vars(self, context=Context()):
+        context = VariableExtractorContext(context)
+        self.enrich(context)
+        return context
+
+    def print_vars(self, context=Context(), format='yaml'):
+        context = self.get_vars(context)
+        return render(context, format)
 
     @classmethod
     def parse(cls, data, format):
