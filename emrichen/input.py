@@ -30,8 +30,14 @@ class RichLoader(yaml.SafeLoader):
 
     def add_tag_constructors(self):
         self.yaml_constructors = self.yaml_constructors.copy()  # Grab an instance copy from the class
+        self.yaml_constructors[self.DEFAULT_MAPPING_TAG] = self._make_ordered_dict
         for name, tag in tag_registry.items():
             self.yaml_constructors[f'!{name}'] = partial(_load_yaml_tag, tag)
+
+    @staticmethod
+    def _make_ordered_dict(loader, node):
+        loader.flatten_mapping(node)
+        return OrderedDict(loader.construct_pairs(node))
 
 
 def _hydrate_json_object(pairs):

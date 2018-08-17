@@ -24,8 +24,8 @@ klak: klok
 
 EXPECTED = """foo: bar
 quux:
-  klik: klok kluk
   xyzzy: meow
+  klik: klok kluk
 """
 
 

@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from collections.abc import Mapping, Sequence
 
 from .input import parse
@@ -25,7 +26,7 @@ class Context(dict):
             return value
 
         elif isinstance(value, Mapping):
-            out = {}
+            out = OrderedDict()
             for key, val in value.items():
                 val = self.enrich(val)
                 if val is not Void:

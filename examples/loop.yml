@@ -7,5 +7,5 @@ domains:
       apiVersion: v1
       kind: DomainName
       metadata:
-        name: !Var domain_name
         index: !Var domain_index
+        name: !Var domain_name
