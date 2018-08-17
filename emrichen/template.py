@@ -23,7 +23,7 @@ class Template(object):
         return render(enriched, format)
 
     @classmethod
-    def parse(cls, data, format):
+    def parse(cls, data, format='yaml'):
         return cls(template=parse(data, format=format))
 
 
