@@ -11,4 +11,4 @@ nope: !Exists quux
 
 
 def test_exists():
-    assert emrichen(TEMPLATE).strip() == 'nope: false\nyep: true'
+    assert emrichen(TEMPLATE).strip() == 'yep: true\nnope: false'
