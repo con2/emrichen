@@ -1,6 +1,5 @@
 import operator
 
-from .utils import maybe_enrich
 
 operator_list = [
     (('=', '==', '===', 'eq'), operator.eq),
@@ -26,10 +25,10 @@ def evaluate_condition(context, cond):
     elif 'anyOf' in cond:
         return any(evaluate_condition(context, subcond) for subcond in cond['anyOf'])
 
-    a = maybe_enrich(context, cond['a'])
-    b = maybe_enrich(context, cond.get('b'))
-    op = operators[maybe_enrich(context, cond.get('op', 'truth'))]
-    negate = maybe_enrich(context, cond.get('not'))
+    a = context.enrich(cond['a'])
+    b = context.enrich(cond.get('b'))
+    op = operators[context.enrich(cond.get('op', 'truth'))]
+    negate = context.enrich(cond.get('not'))
 
     result = op(a, b)
     return (not result if negate else result)
