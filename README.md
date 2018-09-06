@@ -30,6 +30,10 @@ Python 3.6+ required.
 | `!Void` | None | `foo: !Void` | The dict key, list item or YAML document that resolves to `!Void` is removed from the output. |
 | `!With` | `vars:` A dict of variable definitions.<br>`template:` The template to process with the variables defined. | See `examples/with/`. | Binds local variables that are only visible within `template`. Useful for giving a name for common sub-expressions. |
 
+### Tag composition
+
+Due to YAML, you can't do `!Base64 !Var foo`. We provide a convenient workaround: `!Base64,Var foo`.
+
 ## CLI
 
     usage: emrichen [-h] [--var-file VAR_FILES] [--define VAR=VALUE]
