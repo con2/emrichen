@@ -1,15 +1,24 @@
 import json
 from collections import OrderedDict
 
-from emrichen.tags.base import tag_registry
+from ..exceptions import NoSuchTag
+from ..tags.base import tag_registry
+from .utils import make_compose
 
 
 def _hydrate_json_object(pairs):
     if len(pairs) == 1:
         key, data = pairs[0]
-        if key.startswith('!') and key[1:] in tag_registry:
-            tag = tag_registry[key[1:]]
-            return tag(data)
+        if key.startswith('!'):
+            key = key[1:]
+            if ',' in key:
+                try:
+                    return make_compose(names=key, value=data)
+                except NoSuchTag as nst:
+                    raise NameError("in compose tag %s: can't find tag %s" % (key, nst.args[0])) from nst
+            if key not in tag_registry:
+                raise NoSuchTag(key)
+            return tag_registry[key](data)
     return OrderedDict(pairs)
 
 
