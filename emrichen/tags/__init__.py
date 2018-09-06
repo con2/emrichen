@@ -1,3 +1,4 @@
+from .base64 import Base64
 from .concat import Concat
 from .defaults import Defaults
 from .error import Error
@@ -5,14 +6,16 @@ from .exists import Exists
 from .filter import Filter
 from .format import Format
 from .if_ import If
-from .merge import Merge
 from .lookup import Lookup, LookupAll
 from .loop import Loop
+from .merge import Merge
 from .var import Var
 from .void import Void
 from .with_ import With
 
 __all__ = [
+    'Base64',
+    'Concat',
     'Defaults',
     'Error',
     'Exists',
@@ -22,6 +25,7 @@ __all__ = [
     'Lookup',
     'LookupAll',
     'Loop',
+    'Merge',
     'Var',
     'Void',
     'With',

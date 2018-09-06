@@ -14,6 +14,7 @@ Python 3.6+ required.
 
 | Tag | Arguments | Example | Description |
 |-----|-----------|---------|-------------|
+| `!Base64` | The value to encode | `!Base64 foobar` | Encodes the value (or a string representation thereof) into base64. |
 | `!Concat` | A list of lists | `!Concat [[1, 2], [3, 4]]` | Concatenates lists. |
 | `!Defaults` | A dict of variable definitions | See `examples/defaults/` | Defines default values for variables. These will be overridden by any other variable source. **NOTE:** `!Defaults` must appear in a document of its own in the template file (ie. separated by `---`). The document containing `!Defaults` will be erased from the output. |
 | `!Error` | Error message | `!Error "Must define either foo or bar, not both"` | If the `!Error` tag is present in the template after resolving all conditionals, it will cause the template rendering to exit with error emitting the specified error message. |
