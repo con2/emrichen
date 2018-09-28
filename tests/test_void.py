@@ -18,7 +18,7 @@ def test_void_yaml():
 
 
 def test_void_json():
-    assert json.loads(TEMPLATE.render({}, 'json')) == [{"Surprise": True}]
+    assert json.loads(TEMPLATE.render({}, 'json')) == {"Surprise": True}
 
 
 def test_void_top_level():
