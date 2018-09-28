@@ -33,17 +33,18 @@ class Loop(BaseTag):
         as_ = str(self.data.get('as', 'item'))
         index_as = str(self.data.get('index_as') or '')
         compact = bool(self.data.get('compact'))
+        index_start = int(self.data.get('index_start', 0))
 
         template = self.data.get('template')
         if template is None:
             raise ValueError(f'{self}: missing template')
 
         output = []
-        iterable, is_mapping = self.get_iterable(context)
+        iterable, _ = self.get_iterable(context)
         for index, value in iterable:
             subcontext = {as_: value}
             if index_as:
-                subcontext[index_as] = index
+                subcontext[index_as] = index + index_start
             value = Context(context, subcontext).enrich(template)
             if compact and not value:
                 continue
