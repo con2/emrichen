@@ -45,3 +45,48 @@ def test_loop_user_friendliness():
     with pytest.raises(ValueError) as ei:
         output = template.render(ctx)
     assert 'did you mean' in str(ei.value)
+
+
+def test_loop_index_start():
+    template = Template.parse('''
+!Loop
+  over: [1, 2, 3]
+  index_start: 5
+  index_as: index
+  template: !Var index
+''')
+    assert template.enrich({}) == [[5, 6, 7]]
+
+
+def test_loop_over_dict():
+    template = Template.parse('''
+!Loop
+  over:
+    a: 5
+    b: 6
+  index_as: index
+  template:
+    item: !Var item
+    index: !Var index
+''')
+    assert template.render({}).strip() == '''
+- item: 5
+  index: a
+- item: 6
+  index: b
+'''.strip()
+
+
+def test_no_index_start_with_dict():
+    template = Template.parse('''
+!Loop
+  over:
+    a: 5
+  index_as: index
+  index_start: 5
+  template: 1
+''')
+    with pytest.raises(ValueError) as nope:
+        template.render({})
+
+    assert 'index_start with dict' in str(nope.value)
