@@ -9,6 +9,7 @@ from .if_ import If
 from .lookup import Lookup, LookupAll
 from .loop import Loop
 from .merge import Merge
+from .urlencode import URLEncode
 from .var import Var
 from .void import Void
 from .with_ import With
@@ -26,6 +27,7 @@ __all__ = [
     'LookupAll',
     'Loop',
     'Merge',
+    'URLEncode',
     'Var',
     'Void',
     'With',
