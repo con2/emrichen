@@ -24,9 +24,8 @@ class Template(object):
         return render(enriched, format)
 
     @classmethod
-    def parse(cls, data, format='yaml'):
-        filename = None
-        if hasattr(data, 'name') and data.name:
+    def parse(cls, data, format='yaml', filename=None):
+        if filename is None and hasattr(data, 'name') and data.name:
             filename = data.name
 
         return cls(template=parse(data, format=format), filename=filename)
