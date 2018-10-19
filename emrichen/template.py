@@ -5,7 +5,7 @@ from .tags import Defaults
 
 
 class Template(object):
-    def __init__(self, template):
+    def __init__(self, template, filename=None):
         if not isinstance(template, list):
             raise TypeError(
                 f'`template` must be a list of objects; {template!r} is not. '
@@ -13,9 +13,10 @@ class Template(object):
             )
 
         self.template, self.defaults = extract_defaults(template)
+        self.filename = filename
 
     def enrich(self, context):
-        context = Context(self.defaults, context)
+        context = Context(self.defaults, context, __file__=self.filename)
         return context.enrich(self.template)
 
     def render(self, context, format='yaml'):
@@ -24,7 +25,11 @@ class Template(object):
 
     @classmethod
     def parse(cls, data, format='yaml'):
-        return cls(template=parse(data, format=format))
+        filename = None
+        if hasattr(data, 'name') and data.name:
+            filename = data.name
+
+        return cls(template=parse(data, format=format), filename=filename)
 
 
 def extract_defaults(template):
