@@ -20,6 +20,4 @@ class Include(BaseTag):
         if len(enriched) > 1:
             raise ValueError('!Include can only include single-document templates')
 
-        # TODO How about multiple documents, all of which are Void save one?
-
         return enriched[0]
