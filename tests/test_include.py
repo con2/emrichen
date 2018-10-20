@@ -55,7 +55,7 @@ def test_mixed_format():
 
 
 def test_include_defaults():
-    filename = os.path.join(BASE_DIR, 'test_include_good.in.yml')
+    filename = os.path.join(BASE_DIR, 'test_include_defaults.in.yml')
     template = Template.parse('''
 !Include includes/defaults.in.yml
 ---
@@ -72,3 +72,13 @@ def test_consecutive_include_at_top_level():
 !Include includes/good.in.yml
 ''', filename=filename)
     assert template.enrich({}) == [{'foo': 5}, {'foo': 5}]
+
+
+def test_include_chained_defaults():
+    filename = os.path.join(BASE_DIR, 'test_include_chained_defaults.in.yml')
+    template = Template.parse('''
+!Include includes/chained_defaults.in.yml
+---
+foo: !Var foo
+''', filename=filename)
+    assert template.enrich({}) == [{'foo': 5}]
