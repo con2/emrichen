@@ -12,7 +12,6 @@ class Include(BaseTag):
             os.path.dirname(context['__file__']), self.data)
 
         with open(include_path) as include_file:
-            # TODO: determine format (now YAML only)
             return Template.parse(include_file)
 
     def enrich(self, context):
