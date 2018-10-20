@@ -1,7 +1,17 @@
+import os
+
 from .context import Context
-from .input import parse
+from .input import parse, PARSERS
 from .output import render
 from .tags import Defaults
+
+
+def determine_format(filename, choices, default):
+    if filename:
+        ext = os.path.splitext(filename)[1].lstrip('.').lower()
+        if ext in choices:
+            return ext
+    return default
 
 
 class Template(object):
@@ -24,9 +34,12 @@ class Template(object):
         return render(enriched, format)
 
     @classmethod
-    def parse(cls, data, format='yaml', filename=None):
+    def parse(cls, data, format=None, filename=None):
         if filename is None and hasattr(data, 'name') and data.name:
             filename = data.name
+
+        if format is None:
+            format = determine_format(filename, PARSERS, 'yaml')
 
         return cls(template=parse(data, format=format), filename=filename)
 
