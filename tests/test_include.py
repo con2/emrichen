@@ -62,3 +62,14 @@ def test_include_defaults():
 foo: !Var foo
 ''', filename=filename)
     assert template.enrich({}) == [{'foo': 5}]
+
+
+@pytest.mark.xfail
+def test_consecutive_include_at_top_level():
+    filename = os.path.join(BASE_DIR, 'test_consecutive_include_at_top_level.in.yml')
+    template = Template.parse('''
+!Include includes/good.in.yml
+---
+!Include includes/good.in.yml
+''', filename=filename)
+    assert template.enrich({}) == [{'foo': 5}, {'foo': 5}]
