@@ -45,13 +45,14 @@ class Template(object):
 
 
 def extract_defaults(template, filename):
-    defaults = dict(__file__=filename)
+    defaults = {}
 
     for doc in template:
         if isinstance(doc, Defaults):
             defaults.update(doc.data)
         elif isinstance(doc, Include):
-            defaults.update(doc.get_template(defaults).defaults)
+            temp_context = dict(defaults, __file__=filename)
+            defaults.update(doc.get_template(temp_context).defaults)
 
     template = [doc for doc in template if not isinstance(doc, Defaults)]
 
