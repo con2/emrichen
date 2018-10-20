@@ -52,3 +52,13 @@ def test_mixed_format():
     filename = os.path.join(BASE_DIR, 'test_include_mixed_format.in.yml')
     template = Template.parse('!Include includes/chained.in.json', filename=filename)
     assert template.enrich({}) == [{'bar': {'foo': 5}}]
+
+
+def test_include_defaults():
+    filename = os.path.join(BASE_DIR, 'test_include_good.in.yml')
+    template = Template.parse('''
+!Include includes/defaults.in.yml
+---
+foo: !Var foo
+''', filename=filename)
+    assert template.enrich({}) == [{'foo': 5}]

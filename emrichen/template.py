@@ -3,7 +3,7 @@ import os
 from .context import Context
 from .input import parse, PARSERS
 from .output import render
-from .tags import Defaults
+from .tags import Defaults, Include
 
 
 def determine_format(filename, choices, default):
@@ -22,7 +22,7 @@ class Template(object):
                 f'Are you maybe looking for Template.parse()?'
             )
 
-        self.template, self.defaults = extract_defaults(template)
+        self.template, self.defaults = extract_defaults(template, filename)
         self.filename = filename
 
     def enrich(self, context):
@@ -44,11 +44,14 @@ class Template(object):
         return cls(template=parse(data, format=format), filename=filename)
 
 
-def extract_defaults(template):
-    defaults = {}
+def extract_defaults(template, filename):
+    defaults = dict(__file__=filename)
+
     for doc in template:
         if isinstance(doc, Defaults):
             defaults.update(doc.data)
+        elif isinstance(doc, Include):
+            defaults.update(doc.get_template(defaults).defaults)
 
     template = [doc for doc in template if not isinstance(doc, Defaults)]
 
