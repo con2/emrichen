@@ -1,0 +1,2 @@
+bar: !Include good.in.yml
+bar2: !Include ./good.in.yml

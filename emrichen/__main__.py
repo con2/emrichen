@@ -5,7 +5,7 @@ import sys
 from .context import Context
 from .input import PARSERS
 from .output import RENDERERS
-from .template import Template
+from .template import Template, determine_format
 
 
 def get_parser():
@@ -78,14 +78,6 @@ def get_parser():
     return parser
 
 
-def determine_format(filelike, choices, default):
-    if hasattr(filelike, 'name'):
-        ext = os.path.splitext(filelike.name)[1].lstrip('.').lower()
-        if ext in choices:
-            return ext
-    return default
-
-
 def main(args=None):
     if args is None:
         args = sys.argv[1:]
@@ -99,11 +91,7 @@ def main(args=None):
         variable_sources.append(os.environ)
 
     args.output_format = args.output_format or determine_format(
-        args.output_file, RENDERERS, default='yaml'
-    )
-
-    args.template_format = args.template_format or determine_format(
-        args.template_file, PARSERS, default='yaml'
+        getattr(args.output_file, 'name', None), RENDERERS, 'yaml'
     )
 
     context = Context(*variable_sources, **override_variables)
