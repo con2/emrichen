@@ -4,9 +4,10 @@ from emrichen import Template
 def test_if():
     template = Template.parse('''
 !If
-  a: !Lookup chance
-  op: gt
-  b: .5
+  test: !Op
+    a: !Lookup chance
+    op: gt
+    b: .5
   then: !Format "This is {person.name}, hello"
   else: No chance
 ''', 'yaml')
@@ -25,8 +26,6 @@ def test_filter_list():
   - SSEJ
   - false
   - null
-  test:
-    a: !Lookup item
 ''', 'yaml')
     assert template.enrich({})[0] == ['valid', 'hello', 'SSEJ']
 
@@ -34,21 +33,36 @@ def test_filter_list():
 def test_filter_dict():
     template = Template.parse('''
 !Filter
+  as: i
+  test: !Not,Var i
   over:
     'yes': true
     no: 0
     nope: false
     oui: 1
 ''', 'yaml')
-    assert template.enrich({})[0] == {'oui': 1, 'yes': True}
+    assert template.enrich({})[0] == {False: 0, 'nope': False}
+
+
+def test_filter_op():
+    template = Template.parse('''
+!Filter
+  test: !Op
+    a: !Var item
+    op: gt
+    b: 4
+  over: [1, 7, 2, 5]
+''')
+    assert template.enrich({}) == [[7, 5]]
 
 
 def test_if_void():
     template = Template.parse('''
 result: !If
-  a: !Lookup chance
-  op: gt
-  b: .5
+  test: !Op
+    a: !Lookup chance
+    op: gt
+    b: .5
   then: !Format "This is {person.name}, hello"
 ''', 'yaml')
     base = {'person': {'name': 'dog'}}

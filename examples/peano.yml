@@ -31,9 +31,10 @@ three: !With
 #   | b == zero = a
 #   | otherwise = plus (succ a) (pred b)
 plus: !If
-  a: !Var b
-  op: ==
-  b: !Var zero
+  test:
+    a: !Var b
+    op: ==
+    b: !Var zero
   then: !Var a
   else: !With
     vars:
