@@ -1,4 +1,3 @@
-from ..condition import evaluate_condition
 from ..void import Void
 from .base import BaseTag
 

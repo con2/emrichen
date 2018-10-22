@@ -1,6 +1,5 @@
 from collections import OrderedDict
 
-from ..condition import evaluate_condition
 from .base import BaseTag
 from .loop import get_iterable
 from ..void import Void
