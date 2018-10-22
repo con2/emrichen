@@ -14,7 +14,7 @@ class If(BaseTag):
 
         true_template = self.data.get('then', Void)
         false_template = self.data.get('else', Void)
-        test = self.data.get('test')
+        test = self.data['test']
 
         if context.enrich(test):
             return context.enrich(true_template)
