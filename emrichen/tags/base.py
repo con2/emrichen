@@ -4,7 +4,8 @@ tag_registry = {}
 class BaseMeta(type):
     def __new__(meta, name, bases, class_dict):
         cls = type.__new__(meta, name, bases, class_dict)
-        tag_registry[name] = cls
+        if name[0] != '_' and name != 'BaseTag':
+            tag_registry[name] = cls
         return cls
 
 
