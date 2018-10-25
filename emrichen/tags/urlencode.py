@@ -5,6 +5,17 @@ from .base import BaseTag
 
 class URLEncode(BaseTag):
     """
+    arguments: |
+        A string to encode
+        **OR**
+        `url`: The URL to combine query parameters into
+        `query`: An object of query string parameters to add.
+    example: |
+        `!URLEncode "foo+bar"`
+        `!URLEncode { url: "https://example.com/", query: { foo: bar } }`
+    description:
+        Encodes strings for safe inclusion in a URL, or combines query string parameters into a URL.
+    ---
     Three modes of operation:
 
     1. Just encode a plain string

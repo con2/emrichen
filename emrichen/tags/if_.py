@@ -3,6 +3,11 @@ from .base import BaseTag
 
 
 class If(BaseTag):
+    """
+    arguments: '`test`, `then`, `else`'
+    example: "See `tests/test_cond.py`"
+    description: Returns one of two values based on a condition.
+    """
     value_types = (dict,)
 
     def enrich(self, context):
