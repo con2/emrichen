@@ -14,6 +14,12 @@ class _BaseInclude(BaseTag):
 
 
 class Include(_BaseInclude):
+    """
+    arguments: Path to a template to include
+    example: "`!Include ../foo.yml`"
+    description: Renders the requested template at this location. Both absolute and relative paths work.
+    """
+
     def get_template(self, context):
         from ..template import Template
 
@@ -33,6 +39,12 @@ class Include(_BaseInclude):
 
 
 class IncludeText(_BaseInclude):
+    """
+    arguments: Path to an UTF-8 text file
+    example: "`!IncludeText ../foo.toml`"
+    description: Loads the given UTF-8 text file and returns the contents as a string.
+    """
+
     def get_data(self, context) -> bytes:
         with self._open_file(context, 'rb') as include_file:
             return include_file.read()
@@ -42,6 +54,12 @@ class IncludeText(_BaseInclude):
 
 
 class IncludeBase64(IncludeText):
+    """
+    arguments: Path to a binary file
+    example: "`!IncludeBase64 ../foo.pdf`"
+    description: Loads the given binary file and returns the contents encoded as Base64.
+    """
+
     def enrich(self, context):
         data = super().get_data(context)
         return base64.b64encode(data).decode('UTF-8')

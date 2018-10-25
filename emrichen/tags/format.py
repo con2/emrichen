@@ -24,5 +24,13 @@ class JSONPathFormatter(string.Formatter):
 
 
 class Format(BaseTag):
+    """
+    arguments: Format string
+    example: '`!Var "{foo} {bar!d}"`'
+    description: |
+        Interpolate strings using [Python format strings](https://docs.python.org/3/library/string.html#formatstrings).
+        JSONPath supported in variable lookup (eg. `{people[0].first_name}` will do the right thing).
+        **NOTE:** When the format string starts with `{`, you need to quote it in order to avoid being interpreted as a YAML object.
+    """
     def enrich(self, context):
         return JSONPathFormatter(tag=self, context=context).format(self.data)

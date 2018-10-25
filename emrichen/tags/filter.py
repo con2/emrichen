@@ -6,6 +6,11 @@ from ..void import Void
 
 
 class Filter(BaseTag):
+    """
+    arguments: "`test`, `over`"
+    example: See `tests/test_cond.py`
+    description: Takes in a list and only returns elements that pass a predicate.
+    """
     value_types = (dict,)
 
     def enrich(self, context):

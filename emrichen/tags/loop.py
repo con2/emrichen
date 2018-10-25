@@ -31,6 +31,17 @@ def get_iterable(tag, over, context, index_start=None):
 
 
 class Loop(BaseTag):
+    """
+    arguments: |
+        `over`: (required) The data to iterate over (a literal list or dict, or !Var)
+        `as`: (optional, default `item`) The variable name given to the current value
+        `index_as`: (optional) The variable name given to the loop index. If over is a list, this is a numeric index starting from `0`. If over is a dict, this is the dict key.
+        `index_start`: (optional, default `0`) First index, for eg. 1-based indexing.
+        `template`: (required) The template to process for each iteration of the loop.
+    example: See `examples/loop/`.
+    description: Loops over a list or dict and renders a template for each iteration. The output is always a list.
+
+    """
     value_types = (dict,)
 
     def enrich(self, context):

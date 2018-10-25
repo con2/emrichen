@@ -12,6 +12,8 @@ Python 3.6+ required.
 
 ## Supported tags
 
+<!-- This table is updated by `update_readme.py`; please don't edit by hand. -->
+<!-- START SUPPORTED TAGS -->
 | Tag | Arguments | Example | Description |
 |-----|-----------|---------|-------------|
 | `!All` | An iterable | `!All [true, false]` | Returns true iff all the items of the iterable argument are truthy. |
@@ -34,6 +36,7 @@ Python 3.6+ required.
 | `!Var` | Variable name | `!Var image_name` | Replaced with the value of the variable. |
 | `!Void` | None | `foo: !Void` | The dict key, list item or YAML document that resolves to `!Void` is removed from the output. |
 | `!With` | `vars:` A dict of variable definitions.<br>`template:` The template to process with the variables defined. | See `examples/with/`. | Binds local variables that are only visible within `template`. Useful for giving a name for common sub-expressions. |
+<!-- END SUPPORTED TAGS -->
 
 ### Tag composition
 

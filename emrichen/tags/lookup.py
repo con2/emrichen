@@ -13,6 +13,11 @@ def find_jsonpath_in_context(jsonpath_str, context):
 
 
 class Lookup(BaseTag):
+    """
+    arguments: JSONPath expression
+    example: "`!Lookup people[0].first_name`"
+    description: Performs a JSONPath lookup returning the first match. If there is no match, an error is raised.
+    """
     def enrich(self, context):
         matches = find_jsonpath_in_context(self.data, context)
         if not matches:
@@ -21,5 +26,10 @@ class Lookup(BaseTag):
 
 
 class LookupAll(BaseTag):
+    """
+    arguments: JSONPath expression
+    example: "`!LookupAll people[*].first_name`"
+    description: Performs a JSONPath lookup returning all matches as a list. If no matches are found, the empty list `[]` is returned.
+    """
     def enrich(self, context):
         return [m.value for m in find_jsonpath_in_context(self.data, context)]
