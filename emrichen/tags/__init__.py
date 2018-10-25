@@ -8,7 +8,7 @@ from .exists import Exists
 from .filter import Filter
 from .format import Format
 from .if_ import If
-from .include import Include
+from .include import Include, IncludeBase64, IncludeText
 from .lookup import Lookup, LookupAll
 from .loop import Loop
 from .merge import Merge
@@ -31,10 +31,14 @@ __all__ = [
     'Filter',
     'Format',
     'If',
+    'Include',
+    'IncludeBase64',
+    'IncludeText',
     'Lookup',
     'LookupAll',
     'Loop',
     'Merge',
+    'Not',
     'Op',
     'URLEncode',
     'Var',

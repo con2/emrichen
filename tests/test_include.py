@@ -82,3 +82,19 @@ def test_include_chained_defaults():
 foo: !Var foo
 ''', filename=filename)
     assert template.enrich({}) == [{'foo': 5}]
+
+
+def test_include_text_and_base64():
+    filename = os.path.join(BASE_DIR, 'test_include_text_and_base64.in.yml')
+    template = Template.parse('''
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config
+data:
+  image.png.b64: !IncludeBase64 includes/intense50.png
+  config.toml: !IncludeText includes/data.toml
+''', filename=filename)
+    data = template.enrich({})[0]['data']
+    assert data['image.png.b64'].startswith('iVBORw0KGgoAAAANSUhEUgA')
+    assert data['config.toml'].startswith('[database]\nserver =')
