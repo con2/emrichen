@@ -37,4 +37,4 @@ def test_cli_kubernetes_example(examples_dir, capsys):
         ]
     )
     out, err = capsys.readouterr()
-    assert f'tracon/kompassi:{tag}' in out
+    assert 'tracon/kompassi:{tag}'.format(tag=tag) in out

@@ -9,7 +9,10 @@ def get_iterable(tag, over, context, index_start=None):
         # in the context, but if you really do need to do that, you may need to
         # rethink your approach anyway.
         raise ValueError(
-            f'{tag}: `over` value exists within the context; did you mean `!Var {over}`?'
+            '{tag}: `over` value exists within the context; did you mean `!Var {over}`?'.format(
+                tag=tag,
+                over=over,
+            )
         )
 
     if hasattr(over, 'enrich'):
@@ -27,7 +30,7 @@ def get_iterable(tag, over, context, index_start=None):
 
         return (enumerate(over, index_start), False)
 
-    raise ValueError(f'{tag}: over value {over} is not iterable')
+    raise ValueError('{tag}: over value {over} is not iterable'.format(tag=tag, over=over))
 
 
 class Loop(BaseTag):
@@ -54,7 +57,7 @@ class Loop(BaseTag):
 
         template = self.data.get('template')
         if template is None:
-            raise ValueError(f'{self}: missing template')
+            raise ValueError('{self}: missing template'.format(self=self))
 
         output = []
         iterable, _ = self.get_iterable(context, index_start)

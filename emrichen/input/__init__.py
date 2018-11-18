@@ -11,4 +11,4 @@ def parse(data, format):
     if format in PARSERS:
         return PARSERS[format](data)
     else:
-        raise ValueError(f'No parser for format {format}')
+        raise ValueError('No parser for format {format}'.format(format=format))

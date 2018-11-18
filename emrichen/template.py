@@ -18,8 +18,9 @@ class Template(object):
     def __init__(self, template, filename=None):
         if not isinstance(template, list):
             raise TypeError(
-                f'`template` must be a list of objects; {template!r} is not. '
-                f'Are you maybe looking for Template.parse()?'
+                '`template` must be a list of objects; {template} is not. Are you maybe looking for Template.parse()?'.format(
+                    template=repr(template),
+                )
             )
 
         self.template, self.defaults = extract_defaults(template, filename)

@@ -12,10 +12,10 @@ class If(BaseTag):
 
     def enrich(self, context):
         if 'test' not in self.data:
-            raise ValueError(f'{self}: missing test')
+            raise ValueError('{self}: missing test'.format(self=self))
 
         if not ('then' in self.data or 'else' in self.data):
-            raise ValueError(f'{self}: missing both then and else')
+            raise ValueError('{self}: missing both then and else'.format(self=self))
 
         true_template = self.data.get('then', Void)
         false_template = self.data.get('else', Void)
