@@ -33,7 +33,7 @@ def test_cli_kubernetes_example(examples_dir, capsys):
             '-f',
             os.path.join(examples_dir, 'kubernetes', 'vars.yml'),
             '-D',
-            f'tag={tag}',
+            'tag={tag}'.format(tag=tag),
         ]
     )
     out, err = capsys.readouterr()
