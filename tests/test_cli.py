@@ -20,7 +20,7 @@ def test_cli_json_input(examples_dir, output_format, capsys):
             output_format,
         ]
     )
-    out, err = capsys.readouterr()
+    out, _ = capsys.readouterr()
     parse(out, format=output_format)
     assert 'pikkuruinen miu' in out
 
@@ -36,5 +36,5 @@ def test_cli_kubernetes_example(examples_dir, capsys):
             'tag={tag}'.format(tag=tag),
         ]
     )
-    out, err = capsys.readouterr()
+    out, _ = capsys.readouterr()
     assert 'tracon/kompassi:{tag}'.format(tag=tag) in out

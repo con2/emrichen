@@ -43,7 +43,7 @@ def test_loop_user_friendliness():
     template = Template([Loop({'over': 'domain_names', 'template': Var('item')})])
     ctx = Context(LOOP_TEST_CONTEXT)
     with pytest.raises(ValueError) as ei:
-        output = template.render(ctx)
+        template.render(ctx)
     assert 'did you mean' in str(ei.value)
 
 
