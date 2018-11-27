@@ -12,6 +12,7 @@ from .filter import Filter
 from .format import Format
 from .if_ import If
 from .include import Include, IncludeBase64, IncludeText
+from .join import Join
 from .lookup import Lookup, LookupAll
 from .loop import Loop
 from .merge import Merge
@@ -37,6 +38,7 @@ __all__ = [
     'Include',
     'IncludeBase64',
     'IncludeText',
+    'Join',
     'Lookup',
     'LookupAll',
     'Loop',
