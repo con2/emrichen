@@ -10,8 +10,9 @@ from .error import Error
 from .exists import Exists
 from .filter import Filter
 from .format import Format
+from .hash import MD5, SHA1, SHA256
 from .if_ import If
-from .include import Include, IncludeBase64, IncludeText
+from .include import Include, IncludeBase64, IncludeBinary, IncludeText
 from .join import Join
 from .lookup import Lookup, LookupAll
 from .loop import Loop
@@ -37,14 +38,18 @@ __all__ = [
     'If',
     'Include',
     'IncludeBase64',
+    'IncludeBinary',
     'IncludeText',
     'Join',
     'Lookup',
     'LookupAll',
     'Loop',
+    'MD5',
     'Merge',
     'Not',
     'Op',
+    'SHA1',
+    'SHA256',
     'URLEncode',
     'Var',
     'Void',

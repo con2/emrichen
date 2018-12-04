@@ -29,14 +29,18 @@ Python 3.6+ required.
 | `!If` | `test`, `then`, `else` | See `tests/test_cond.py` | Returns one of two values based on a condition. |
 | `!Include` | Path to a template to include | `!Include ../foo.yml` | Renders the requested template at this location. Both absolute and relative paths work. |
 | `!IncludeBase64` | Path to a binary file | `!IncludeBase64 ../foo.pdf` | Loads the given binary file and returns the contents encoded as Base64. |
+| `!IncludeBinary` | Path to a binary file | `!IncludeBinary ../foo.pdf` | Loads the given binary file and returns the contents as bytes.  This is practically only useful for hashing. |
 | `!IncludeText` | Path to an UTF-8 text file | `!IncludeText ../foo.toml` | Loads the given UTF-8 text file and returns the contents as a string. |
 | `!Join` | `items`: (required) A list of items to be joined together. <br> `separator`: (optional, default space) The separator to place between the items. <br> **OR** <br> a list of items to be joined together with a space as the separator. | `!Join [foo, bar]` <br> `!Join { items: [foo, bar], separator: ', ' }` | Joins a list of items together with a separator. The result is always a string. |
 | `!Lookup` | JSONPath expression | `!Lookup people[0].first_name` | Performs a JSONPath lookup returning the first match. If there is no match, an error is raised. |
 | `!LookupAll` | JSONPath expression | `!LookupAll people[*].first_name` | Performs a JSONPath lookup returning all matches as a list. If no matches are found, the empty list `[]` is returned. |
 | `!Loop` | `over`: (required) The data to iterate over (a literal list or dict, or !Var) <br> `as`: (optional, default `item`) The variable name given to the current value <br> `index_as`: (optional) The variable name given to the loop index. If over is a list, this is a numeric index starting from `0`. If over is a dict, this is the dict key. <br> `index_start`: (optional, default `0`) First index, for eg. 1-based indexing. <br> `template`: (required) The template to process for each iteration of the loop. | See `examples/loop/`. | Loops over a list or dict and renders a template for each iteration. The output is always a list. |
+| `!MD5` | Data to hash | `!Include ../foo.yml` | Hashes the given data using the given algorithm. If the data is not binary, it is converted to UTF-8 bytes. |
 | `!Merge` | A list of dicts | `!Merge [{a: 5}, {b: 6}]` | Merges objects. For overlapping keys the last one takes precedence. |
 | `!Not` | a value | `!Not !Var foo` | Logically negates the given value (in Python semantics). |
 | `!Op` | `a`, `op`, `b` | See `tests/test_cond.py` | Performs binary operators. Especially useful with `!If` to implement greater-than etc. |
+| `!SHA1` | Data to hash | `!Include ../foo.yml` | Hashes the given data using the given algorithm. If the data is not binary, it is converted to UTF-8 bytes. |
+| `!SHA256` | Data to hash | `!Include ../foo.yml` | Hashes the given data using the given algorithm. If the data is not binary, it is converted to UTF-8 bytes. |
 | `!URLEncode` | A string to encode <br> **OR** <br> `url`: The URL to combine query parameters into <br> `query`: An object of query string parameters to add. | `!URLEncode "foo+bar"` <br> `!URLEncode { url: "https://example.com/", query: { foo: bar } }` | Encodes strings for safe inclusion in a URL, or combines query string parameters into a URL. |
 | `!Var` | Variable name | `!Var image_name` | Replaced with the value of the variable. |
 | `!Void` | Anything or nothing | `foo: !Void` | The dict key, list item or YAML document that resolves to `!Void` is removed from the output. |
