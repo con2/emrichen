@@ -63,3 +63,14 @@ class IncludeBase64(IncludeText):
     def enrich(self, context):
         data = super().get_data(context)
         return base64.b64encode(data).decode('UTF-8')
+
+
+class IncludeBinary(IncludeText):
+    """
+    arguments: Path to a binary file
+    example: "`!IncludeBinary ../foo.pdf`"
+    description: Loads the given binary file and returns the contents as bytes.  This is practically only useful for hashing.
+    """
+
+    def enrich(self, context):
+        return super().get_data(context)
