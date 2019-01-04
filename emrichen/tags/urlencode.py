@@ -49,8 +49,8 @@ class URLEncode(BaseTag):
             # 1. Just encode a plain string
             return quote_plus(self.data)
 
-        url = self.data.get('url')
-        query = self.data.get('query')
+        url = context.enrich(self.data.get('url'))
+        query = context.enrich(self.data.get('query'))
 
         if url is not None:  # empty string ok!
             # 3. Combine a base URL and query string parameters
