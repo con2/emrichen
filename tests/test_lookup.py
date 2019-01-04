@@ -80,3 +80,21 @@ workie: !Lookup x.y
 no_workie: !Lookup z.y
 ''', format='yaml')
     assert template.enrich({}) == [{'workie': 5, 'no_workie': 5}]
+
+
+def test_lookup_enrich():
+    """
+    Lookup should enrich whatever it returns.
+    """
+    template = Template.parse('''
+!Defaults
+x: [5]
+y: !Var x
+z: !Lookup y
+---
+should_contain_5: !Loop
+  over: !Var z
+  as: item
+  template: !Var item
+''')
+    assert template.enrich({}) == [{'should_contain_5': [5]}]

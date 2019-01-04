@@ -8,4 +8,4 @@ class Var(BaseTag):
     description: Replaced with the value of the variable.
     """
     def enrich(self, context):
-        return context[self.data]
+        return context.enrich(context[self.data])

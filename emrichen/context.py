@@ -19,7 +19,7 @@ class Context(dict):
         Given a YAML value, performs our registered transformations on it.
         """
         if hasattr(value, 'enrich'):
-            return self.enrich(value.enrich(self))
+            return value.enrich(self)
 
         # need to special-case str before Sequence because str \subset Sequence
         elif isinstance(value, str):
