@@ -29,7 +29,7 @@ class JSONPathFormatter(string.Formatter):
 class Format(BaseTag):
     """
     arguments: Format string
-    example: '`!Var "{foo} {bar!d}"`'
+    example: '`!Format "{foo} {bar!d}"`'
     description: |
         Interpolate strings using [Python format strings](https://docs.python.org/3/library/string.html#formatstrings).
         JSONPath supported in variable lookup (eg. `{people[0].first_name}` will do the right thing).
