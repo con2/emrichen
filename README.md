@@ -1,8 +1,8 @@
 # Emrichen – A YAML to YAML preprocessor
 
-Emrichen takes in YAML, performs transformations and outputs YAML.
+Emrichen takes in YAML, performs transformations and outputs YAML. Or JSON.
 
-Currently the only supported transformation is substituting variables defined in either variable files (also YAML) or the command line. The full type system of YAML is supported in the values of the variables.
+Currently the only supported transformation is substituting variables defined in either variable files (also YAML or JSON) or the command line. The full type system of YAML is supported in the values of the variables.
 
 ## Installation
 
@@ -47,37 +47,68 @@ Python 3.5+ required.
 | `!With` | `vars`: A dict of variable definitions. <br> `template`: The template to process with the variables defined. | See `examples/with/`. | Binds local variables that are only visible within `template`. Useful for giving a name for common sub-expressions. |
 <!-- END SUPPORTED TAGS -->
 
+### Tags in JSON
+
+JSON doesn't have a native tag construct. Instead, use an object with a single key that is the name of the tag (including the bang, eg. `!Var`). For example:
+
+```json
+{
+    "foo": {
+        "!Var": "foo"
+    }
+}
+```
+
+Limitations of the JSON support:
+
+* Object keys starting with `!` are not supported.
+* A template rendered as JSON may only contain a single document.
+  * JSON templates always have a single document only.
+  * YAML templates may only contain a single non-`!Void`, non-`!Defaults` document.
+* As `!Defaults` must appear in a document of its own, it's not supported in JSON templates. Use a var file instead.
+
 ### Tag composition
 
 Due to YAML, you can't do `!Base64 !Var foo`. We provide a convenient workaround: `!Base64,Var foo`.
 
 ## CLI
 
-    usage: emrichen [-h] [--var-file VAR_FILES] [--define VAR=VALUE]
-                    [--output-file OUTPUT_FILE] [--include-env]
-                    [template_file]
+```
+usage: emrichen [-h] [--template-format {yaml,json}] [--var-file VAR_FILE]
+                [--define VAR=VALUE] [--output-file OUTPUT_FILE]
+                [--output-format {yaml,json}] [--include-env]
+                [template_file]
 
-    A YAML to YAML preprocessor.
+A YAML to YAML preprocessor.
 
-    positional arguments:
-      template_file         The YAML template to process. If unspecified, the
-                            template is read from stdin.
+positional arguments:
+  template_file         The YAML template to process. If unspecified, the
+                        template is read from stdin.
 
-    optional arguments:
-      -h, --help            show this help message and exit
-      --var-file VAR_FILE, -f VAR_FILE
-                            A YAML file containing an object whose top-level keys
-                            will be defined as variables. May be specified
-                            multiple times.
-      --define VAR=VALUE, -D VAR=VALUE
-                            Defines a single variable. May be specified multiple
-                            times.
-      --output-file OUTPUT_FILE, -o OUTPUT_FILE
-                            Output file. If unspecified, the template output is
-                            written into stdout.
-      --include-env, -e     Expose process environment variables to the template.
+optional arguments:
+  -h, --help            show this help message and exit
+  --template-format {yaml,json}
+                        Template format. If unspecified, attempted to be
+                        autodetected from the input filename (but defaults to
+                        YAML).
+  --var-file VAR_FILE, -f VAR_FILE
+                        A YAML file containing an object whose top-level keys
+                        will be defined as variables. May be specified
+                        multiple times.
+  --define VAR=VALUE, -D VAR=VALUE
+                        Defines a single variable. May be specified multiple
+                        times.
+  --output-file OUTPUT_FILE, -o OUTPUT_FILE
+                        Output file. If unspecified, the template output is
+                        written into stdout.
+  --output-format {yaml,json}
+                        Output format. If unspecified, attempted to be
+                        autodetected from the output filename (but defaults to
+                        YAML).
+  --include-env, -e     Expose process environment variables to the template.
 
-    Variable precedence: -D > -e > -f > !Defaults
+Variable precedence: -D > -e > -f > !Defaults
+```
 
 ### Examples
 
