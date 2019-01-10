@@ -6,8 +6,8 @@ from .base import BaseTag
 class _BaseHash(BaseTag):
     """
     arguments: Data to hash
-    example: "`!Include ../foo.yml`"
-    description: Hashes the given data using the given algorithm. If the data is not binary, it is converted to UTF-8 bytes.
+    example: "`!{name} 'Törkylempijävongahdus'"
+    description: Hashes the given data using the {name} algorithm. If the data is not binary, it is converted to UTF-8 bytes.
     """
     hasher = None
 

@@ -8,10 +8,19 @@ import yaml
 
 from emrichen.tags.base import tag_registry
 
+placeholder_re = re.compile(r'{(.+?)}')
 
-def format_for_table(val):
+
+def format_placeholders(val, fmt_env):
+    return placeholder_re.sub(
+        lambda m: fmt_env.get(m.group(1), m.group(0)),
+        str(val or ''),
+    )
+
+
+def format_for_table(val, fmt_env):
     return (
-        textwrap.dedent(str(val or ''))
+        textwrap.dedent(format_placeholders(str(val or ''), fmt_env))
             .strip()
             .replace('\r\n', '\n')
             .replace('\n', ' <br> ')  # Spaces around the br make the raw text easier to read and diff.
@@ -33,12 +42,16 @@ def generate_markdown_table():
             print(f'!{name}: no documentation', file=sys.stderr)
             doc = {}
 
+        fmt_env = {
+            'name': name,
+        }
+
         out_sio.write(' | '.join([
             '',  # row start marker
-            f'`!{name}`',
-            format_for_table(doc.get('arguments')),
-            format_for_table(doc.get('example')),
-            format_for_table(doc.get('description')),
+            format_placeholders('`!{name}`', fmt_env),
+            format_for_table(doc.get('arguments'), fmt_env),
+            format_for_table(doc.get('example'), fmt_env),
+            format_for_table(doc.get('description'), fmt_env),
             '',  # row end marker
         ]).strip() + '\n')
     return out_sio.getvalue()
