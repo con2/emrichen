@@ -6,7 +6,7 @@ Currently the only supported transformation is substituting variables defined in
 
 ## Installation
 
-Python 3.6+ required.
+Python 3.5+ required.
 
     pip3 install git+https://github.com/japsu/emrichen.git
 
