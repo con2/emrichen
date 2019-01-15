@@ -11,7 +11,7 @@ class JSONPathFormatter(string.Formatter):
         self.context = context
 
     def get_field(self, field_name, args, kwargs):
-        return (self._get_in_context(field_name), 0)
+        return (self.context.enrich(self._get_in_context(field_name)), 0)
 
     def _get_in_context(self, selector):
         matches = find_jsonpath_in_context(selector, self.context)
