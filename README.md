@@ -1,14 +1,65 @@
-# Emrichen – A YAML to YAML preprocessor
+# Emrichen – Template engine for YAML & JSON
 
-Emrichen takes in YAML, performs transformations and outputs YAML. Or JSON.
+Emrichen takes in templates written in YAML or JSON, processes tags that do things like variable substitution, and outputs YAML or JSON.
 
-Currently the only supported transformation is substituting variables defined in either variable files (also YAML or JSON) or the command line. The full type system of YAML is supported in the values of the variables.
+What makes Emrichen better for generating YAML or JSON than a text-based template system is that it works *within* YAML (or JSON).
+
+Ever tried substituting a list or dict into a YAML document just to run into indentation issues? Horrible! Handling quotation marks and double backslash escapes? Nope!
+
+In Emrichen, variables are typed in the familiar JSON types, making these a non-issue. Emrichen is a pragmatic and powerful way to generate YAML and JSON.
+
+Consider the following template that produces a minimal Kubernetes deployment:
+
+```yaml
+!Defaults
+tag: latest
+image: !Format "nginx:{tag}"
+replicas: 3
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: !Var replicas
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: !Var image
+        ports:
+        - containerPort: 80
+```
+
+This small template already demonstrates three of Emrichen's powerful tags: `!Defaults` that provides default values for variables; `!Var` that performs simple variable substitution; and `!Format` that performs string formatting.
+
+Put it in a file, say, `nginx.in.yaml` (we use `.in.yaml` to denote templates) and render it using this command:
+
+    emrichen nginx.in.yaml
+
+Prefer JSON output?
+
+    emrichen --output-format json nginx.in.yaml
+
+Wanna change the tag?
+
+    emrichen --define tag=1-alpine nginx.in.yaml
+
+Note how `image` is evaluated lazily – you need not override `image` just to change `tag`!
+
+See below for a table of supported tags. There's a lot of them. If you need one that's not there yet, please shoot us an issue or PR.
 
 ## Installation
 
-Python 3.5+ required.
+Python 3.5+ required. Python 2 is not and will not be supported.
 
-    pip3 install git+https://github.com/japsu/emrichen.git
+    pip3 install emrichen
 
 ## Supported tags
 
