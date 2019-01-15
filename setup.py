@@ -4,8 +4,8 @@ from setuptools import find_packages, setup
 
 setup(
     name='emrichen',
-    version='0.0.1',
-    description='YAML preprocessor',
+    version='0.1.0',
+    description='Template engine for YAML & JSON',
     long_description='',
     license='MIT',
     author='Santtu Pajukanta',
