@@ -42,15 +42,17 @@ class URLEncode(BaseTag):
     TODO Add query_mode: append|replace (currently append)
     """
 
-    value_types = (str, dict)
+    value_types = (object,)
 
     def enrich(self, context):
-        if isinstance(self.data, str):
-            # 1. Just encode a plain string
-            return quote_plus(self.data)
+        data = context.enrich(self.data)
 
-        url = context.enrich(self.data.get('url'))
-        query = context.enrich(self.data.get('query'))
+        if isinstance(data, str):
+            # 1. Just encode a plain string
+            return quote_plus(data)
+
+        url = data.get('url')
+        query = data.get('query')
 
         if url is not None:  # empty string ok!
             # 3. Combine a base URL and query string parameters
