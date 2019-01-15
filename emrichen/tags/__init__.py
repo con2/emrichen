@@ -5,6 +5,7 @@ from .any import Any
 from .base64 import Base64
 from .compose import Compose
 from .concat import Concat
+from .debug import Debug
 from .defaults import Defaults
 from .error import Error
 from .exists import Exists
@@ -30,6 +31,7 @@ __all__ = [
     'Base64',
     'Compose',
     'Concat',
+    'Debug',
     'Defaults',
     'Error',
     'Exists',

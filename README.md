@@ -21,6 +21,7 @@ Python 3.5+ required.
 | `!Base64` | The value to encode | `!Base64 foobar` | Encodes the value (or a string representation thereof) into base64. |
 | `!Compose` | `value`: The value to apply tags on <br> `tags`: A list of tag names to apply, latest first | `!Base64,Var foo` | Used internally to implement tag composition. <br> Usually not used in the spelt-out form. <br> See _Tag composition_ below. |
 | `!Concat` | A list of lists | `!Concat [[1, 2], [3, 4]]` | Concatenates lists. |
+| `!Debug` | Anything, really | `!Debug,Var foo` | Enriches its argument, outputs it to stderr and returns it. Useful to check the value <br> of some expression deep in a big template, perhaps even one that doesn't even fully render. |
 | `!Defaults` | A dict of variable definitions | See `examples/defaults/` | Defines default values for variables. These will be overridden by any other variable source. <br> **NOTE:** `!Defaults` must appear in a document of its own in the template file (ie. separated by `---`).   The document containing `!Defaults` will be erased from the output. |
 | `!Error` | Error message | `!Error "Must define either foo or bar, not both"` | If the `!Error` tag is present in the template after resolving all conditionals, <br> it will cause the template rendering to exit with error emitting the specified error message. |
 | `!Exists` | JSONPath expression | `!Exists foo` | Returns `true` if the JSONPath expression returns one or more matches, `false` otherwise. |
