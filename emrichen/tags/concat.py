@@ -7,10 +7,10 @@ class Concat(BaseTag):
     example: "`!Concat [[1, 2], [3, 4]]`"
     description: Concatenates lists.
     """
-    value_types = (list,)
+    value_types = (object,)
 
     def enrich(self, context):
         result = []
-        for iterable in self.data:
-            result.extend(context.enrich(iterable))
+        for iterable in context.enrich(self.data):
+            result.extend(iterable)
         return result
