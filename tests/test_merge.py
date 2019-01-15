@@ -6,10 +6,11 @@ TEMPLATE = """
 a:
   foo: 5
   bar: 6
----
-!Merge
+b:
   - !Var a
   - bar: 7
+---
+!Merge,Var b
 """
 
 
