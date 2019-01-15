@@ -16,8 +16,8 @@ class Compose(BaseTag):
     value_types = (dict,)
 
     def enrich(self, context):
-        value = context.enrich(self.data.get('value'))
+        value = self.data.get('value')
         for tag_name in reversed(self.data['tags']):
             tag_class = tag_registry[tag_name]
-            value = context.enrich(tag_class(value))
-        return value
+            value = tag_class(value)
+        return context.enrich(value)
