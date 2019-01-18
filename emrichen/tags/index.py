@@ -20,7 +20,9 @@ class Index(Loop):
 
     def enrich(self, context):
         as_ = self.data.get('as', 'item')
-        self.data.setdefault('template', Var(as_))
+
+        if 'template' not in self.data:
+            self.data = dict(self.data, template=Var(as_))
 
         self._index = OrderedDict()
         super(Index, self).enrich(context)
