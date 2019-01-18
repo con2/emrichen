@@ -11,11 +11,10 @@ from .error import Error
 from .exists import Exists
 from .filter import Filter
 from .format import Format
-from .group import Group
 from .hash import MD5, SHA1, SHA256
 from .if_ import If
 from .include import Include, IncludeBase64, IncludeBinary, IncludeText
-from .index import Index
+from .index import Group, Index
 from .join import Join
 from .lookup import Lookup, LookupAll
 from .loop import Loop

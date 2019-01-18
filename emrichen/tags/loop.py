@@ -46,6 +46,7 @@ class Loop(BaseTag):
     description: Loops over a list or dict and renders a template for each iteration. The output is always a list.
     """
     value_types = (dict,)
+    output_factory = list
 
     def enrich(self, context):
         from ..context import Context
@@ -60,7 +61,7 @@ class Loop(BaseTag):
         if template is None:
             raise ValueError('{self}: missing template'.format(self=self))
 
-        output = []
+        output = self.output_factory()
         iterable, _ = self.get_iterable(context, index_start)
         previous_value = None
         for index, value in iterable:
@@ -69,20 +70,22 @@ class Loop(BaseTag):
                 subcontext[index_as] = index
             if previous_as:
                 subcontext[previous_as] = previous_value
-            previous_value = value
             subcontext = Context(context, subcontext)
+
             result = subcontext.enrich(template)
+            previous_value = value
+
             if compact and not result:
                 continue
-            self.process_item(subcontext, value, result)
-            output.append(result)
+
+            self.process_item(subcontext, output, value, result)
         return output
 
     def get_iterable(self, context, index_start):
         return get_iterable(self, self.data.get('over'), context, index_start)
 
-    def process_item(self, context, value, result):
+    def process_item(self, context, output, value, result):
         '''
         Used by Loop subclasses to do things every iteration.
         '''
-        pass
+        output.append(result)
