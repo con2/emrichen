@@ -14,6 +14,7 @@ from .format import Format
 from .hash import MD5, SHA1, SHA256
 from .if_ import If
 from .include import Include, IncludeBase64, IncludeBinary, IncludeText
+from .index import Index
 from .join import Join
 from .lookup import Lookup, LookupAll
 from .loop import Loop
@@ -42,6 +43,7 @@ __all__ = [
     'IncludeBase64',
     'IncludeBinary',
     'IncludeText',
+    'Index',
     'Join',
     'Lookup',
     'LookupAll',
