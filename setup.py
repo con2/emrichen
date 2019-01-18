@@ -9,7 +9,7 @@ with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.md'),
 
 setup(
     name='emrichen',
-    version='0.1.1',
+    version='0.2.0',
     description='Template engine for YAML & JSON',
     long_description=long_description,
     long_description_content_type='text/markdown',

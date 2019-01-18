@@ -90,3 +90,13 @@ def test_no_index_start_with_dict():
         template.render({})
 
     assert 'index_start with dict' in str(nope.value)
+
+
+def test_previous_as():
+    assert Template.parse('''
+!Loop
+  over: [1, 2, 3]
+  as: item
+  previous_as: previous_item
+  template: [!Var previous_item, !Var item]
+''').enrich({}) == [[[None, 1], [1, 2], [2,3]]]

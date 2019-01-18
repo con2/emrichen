@@ -8,9 +8,33 @@ import warnings
 from collections import defaultdict
 
 
-class ClassDefWalker(ast.NodeVisitor):
+class Universe:
     def __init__(self):
+        self.cls_modules = {}
         self.cls_bases = defaultdict(set)
+
+    def get_all_bases(self, name):
+        bases = set()
+        open = list(self.cls_bases[name])
+        while open:
+            name = open.pop(0)
+            if name not in bases:
+                yield name
+                bases.add(name)
+                open.extend(list(self.cls_bases[name]))
+
+    def get_classes_deriving_from(self, base_names):
+        for name in list(self.cls_bases.keys()):
+            for base in self.get_all_bases(name):
+                if base in base_names:
+                    yield name
+                    break
+
+
+class ClassDefWalker(ast.NodeVisitor):
+    def __init__(self, module, universe):
+        self.module = module
+        self.universe = universe
 
     def _stringify_id_node(self, node):
         if isinstance(node, ast.Name):
@@ -26,40 +50,26 @@ class ClassDefWalker(ast.NodeVisitor):
     def visit_ClassDef(self, classdef):
         for base in classdef.bases:
             base_name = self._stringify_id_node(base)
-            self.cls_bases[classdef.name].add(base_name)
-
-    def get_all_bases(self, name):
-        bases = set()
-        open = list(self.cls_bases[name])
-        while open:
-            name = open.pop(0)
-            if name not in bases:
-                yield name
-                bases.add(name)
-                open.extend(list(self.cls_bases[name]))
-
-    def get_classes_deriving_from(self, base_name):
-        for name in list(self.cls_bases.keys()):
-            for base in self.get_all_bases(name):
-                if base == base_name:
-                    yield name
-                    break
+            self.universe.cls_bases[classdef.name].add(base_name)
+            self.universe.cls_modules[classdef.name] = self.module
 
 
 def find_tags_in_modules():
     tags_per_module = defaultdict(set)
-
+    universe = Universe()
     for filepath in glob.glob('emrichen/tags/*.py'):
         modname = os.path.splitext(os.path.basename(filepath))[0]
         if modname.startswith('_'):
             continue
         with open(filepath) as infp:
             tree = ast.parse(infp.read(), filepath)
-            cdw = ClassDefWalker()
+            cdw = ClassDefWalker(module=modname, universe=universe)
             cdw.visit(tree)
-            for tag in cdw.get_classes_deriving_from('BaseTag'):
-                if not tag.startswith('_'):
-                    tags_per_module[modname].add(tag)
+
+    for tag in universe.get_classes_deriving_from(('BaseTag',)):
+        if not tag.startswith('_'):
+            tags_per_module[universe.cls_modules[tag]].add(tag)
+
     return tags_per_module
 
 
