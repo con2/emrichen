@@ -1,5 +1,7 @@
 # Emrichen – Template engine for YAML & JSON
 
+[![Build Status](https://travis-ci.org/japsu/emrichen.svg?branch=master)](https://travis-ci.org/japsu/emrichen) [![PyPI version](https://badge.fury.io/py/emrichen.svg)](https://badge.fury.io/py/emrichen)
+
 Emrichen takes in templates written in YAML or JSON, processes tags that do things like variable substitution, and outputs YAML or JSON.
 
 What makes Emrichen better for generating YAML or JSON than a text-based template system is that it works *within* YAML (or JSON).
