@@ -21,6 +21,7 @@ from .loop import Loop
 from .merge import Merge
 from .not_ import Not
 from .op import Op
+from .typeop import IsBoolean, IsDict, IsInteger, IsList, IsNone, IsNumber, IsString
 from .urlencode import URLEncode
 from .var import Var
 from .void import Void
@@ -45,6 +46,13 @@ __all__ = [
     'IncludeBinary',
     'IncludeText',
     'Index',
+    'IsBoolean',
+    'IsDict',
+    'IsInteger',
+    'IsList',
+    'IsNone',
+    'IsNumber',
+    'IsString',
     'Join',
     'Lookup',
     'LookupAll',

@@ -105,3 +105,6 @@ venv.bak/
 
 # Visual Studio Code
 .vscode/
+
+# Pip metadata
+pip-wheel-metadata
