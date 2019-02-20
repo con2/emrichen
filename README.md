@@ -87,6 +87,13 @@ Python 3.5+ required. Python 2 is not and will not be supported.
 | `!IncludeBinary` | Path to a binary file | `!IncludeBinary ../foo.pdf` | Loads the given binary file and returns the contents as bytes.  This is practically only useful for hashing. |
 | `!IncludeText` | Path to an UTF-8 text file | `!IncludeText ../foo.toml` | Loads the given UTF-8 text file and returns the contents as a string. |
 | `!Index` | Accepts the same arguments as `!Loop`, except `template` is optional (default identity), plus the following: <br> `by`: (required) An expression used to determine the key for the current value <br> `result_as`: (optional, string) When evaluating `by`, the enriched `template` is available under this name. <br> `duplicates`: (optional, default `error`) `error`, `warn(ing)` or `ignore` duplicate values. | TBD | Makes a dict out of a list. Keys are determined by `by`. |
+| `!IsBoolean` | Data to typecheck. | `!IsBoolean ...` | Returns True if the value enriched is of the given type, False otherwise. |
+| `!IsDict` | Data to typecheck. | `!IsDict ...` | Returns True if the value enriched is of the given type, False otherwise. |
+| `!IsInteger` | Data to typecheck. | `!IsInteger ...` | Returns True if the value enriched is of the given type, False otherwise. |
+| `!IsList` | Data to typecheck. | `!IsList ...` | Returns True if the value enriched is of the given type, False otherwise. |
+| `!IsNone` | Data to typecheck. | `!IsNone ...` | Returns True if the value enriched is None (null) or Void, False otherwise. |
+| `!IsNumber` | Data to typecheck. | `!IsNumber ...` | Returns True if the value enriched is of the given type, False otherwise. |
+| `!IsString` | Data to typecheck. | `!IsString ...` | Returns True if the value enriched is of the given type, False otherwise. |
 | `!Join` | `items`: (required) A list of items to be joined together. <br> `separator`: (optional, default space) The separator to place between the items. <br> **OR** <br> a list of items to be joined together with a space as the separator. | `!Join [foo, bar]` <br> `!Join { items: [foo, bar], separator: ', ' }` | Joins a list of items together with a separator. The result is always a string. |
 | `!Lookup` | JSONPath expression | `!Lookup people[0].first_name` | Performs a JSONPath lookup returning the first match. If there is no match, an error is raised. |
 | `!LookupAll` | JSONPath expression | `!LookupAll people[*].first_name` | Performs a JSONPath lookup returning all matches as a list. If no matches are found, the empty list `[]` is returned. |
