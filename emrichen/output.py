@@ -17,8 +17,16 @@ def render_json(data):
     return json.dumps(data[0], ensure_ascii=False, indent=2)
 
 
+def render_yaml(data):
+    return yaml.dump_all(data,
+        Dumper=pyaml.PrettyYAMLDumper,
+        allow_unicode=True,
+        default_flow_style=False,
+    )
+
+
 RENDERERS = {
-    'yaml': lambda data: yaml.dump_all(data, Dumper=pyaml.PrettyYAMLDumper, default_flow_style=False),
+    'yaml': render_yaml,
     'json': render_json,
 }
 
