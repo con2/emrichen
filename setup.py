@@ -1,15 +1,23 @@
 #!/usr/bin/env python
 
 import os
+import re
 from setuptools import find_packages, setup
 
+source_dir = os.path.abspath(os.path.dirname(__file__))
 
-with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.md'), encoding='utf-8') as f:
+
+with open(os.path.join(source_dir, 'emrichen', '__init__.py'), 'r') as f:
+    version = re.search("__version__ = ['\"]([^'\"]+)['\"]", f.read()).group(1)
+
+
+with open(os.path.join(source_dir, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
+
 
 setup(
     name='emrichen',
-    version='0.2.1',
+    version=version,
     description='Template engine for YAML & JSON',
     long_description=long_description,
     long_description_content_type='text/markdown',
