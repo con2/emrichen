@@ -100,3 +100,25 @@ def test_previous_as():
   previous_as: previous_item
   template: [!Var previous_item, !Var item]
 ''').enrich({}) == [[[None, 1], [1, 2], [2,3]]]
+
+
+def test_as_documents():
+    template = Template.parse('''
+!Loop
+  over: !Var domain_names
+  as: item
+  as_documents: true
+  template:
+    name: !Var item
+''', 'yaml')
+    output = template.render(Context(LOOP_TEST_CONTEXT))
+
+    assert (output.strip() == '''
+name: hernekeit.to
+---
+name: vii.na
+---
+name: teli.ne
+---
+name: johann.es
+'''.strip())

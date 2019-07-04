@@ -3,6 +3,8 @@ import json
 import pyaml
 import yaml
 
+from emrichen.documents_list import flatten_documents_lists
+
 
 def render_json(data):
     if not isinstance(data, list) or len(data) != 1:
@@ -18,6 +20,8 @@ def render_json(data):
 
 
 def render_yaml(data):
+    if isinstance(data, list):
+        data = flatten_documents_lists(data)
     return yaml.dump_all(data,
         Dumper=pyaml.PrettyYAMLDumper,
         allow_unicode=True,
