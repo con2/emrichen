@@ -2,7 +2,7 @@ from .context import Context
 from .template import Template
 from .tags import Var
 
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 
 
 __all__ = ['Context', 'Template', 'Var', 'emrichen']
