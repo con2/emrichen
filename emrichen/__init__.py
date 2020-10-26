@@ -1,6 +1,8 @@
+from typing import TextIO, Union
+
 from .context import Context
-from .template import Template
 from .tags import Var
+from .template import Template
 
 __version__ = '0.2.3'
 
@@ -8,7 +10,7 @@ __version__ = '0.2.3'
 __all__ = ['Context', 'Template', 'Var', 'emrichen']
 
 
-def emrichen(template, *variable_sources, **override_variables):
+def emrichen(template: Union[str, TextIO], *variable_sources, **override_variables) -> str:
     """
     Renders the template using the given variable sources and variable overrides.
 

@@ -1,3 +1,4 @@
+from ..context import Context
 from .base import BaseTag
 
 
@@ -9,7 +10,7 @@ class Concat(BaseTag):
     """
     value_types = (list, BaseTag)
 
-    def enrich(self, context):
+    def enrich(self, context: Context) -> list:
         result = []
         for iterable in context.enrich(self.data):
             result.extend(iterable)

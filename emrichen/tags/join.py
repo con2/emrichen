@@ -1,5 +1,6 @@
 from collections.abc import Mapping
 
+from ..context import Context
 from .base import BaseTag
 
 
@@ -18,7 +19,7 @@ class Join(BaseTag):
 
     value_types = (dict, list, BaseTag)
 
-    def enrich(self, context):
+    def enrich(self, context: Context) -> str:
         if isinstance(self.data, Mapping):
             separator = context.enrich(self.data.get('separator', ' '))
             items = context.enrich(self.data['items'])

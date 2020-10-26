@@ -1,3 +1,6 @@
+from typing import Any
+
+from ..context import Context
 from .base import BaseTag, tag_registry
 
 
@@ -15,7 +18,7 @@ class Compose(BaseTag):
     '''
     value_types = (dict,)
 
-    def enrich(self, context):
+    def enrich(self, context: Context) -> Any:
         value = self.data.get('value')
         for tag_name in reversed(self.data['tags']):
             tag_class = tag_registry[tag_name]

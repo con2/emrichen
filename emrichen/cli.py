@@ -5,7 +5,7 @@ from .input import PARSERS
 from .output import RENDERERS
 
 
-def get_parser(with_pargs=True):
+def get_parser(with_pargs=True) -> argparse.ArgumentParser:
     """
     Returns the Emrichen command line parser.
 

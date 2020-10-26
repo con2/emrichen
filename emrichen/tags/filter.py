@@ -1,8 +1,11 @@
 from collections import OrderedDict
+from typing import Any
 
+from ..context import Context
+from ..void import Void
 from .base import BaseTag
 from .loop import get_iterable
-from ..void import Void
+from .var import Var
 
 
 class Filter(BaseTag):
@@ -13,9 +16,7 @@ class Filter(BaseTag):
     """
     value_types = (dict,)
 
-    def enrich(self, context):
-        from ..context import Context
-        from .var import Var
+    def enrich(self, context: Context) -> Any:
 
         as_ = str(self.data.get('as', 'item'))
         index_as = str(self.data.get('index_as') or '')

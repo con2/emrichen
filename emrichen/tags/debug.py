@@ -1,5 +1,7 @@
 import sys
+from typing import Any
 
+from ..context import Context
 from .base import BaseTag
 
 
@@ -14,7 +16,7 @@ class Debug(BaseTag):
 
     value_types = (object,)
 
-    def enrich(self, context):
+    def enrich(self, context: Context) -> Any:
         value = context.enrich(self.data)
         sys.stderr.write(str(value) + '\n')
         return value

@@ -1,3 +1,4 @@
+from ..context import Context
 from .base import BaseTag
 
 
@@ -9,5 +10,5 @@ class Not(BaseTag):
     """
     value_types = (object,)
 
-    def enrich(self, context):
+    def enrich(self, context: Context) -> bool:
         return not context.enrich(self.data)

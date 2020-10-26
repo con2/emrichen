@@ -1,5 +1,6 @@
 import os
 import sys
+from typing import List, Optional
 
 from .cli import get_parser
 from .context import Context
@@ -7,7 +8,7 @@ from .output import RENDERERS
 from .template import Template, determine_format
 
 
-def main(args=None):
+def main(args: Optional[List[str]] = None) -> None:
     if args is None:
         args = sys.argv[1:]
     parser = get_parser()

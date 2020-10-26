@@ -1,3 +1,6 @@
+from typing import Any
+
+from ..context import Context
 from ..void import Void
 from .base import BaseTag
 
@@ -10,7 +13,7 @@ class If(BaseTag):
     """
     value_types = (dict,)
 
-    def enrich(self, context):
+    def enrich(self, context: Context) -> Any:
         if 'test' not in self.data:
             raise ValueError('{self}: missing test'.format(self=self))
 

@@ -1,3 +1,4 @@
+from ..context import Context
 from .base import BaseTag
 
 
@@ -11,9 +12,7 @@ class With(BaseTag):
     """
     value_types = (dict,)
 
-    def enrich(self, context):
-        from ..context import Context
-
+    def enrich(self, context: Context) -> int:
         vars_ = self.data['vars']
         template = self.data['template']
 

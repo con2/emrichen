@@ -1,7 +1,8 @@
 import operator
+from typing import Any
 
+from ..context import Context
 from .base import BaseTag
-
 
 operator_list = [
     (('=', '==', '===', 'eq'), operator.eq),
@@ -32,7 +33,7 @@ class Op(BaseTag):
     description: Performs binary operators. Especially useful with `!If` to implement greater-than etc.
     """
     value_types = (dict, list)
-    def enrich(self, context):
+    def enrich(self, context: Context) -> Any:
         if isinstance(self.data, dict):
             a = context.enrich(self.data['a'])
             op_name = context.enrich(self.data['op'])
