@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from collections.abc import Mapping, Sequence
+from typing import Any
 
-from .input import parse
 from .void import Void
 
 
@@ -11,10 +11,11 @@ class Context(dict):
     YAML values using them.
     """
 
-    def __init__(self, *variable_sources, **override_variables):
+    def __init__(self, *variable_sources, **override_variables) -> None:
+        super().__init__()
         self.add_variables(*variable_sources, **override_variables)
 
-    def enrich(self, value):
+    def enrich(self, value: Any) -> Any:
         """
         Given a YAML value, performs our registered transformations on it.
         """
@@ -42,7 +43,7 @@ class Context(dict):
         else:
             return value
 
-    def add_variables(self, *variable_sources, **override_variables):
+    def add_variables(self, *variable_sources, **override_variables) -> None:
         """
         Adds one or more sources of variables into this Context. If the same variable is defined
         by multiple sources, the last one takes precedence.
@@ -51,6 +52,7 @@ class Context(dict):
         single YAML document with a single object whose top-level keys will be exported as
         variables.
         """
+        from .input import parse
         for variables in variable_sources:
             if isinstance(variables, Mapping):
                 self.update(variables)

@@ -1,5 +1,6 @@
 import hashlib
 
+from ..context import Context
 from .base import BaseTag
 
 
@@ -11,7 +12,7 @@ class _BaseHash(BaseTag):
     """
     hasher = None
 
-    def enrich(self, context):
+    def enrich(self, context: Context) -> str:
         data = self.data
         if not isinstance(data, bytes):
             if not isinstance(data, str):

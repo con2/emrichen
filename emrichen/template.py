@@ -1,12 +1,12 @@
 import os
+from io import TextIOWrapper
+from typing import Any, Callable, Dict, Optional, Tuple, Union
 
 from .context import Context
-from .input import parse, PARSERS
 from .output import render
-from .tags import Defaults, Include
 
 
-def determine_format(filename, choices, default):
+def determine_format(filename: Optional[str], choices: Dict[str, Callable], default: str) -> str:
     if filename:
         ext = os.path.splitext(filename)[1].lstrip('.').lower()
         if ext in choices:
@@ -15,7 +15,7 @@ def determine_format(filename, choices, default):
 
 
 class Template(object):
-    def __init__(self, template, filename=None):
+    def __init__(self, template: Any, filename: Optional[str]=None) -> None:
         if not isinstance(template, list):
             raise TypeError(
                 '`template` must be a list of objects; {template} is not. Are you maybe looking for Template.parse()?'.format(
@@ -26,16 +26,17 @@ class Template(object):
         self.template, self.defaults = extract_defaults(template, filename)
         self.filename = filename
 
-    def enrich(self, context):
+    def enrich(self, context: Union[dict, Context]) -> Any:
         context = Context(self.defaults, context, __file__=self.filename)
         return context.enrich(self.template)
 
-    def render(self, context, format='yaml'):
+    def render(self, context: Union[dict, Context], format: str='yaml') -> str:
         enriched = self.enrich(context)
         return render(enriched, format)
 
     @classmethod
-    def parse(cls, data, format=None, filename=None):
+    def parse(cls, data: Union[TextIOWrapper, str], format: Optional[str]=None, filename: Optional[str]=None) -> 'Template':
+        from .input import PARSERS, parse
         if filename is None and hasattr(data, 'name') and data.name:
             filename = data.name
 
@@ -45,7 +46,8 @@ class Template(object):
         return cls(template=parse(data, format=format), filename=filename)
 
 
-def extract_defaults(template, filename):
+def extract_defaults(template: Any, filename: Optional[str]) -> Tuple[list, dict]:
+    from .tags import Defaults, Include
     defaults = {}
 
     for doc in template:

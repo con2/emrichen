@@ -1,6 +1,8 @@
 from numbers import Number
+from typing import Any, Optional, Union
 
-from emrichen.void import Void
+from ..context import Context
+from ..void import Void, VoidType
 from .base import BaseTag
 
 
@@ -13,10 +15,10 @@ class _BaseIsType(BaseTag):
     requisite_type = None
     value_types = (object,)
 
-    def enrich(self, context):
+    def enrich(self, context: Context) -> bool:
         return self.check(context.enrich(self.data))
 
-    def check(self, value):
+    def check(self, value: Any) -> bool:
         return isinstance(value, self.requisite_type)
 
 
@@ -34,7 +36,7 @@ class IsInteger(_BaseIsType):
     __doc__ = _BaseIsType.__doc__
     requisite_type = int
 
-    def check(self, value):
+    def check(self, value: Union[int, float, bool]) -> bool:
         # Special case: True and False are integers as far as
         # Python is concerned.
         if value is True or value is False:
@@ -64,5 +66,5 @@ class IsNone(_BaseIsType):
     description: Returns True if the value enriched is None (null) or Void, False otherwise.
     """
 
-    def check(self, value):
+    def check(self, value: Optional[Union[VoidType, str]]) -> bool:
         return (value is None or value is Void)

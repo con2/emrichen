@@ -1,5 +1,6 @@
 from collections import OrderedDict
 
+from ..context import Context
 from .base import BaseTag
 
 
@@ -11,7 +12,7 @@ class Merge(BaseTag):
     """
     value_types = (list, BaseTag)
 
-    def enrich(self, context):
+    def enrich(self, context: Context) -> OrderedDict:
         result = OrderedDict()
         for iterable in context.enrich(self.data):
             result.update(iterable)

@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from sys import stderr
 
+from ..context import Context
 from .loop import Loop
 from .var import Var
 
@@ -9,7 +10,7 @@ class _BaseIndex(Loop):
     value_types = (dict,)
     output_factory = OrderedDict
 
-    def __init__(self, data):
+    def __init__(self, data: dict) -> None:
         if 'template' not in data:
             as_ = data.get('as', 'item')
             data = dict(data, template=Var(as_))
@@ -28,15 +29,14 @@ class Index(_BaseIndex):
     example: TBD
     description: Makes a dict out of a list. Keys are determined by `by`.
     """
-    def __init__(self, data):
+    def __init__(self, data: dict) -> None:
         if 'template' not in data:
             as_ = data.get('as', 'item')
             data = dict(data, template=Var(as_))
 
         super(Index, self).__init__(data)
 
-    def process_item(self, context, output, value, result):
-        from ..context import Context
+    def process_item(self, context: Context, output: dict, value, result) -> None:
 
         by = self.data['by']
         result_as = self.data.get('result_as')
@@ -69,8 +69,7 @@ class Group(_BaseIndex):
     example: TBD
     description: Makes a dict out of a list. Keys are determined by `by`. Items with the same key are grouped in a list.
     """
-    def process_item(self, context, output, value, result):
-        from ..context import Context
+    def process_item(self, context: Context, output: dict, value, result) -> None:
 
         by = self.data['by']
         result_as = self.data.get('result_as')

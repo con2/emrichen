@@ -1,14 +1,15 @@
 from collections import OrderedDict
+from typing import Any, TextIO, Union
 
 import yaml
 from yaml.constructor import ConstructorError
 
 from ..exceptions import NoSuchTag
+from ..tags.base import BaseTag, tag_registry
 from .utils import make_compose
-from ..tags.base import tag_registry
 
 
-def construct_tagless_yaml(loader, node):
+def construct_tagless_yaml(loader: yaml.Loader, node: yaml.Node) -> Any:
     # From yaml.constructor.BaseConstructor#construct_object
     if isinstance(node, yaml.ScalarNode):
         constructor = loader.construct_scalar
@@ -19,7 +20,7 @@ def construct_tagless_yaml(loader, node):
     return constructor(node)
 
 
-def construct_tagged_object(loader, node):
+def construct_tagged_object(loader: yaml.Loader, node: yaml.Node) -> BaseTag:
     name = node.tag.lstrip('!')
     if name in tag_registry:
         tag = tag_registry[name]
@@ -43,20 +44,20 @@ def construct_tagged_object(loader, node):
 
 
 class RichLoader(yaml.SafeLoader):
-    def __init__(self, stream):
+    def __init__(self, stream) -> None:
         super(RichLoader, self).__init__(stream)
         self.add_tag_constructors()
 
-    def add_tag_constructors(self):
+    def add_tag_constructors(self) -> None:
         self.yaml_constructors = self.yaml_constructors.copy()  # Grab an instance copy from the class
         self.yaml_constructors[self.DEFAULT_MAPPING_TAG] = self._make_ordered_dict
         self.yaml_constructors[None] = construct_tagged_object
 
     @staticmethod
-    def _make_ordered_dict(loader, node):
+    def _make_ordered_dict(loader: yaml.Loader, node: yaml.Node) -> OrderedDict:
         loader.flatten_mapping(node)
         return OrderedDict(loader.construct_pairs(node))
 
 
-def load_yaml(data):
+def load_yaml(data: Union[TextIO, str]) -> Any:
     return list(yaml.load_all(data, Loader=RichLoader))

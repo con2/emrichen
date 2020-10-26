@@ -1,3 +1,4 @@
+from ..context import Context
 from .base import BaseTag
 
 
@@ -16,5 +17,5 @@ class Defaults(BaseTag):
     """
     value_types = (dict,)
 
-    def enrich(self, context):
+    def enrich(self, context: Context):
         raise ValueError('Defaults tag is unsupported anywhere else than document root.')

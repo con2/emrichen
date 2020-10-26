@@ -1,3 +1,4 @@
+from ..context import Context
 from .base import BaseTag
 from .lookup import find_jsonpath_in_context
 
@@ -8,6 +9,6 @@ class Exists(BaseTag):
     example: "`!Exists foo`"
     description: Returns `true` if the JSONPath expression returns one or more matches, `false` otherwise.
     """
-    def enrich(self, context):
+    def enrich(self, context: Context) -> bool:
         matches = find_jsonpath_in_context(self.data, context)
         return bool(matches)

@@ -1,5 +1,6 @@
 from base64 import b64encode
 
+from ..context import Context
 from .base import BaseTag
 
 
@@ -11,7 +12,7 @@ class Base64(BaseTag):
     """
     value_types = (object,)
 
-    def enrich(self, context):
+    def enrich(self, context: Context) -> str:
         data = context.enrich(self.data)
 
         if not isinstance(data, bytes):

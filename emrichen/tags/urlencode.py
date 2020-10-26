@@ -1,6 +1,7 @@
 from collections.abc import Mapping
-from urllib.parse import quote_plus, urlparse, urlunparse, parse_qsl, urlencode
+from urllib.parse import parse_qsl, quote_plus, urlencode, urlparse, urlunparse
 
+from ..context import Context
 from .base import BaseTag
 
 
@@ -45,7 +46,7 @@ class URLEncode(BaseTag):
 
     value_types = (dict, str, BaseTag)
 
-    def enrich(self, context):
+    def enrich(self, context: Context) -> str:
         if isinstance(self.data, Mapping):
             url = context.enrich(self.data.get('url'))
             query = context.enrich(self.data.get('query'))
