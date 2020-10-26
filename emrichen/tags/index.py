@@ -15,7 +15,7 @@ class _BaseIndex(Loop):
             as_ = data.get('as', 'item')
             data = dict(data, template=Var(as_))
 
-        super(_BaseIndex, self).__init__(data)
+        super().__init__(data)
 
 
 class Index(_BaseIndex):
@@ -34,7 +34,7 @@ class Index(_BaseIndex):
             as_ = data.get('as', 'item')
             data = dict(data, template=Var(as_))
 
-        super(Index, self).__init__(data)
+        super().__init__(data)
 
     def process_item(self, context: Context, output: dict, value, result) -> None:
 

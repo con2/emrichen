@@ -33,7 +33,7 @@ def construct_tagged_object(loader: yaml.Loader, node: yaml.Node) -> BaseTag:
             name = nst.args[0]
             raise ConstructorError(
                 None, None,
-                "in compose tag %s: can't find tag %s" % (node.tag, name),
+                "in compose tag {}: can't find tag {}".format(node.tag, name),
                 node.start_mark,
             ) from nst
     raise ConstructorError(
@@ -45,7 +45,7 @@ def construct_tagged_object(loader: yaml.Loader, node: yaml.Node) -> BaseTag:
 
 class RichLoader(yaml.SafeLoader):
     def __init__(self, stream) -> None:
-        super(RichLoader, self).__init__(stream)
+        super().__init__(stream)
         self.add_tag_constructors()
 
     def add_tag_constructors(self) -> None:
