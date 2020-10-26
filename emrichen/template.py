@@ -14,7 +14,7 @@ def determine_format(filename: Optional[str], choices: Dict[str, Callable], defa
     return default
 
 
-class Template(object):
+class Template:
     def __init__(self, template: Any, filename: Optional[str]=None) -> None:
         if not isinstance(template, list):
             raise TypeError(

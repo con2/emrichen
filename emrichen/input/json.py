@@ -16,7 +16,7 @@ def _hydrate_json_object(pairs: Any) -> Any:
                 try:
                     return make_compose(names=key, value=data)
                 except NoSuchTag as nst:
-                    raise NameError("in compose tag %s: can't find tag %s" % (key, nst.args[0])) from nst
+                    raise NameError("in compose tag {}: can't find tag {}".format(key, nst.args[0])) from nst
             if key not in tag_registry:
                 raise NoSuchTag(key)
             return tag_registry[key](data)
