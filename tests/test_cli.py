@@ -7,7 +7,7 @@ from emrichen.input import parse
 from emrichen.output import RENDERERS
 
 
-@pytest.mark.parametrize('output_format', list(RENDERERS))
+@pytest.mark.parametrize('output_format', set(RENDERERS) - {'pprint'})
 def test_cli_json_input(examples_dir, output_format, capsys):
     main(
         [
