@@ -14,6 +14,7 @@ with open(os.path.join(source_dir, 'emrichen', '__init__.py'), 'r') as f:
 with open(os.path.join(source_dir, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
+dev_requirements = ["pytest<6.2.0", "pytest-cov==2.10.1"]
 
 setup(
     name='emrichen',
@@ -33,6 +34,7 @@ setup(
         ]
     },
     install_requires=["PyYAML", "pyaml", "jsonpath-rw~=1.4.0"],
-    tests_require=["pytest"],
+    extras_require={"dev": dev_requirements},
+    tests_require=dev_requirements,
     setup_requires=["pytest-runner"],
 )
