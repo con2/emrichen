@@ -138,8 +138,9 @@ Due to YAML, you can't do `!Base64 !Var foo`. We provide a convenient workaround
 
 ```
 usage: emrichen [-h] [--template-format {yaml,json}] [--var-file VAR_FILE]
+usage: emrichen [-h] [--template-format {yaml,json}] [--var-file VAR_FILE]
                 [--define VAR=VALUE] [--output-file OUTPUT_FILE]
-                [--output-format {yaml,json}] [--include-env]
+                [--output-format {yaml,json,pprint}] [--include-env]
                 [template_file]
 
 A YAML to YAML preprocessor.
@@ -164,7 +165,7 @@ optional arguments:
   --output-file OUTPUT_FILE, -o OUTPUT_FILE
                         Output file. If unspecified, the template output is
                         written into stdout.
-  --output-format {yaml,json}
+  --output-format {yaml,json,pprint}
                         Output format. If unspecified, attempted to be
                         autodetected from the output filename (but defaults to
                         YAML).

@@ -1,4 +1,5 @@
 import json
+from pprint import pformat
 
 import pyaml
 import yaml
@@ -32,6 +33,7 @@ def render_yaml(data):
 RENDERERS = {
     'yaml': render_yaml,
     'json': render_json,
+    'pprint': pformat,
 }
 
 
