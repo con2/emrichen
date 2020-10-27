@@ -1,13 +1,13 @@
 import json
 from collections import OrderedDict
-from typing import Any, List, TextIO, Union
+from typing import List, TextIO, Union, Any
 
 from ..exceptions import NoSuchTag
-from ..tags.base import tag_registry
+from ..tags.base import tag_registry, BaseTag
 from .utils import make_compose
 
 
-def _hydrate_json_object(pairs: Any) -> Any:
+def _hydrate_json_object(pairs) -> Union[BaseTag, OrderedDict]:
     if len(pairs) == 1:
         key, data = pairs[0]
         if key.startswith('!'):
@@ -23,7 +23,7 @@ def _hydrate_json_object(pairs: Any) -> Any:
     return OrderedDict(pairs)
 
 
-def json_load_or_loads(str_or_stream: Union[TextIO, str], **kwargs) -> Any:
+def json_load_or_loads(str_or_stream: Union[TextIO, str], **kwargs):
     if hasattr(str_or_stream, 'read'):
         str_or_stream = str_or_stream.read()
     return json.loads(str_or_stream, **kwargs)

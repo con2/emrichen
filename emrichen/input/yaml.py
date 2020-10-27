@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from typing import Any, TextIO, Union
+from typing import TextIO, Union
 
 import yaml
 from yaml.constructor import ConstructorError
@@ -9,7 +9,7 @@ from ..tags.base import BaseTag, tag_registry
 from .utils import make_compose
 
 
-def construct_tagless_yaml(loader: yaml.Loader, node: yaml.Node) -> Any:
+def construct_tagless_yaml(loader: yaml.Loader, node: yaml.Node):
     # From yaml.constructor.BaseConstructor#construct_object
     if isinstance(node, yaml.ScalarNode):
         constructor = loader.construct_scalar
@@ -59,5 +59,5 @@ class RichLoader(yaml.SafeLoader):
         return OrderedDict(loader.construct_pairs(node))
 
 
-def load_yaml(data: Union[TextIO, str]) -> Any:
+def load_yaml(data: Union[TextIO, str]):
     return list(yaml.load_all(data, Loader=RichLoader))

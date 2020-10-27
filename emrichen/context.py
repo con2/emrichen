@@ -1,6 +1,5 @@
 from collections import OrderedDict
 from collections.abc import Mapping, Sequence
-from typing import Any
 
 from .void import Void
 
@@ -15,7 +14,7 @@ class Context(dict):
         super().__init__()
         self.add_variables(*variable_sources, **override_variables)
 
-    def enrich(self, value: Any) -> Any:
+    def enrich(self, value):
         """
         Given a YAML value, performs our registered transformations on it.
         """

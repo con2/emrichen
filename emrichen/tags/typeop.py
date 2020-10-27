@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import Any, Optional, Union
+from typing import Optional, Union
 
 from ..context import Context
 from ..void import Void, VoidType
@@ -18,7 +18,7 @@ class _BaseIsType(BaseTag):
     def enrich(self, context: Context) -> bool:
         return self.check(context.enrich(self.data))
 
-    def check(self, value: Any) -> bool:
+    def check(self, value) -> bool:
         return isinstance(value, self.requisite_type)
 
 

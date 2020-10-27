@@ -1,4 +1,4 @@
-from typing import Any, TextIO, Union
+from typing import TextIO, Union
 
 from .json import load_json
 from .yaml import load_yaml
@@ -9,7 +9,7 @@ PARSERS = {
 }
 
 
-def parse(data: Union[TextIO, str], format: str) -> Any:
+def parse(data: Union[TextIO, str], format: str):
     if format in PARSERS:
         return PARSERS[format](data)
     else:

@@ -1,6 +1,6 @@
 import base64
 import os
-from typing import Any, TextIO
+from typing import TextIO
 
 from ..context import Context
 from ..template import Template
@@ -29,7 +29,7 @@ class Include(_BaseInclude):
         with self._open_file(context) as include_file:
             return Template.parse(include_file)
 
-    def enrich(self, context: Context) -> Any:
+    def enrich(self, context: Context):
         template = self.get_template(context)
         enriched = template.enrich(context)
 
