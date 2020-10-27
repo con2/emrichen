@@ -15,7 +15,7 @@ def determine_format(filename: Optional[str], choices: Dict[str, Callable], defa
 
 
 class Template:
-    def __init__(self, template: Any, filename: Optional[str]=None) -> None:
+    def __init__(self, template, filename: Optional[str]=None) -> None:
         if not isinstance(template, list):
             raise TypeError(
                 '`template` must be a list of objects; {template} is not. Are you maybe looking for Template.parse()?'.format(
@@ -26,7 +26,7 @@ class Template:
         self.template, self.defaults = extract_defaults(template, filename)
         self.filename = filename
 
-    def enrich(self, context: Union[dict, Context]) -> Any:
+    def enrich(self, context: Union[dict, Context]):
         context = Context(self.defaults, context, __file__=self.filename)
         return context.enrich(self.template)
 
@@ -46,7 +46,7 @@ class Template:
         return cls(template=parse(data, format=format), filename=filename)
 
 
-def extract_defaults(template: Any, filename: Optional[str]) -> Tuple[list, dict]:
+def extract_defaults(template, filename: Optional[str]) -> Tuple[list, dict]:
     from .tags import Defaults, Include
     defaults = {}
 

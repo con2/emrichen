@@ -1,6 +1,5 @@
 import json
 from pprint import pformat
-from typing import Any
 
 import pyaml
 import yaml
@@ -8,7 +7,7 @@ import yaml
 from .documents_list import flatten_documents_lists
 
 
-def render_json(data: Any) -> str:
+def render_json(data) -> str:
     if not isinstance(data, list) or len(data) != 1:
         raise TypeError(
             "JSON output can only handle a single document. "
@@ -21,7 +20,7 @@ def render_json(data: Any) -> str:
     return json.dumps(data[0], ensure_ascii=False, indent=2)
 
 
-def render_yaml(data: Any) -> str:
+def render_yaml(data) -> str:
     if isinstance(data, list):
         data = flatten_documents_lists(data)
     return yaml.dump_all(data,

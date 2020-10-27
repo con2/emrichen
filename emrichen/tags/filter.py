@@ -1,5 +1,4 @@
 from collections import OrderedDict
-from typing import Any
 
 from ..context import Context
 from ..void import Void
@@ -16,7 +15,7 @@ class Filter(BaseTag):
     """
     value_types = (dict,)
 
-    def enrich(self, context: Context) -> Any:
+    def enrich(self, context: Context):
 
         as_ = str(self.data.get('as', 'item'))
         index_as = str(self.data.get('index_as') or '')

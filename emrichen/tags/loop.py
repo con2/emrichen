@@ -6,7 +6,7 @@ from ..documents_list import DocumentsList
 from .base import BaseTag
 
 
-def get_iterable(tag: BaseTag, over: Any, context: Context, index_start: Optional[int] = None) -> Iterable[Any]:
+def get_iterable(tag: BaseTag, over, context: Context, index_start: Optional[int] = None) -> Iterable[Any]:
     if isinstance(over, str) and over in context:
         # This does mean you can't explicitly iterate over strings that are keys
         # in the context, but if you really do need to do that, you may need to
@@ -52,7 +52,7 @@ class Loop(BaseTag):
     value_types = (dict,)
     output_factory = list
 
-    def enrich(self, context: Context) -> Any:
+    def enrich(self, context: Context):
         from ..context import Context
 
         as_ = str(self.data.get('as', 'item'))
@@ -92,7 +92,7 @@ class Loop(BaseTag):
     def get_iterable(self, context: Context, index_start: Optional[int]) -> Tuple[enumerate, bool]:
         return get_iterable(self, self.data.get('over'), context, index_start)
 
-    def process_item(self, context: Context, output: Any, value: Any, result: Any) -> None:
+    def process_item(self, context: Context, output, value, result) -> None:
         '''
         Used by Loop subclasses to do things every iteration.
         '''

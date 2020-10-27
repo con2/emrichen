@@ -8,7 +8,7 @@ from .base import BaseTag
 
 
 @lru_cache()
-def parse_jsonpath(expr: str) -> Any:
+def parse_jsonpath(expr: str):
     return jsonpath_rw.parse(expr)
 
 
@@ -22,7 +22,7 @@ class Lookup(BaseTag):
     example: "`!Lookup people[0].first_name`"
     description: Performs a JSONPath lookup returning the first match. If there is no match, an error is raised.
     """
-    def enrich(self, context: Context) -> Any:
+    def enrich(self, context: Context):
         matches = find_jsonpath_in_context(self.data, context)
         if not matches:
             raise KeyError('{self}: no matches for {self.data}'.format(self=self))
