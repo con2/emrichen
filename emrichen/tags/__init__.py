@@ -13,7 +13,7 @@ from .filter import Filter
 from .format import Format
 from .hash import MD5, SHA1, SHA256
 from .if_ import If
-from .include import Include, IncludeBase64, IncludeBinary, IncludeText
+from .include import Include, IncludeBase64, IncludeBinary, IncludeGlob, IncludeText
 from .index import Group, Index
 from .join import Join
 from .lookup import Lookup, LookupAll
@@ -44,6 +44,7 @@ __all__ = [
     'Include',
     'IncludeBase64',
     'IncludeBinary',
+    'IncludeGlob',
     'IncludeText',
     'Index',
     'IsBoolean',

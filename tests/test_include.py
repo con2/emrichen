@@ -98,3 +98,26 @@ data:
     data = template.enrich({})[0]['data']
     assert data['image.png.b64'].startswith('iVBORw0KGgoAAAANSUhEUgA')
     assert data['config.toml'].startswith('[database]\nserver =')
+
+
+def test_include_glob():
+    filename = os.path.join(BASE_DIR, 'test_include_glob.yml')
+    template = Template.parse('!IncludeGlob ["includes/globhierarchy/**", "includes/multi*yml"]', filename=filename)
+    greeting = "Hello"
+    salutation = "Fare thee well"
+    result = template.enrich({"greeting": greeting, "salutation": salutation})[0]
+    assert [dict(od.items()) for od in result] == [
+        # 01.yml's documents
+        {'first': greeting},
+        {'second': True},
+        # z.yml's document
+        {'middle': 42},
+        # 99.yml's documents
+        {'penultimate': True},
+        {'last': salutation},
+        # multi.in.yml
+        {'foo': 5},
+        {'bar': 6},
+        # multi_void.in.yml (two voids elided)
+        {'foo': 5},
+    ]

@@ -1,0 +1,3 @@
+penultimate: true
+---
+last: !Var salutation

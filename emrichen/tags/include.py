@@ -1,4 +1,5 @@
 import base64
+import glob
 import os
 from typing import TextIO
 
@@ -10,10 +11,12 @@ from .base import BaseTag
 
 class _BaseInclude(BaseTag):
     def _open_file(self, context: Context, mode: str = 'r') -> TextIO:
-        include_path = os.path.join(
-            os.path.dirname(context['__file__']), self.data)
+        return open(self._absolve_path(context, self.data), mode)
 
-        return open(include_path, mode)
+    def _absolve_path(self, context: Context, path: str):
+        # Named humorously for humor's sake.
+        return os.path.join(
+            os.path.dirname(context['__file__']), path)
 
 
 class Include(_BaseInclude):
@@ -77,3 +80,41 @@ class IncludeBinary(IncludeText):
 
     def enrich(self, context: Context) -> bytes:
         return super().get_data(context)
+
+
+class IncludeGlob(_BaseInclude):
+    """
+    arguments: A string (or a list thereof) of glob patterns of templates to include
+    example: "`!IncludeGlob bits/**.in.yml`"
+    description: |
+      Expands the glob patterns and renders all templates into a list.
+      YAML files that contain more than one document will have all of those templates rendered into
+      the same flat list.
+      Expansion results are lexicographically sorted.
+      As with Python's `glob.glob()`, use a double star (`**`) for recursion.
+    """
+    value_types = (list, str)
+
+    def enrich(self, context: Context):
+        from ..template import Template
+
+        # Ensure input data is a list.
+        data = self.data
+        if not isinstance(data, list):
+            data = [data]
+
+        output = []
+        for item in data:
+            pattern = context.enrich(item)
+            if not isinstance(pattern, str):
+                raise TypeError('Pattern {!r} in IncludeGlob is not a string'.format(pattern))
+            pattern = self._absolve_path(context, pattern)
+            names = sorted(glob.glob(pattern, recursive=True))
+            for name in names:
+                if not os.path.isfile(name):
+                    continue
+                with open(name) as include_file:
+                    template = Template.parse(include_file)
+                output.extend(template.enrich(context))
+
+        return output
