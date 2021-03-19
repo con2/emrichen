@@ -63,6 +63,11 @@ Python 3.5+ required. Python 2 is not and will not be supported.
 
     pip3 install emrichen
 
+To serialize YAML documents in a more human-readable way, the `pyaml` library is required. This can be installed separately,
+or via the `[pretty]` [extra](https://packaging.python.org/tutorials/installing-packages/#installing-setuptools-extras), i.e.
+
+    pip3 install emrichen[pretty]
+
 ## Supported tags
 
 <!-- This table is updated by `update_readme.py`; please don't edit by hand. -->

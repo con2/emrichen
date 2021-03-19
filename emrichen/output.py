@@ -1,8 +1,12 @@
 import json
 from pprint import pformat
 
-import pyaml
 import yaml
+
+try:
+    import pyaml
+except ImportError:
+    pyaml = None
 
 from .documents_list import flatten_documents_lists
 
@@ -24,7 +28,7 @@ def render_yaml(data) -> str:
     if isinstance(data, list):
         data = flatten_documents_lists(data)
     return yaml.dump_all(data,
-        Dumper=pyaml.PrettyYAMLDumper,
+        Dumper=(pyaml.PrettyYAMLDumper if pyaml else yaml.Dumper),
         allow_unicode=True,
         default_flow_style=False,
     )
