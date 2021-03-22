@@ -102,3 +102,17 @@ should_contain_5: !Loop
 '''
     )
     assert template.enrich({}) == [{'should_contain_5': [5]}]
+
+
+@pytest.mark.xfail
+def test_recursive_data_structure():
+    template = Template.parse('''
+!Defaults
+x:
+    y: 5
+    x: !Var x
+---
+five: !Lookup x.y
+also_five: !Lookup x.x.x.x.x.y
+''')
+    assert template.enrich({}) == [{'five': 5, 'also_five': 5}]
