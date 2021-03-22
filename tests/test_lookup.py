@@ -68,7 +68,6 @@ def test_lookup_no_match():
     assert 'no matches for' in str(ei.value)
 
 
-@pytest.mark.xfail
 def test_late_enrich():
     template = Template.parse(
         '''

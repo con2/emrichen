@@ -3,7 +3,7 @@ from typing import Any, List
 
 import jsonpath_rw
 
-from ..context import Context
+from ..context import Context, EnrichingProxy
 from .base import BaseTag
 
 
@@ -13,7 +13,10 @@ def parse_jsonpath(expr: str):
 
 
 def find_jsonpath_in_context(jsonpath_str: str, context: Context) -> List[jsonpath_rw.DatumInContext]:
-    return parse_jsonpath(jsonpath_str).find(context)
+    result = parse_jsonpath(jsonpath_str).find(EnrichingProxy(context, context))
+    for datum in result:
+        datum.value = EnrichingProxy.unwrap(datum.value)
+    return result
 
 
 class Lookup(BaseTag):
