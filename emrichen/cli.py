@@ -81,4 +81,11 @@ def get_parser(with_pargs=True) -> argparse.ArgumentParser:
         default=False,
         help='Expose process environment variables to the template.',
     )
+    parser.add_argument(
+        '--import-module',
+        '-m',
+        action='append',
+        default=[],
+        help='Import these modules before processing template (for custom tags etc.)',
+    )
     return parser
