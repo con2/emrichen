@@ -14,7 +14,10 @@ with open(os.path.join(source_dir, 'emrichen', '__init__.py')) as f:
 with open(os.path.join(source_dir, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-dev_requirements = ["pytest<6.2.0", "pytest-cov==2.10.1"]
+dev_requirements = [
+    "pytest~=6.2.3",
+    "pytest-cov==2.11.1",
+]
 
 setup(
     name='emrichen',
