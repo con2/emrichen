@@ -49,7 +49,7 @@ class Index(_BaseIndex):
         if key in output:
             # Duplicate key
             action = self.data.get('duplicates', 'error')
-            message = '{self}: Duplicate key {key!r}'.format(self=self, key=key)
+            message = f'{self}: Duplicate key {key!r}'
             if action == 'warn':
                 # TODO logger
                 stderr.write(message + '\n')

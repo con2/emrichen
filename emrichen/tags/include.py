@@ -107,7 +107,7 @@ class IncludeGlob(_BaseInclude):
         for item in data:
             pattern = context.enrich(item)
             if not isinstance(pattern, str):
-                raise TypeError('Pattern {!r} in IncludeGlob is not a string'.format(pattern))
+                raise TypeError(f'Pattern {pattern!r} in IncludeGlob is not a string')
             pattern = self._absolve_path(context, pattern)
             names = sorted(glob.glob(pattern, recursive=True))
             for name in names:

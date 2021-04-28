@@ -41,4 +41,4 @@ def render(data, format: str) -> str:
     if format in RENDERERS:
         return RENDERERS[format](data)
     else:
-        raise ValueError('No renderer for format {format}'.format(format=format))
+        raise ValueError(f'No renderer for format {format}')

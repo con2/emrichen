@@ -7,7 +7,7 @@ from setuptools import find_packages, setup
 source_dir = os.path.abspath(os.path.dirname(__file__))
 
 
-with open(os.path.join(source_dir, 'emrichen', '__init__.py'), 'r') as f:
+with open(os.path.join(source_dir, 'emrichen', '__init__.py')) as f:
     version = re.search("__version__ = ['\"]([^'\"]+)['\"]", f.read()).group(1)
 
 

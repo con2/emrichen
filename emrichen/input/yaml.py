@@ -33,12 +33,12 @@ def construct_tagged_object(loader: yaml.Loader, node: yaml.Node) -> BaseTag:
             name = nst.args[0]
             raise ConstructorError(
                 None, None,
-                "in compose tag {}: can't find tag {}".format(node.tag, name),
+                f"in compose tag {node.tag}: can't find tag {name}",
                 node.start_mark,
             ) from nst
     raise ConstructorError(
         None, None,
-        "can't find tag %s" % node.tag,
+        f"can't find tag {node.tag}",
         node.start_mark,
     )
 

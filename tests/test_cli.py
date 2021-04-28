@@ -34,11 +34,11 @@ def test_cli_kubernetes_example(examples_dir, capsys):
             '-f',
             os.path.join(examples_dir, 'kubernetes', 'vars.yml'),
             '-D',
-            'tag={tag}'.format(tag=tag),
+            f'tag={tag}',
         ]
     )
     out, _ = capsys.readouterr()
-    assert 'tracon/kompassi:{tag}'.format(tag=tag) in out
+    assert f'tracon/kompassi:{tag}' in out
 
 
 def test_custom_tags(examples_dir, capsys):

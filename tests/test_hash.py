@@ -12,4 +12,4 @@ HASHES = {
 @pytest.mark.parametrize('h', sorted(HASHES.items()), ids=sorted(HASHES))
 def test_hash(h):
     algo, expected = h
-    assert Template.parse('!{} "Hello"'.format(algo)).enrich({}) == [expected]
+    assert Template.parse(f'!{algo} "Hello"').enrich({}) == [expected]
