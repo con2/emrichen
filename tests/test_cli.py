@@ -51,7 +51,7 @@ def test_custom_tags(examples_dir, capsys):
     )
     out, _ = capsys.readouterr()
     obj = yaml.safe_load(out)
-    assert obj["spec"]["template"]["spec"]["env"] == [
+    assert sorted(obj["spec"]["template"]["spec"]["env"], key=lambda e: e["name"]) == [
         {'name': 'FOO', 'value': 'bar'},
         {'name': 'QUUX', 'value': '1'},
     ]
