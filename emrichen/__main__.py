@@ -1,5 +1,6 @@
 import os
 import sys
+from importlib import import_module
 from typing import List, Optional
 
 from .cli import get_parser
@@ -13,6 +14,9 @@ def main(args: Optional[List[str]] = None) -> None:
         args = sys.argv[1:]
     parser = get_parser()
     args = parser.parse_args(args)
+
+    for module_path in args.import_module:
+        import_module(module_path)
 
     override_variables = dict(item.split('=', 1) for item in args.define)
 

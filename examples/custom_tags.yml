@@ -1,0 +1,9 @@
+# usage: emrichen -m tests.custom_tags examples/custom_tags.yml
+apiVersion: v1
+kind: Deployment
+spec:
+  template:
+    spec:
+      env: !KubeEnv
+        FOO: bar
+        QUUX: 1

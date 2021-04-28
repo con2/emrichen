@@ -1,6 +1,7 @@
 import os
 
 import pytest
+import yaml
 
 from emrichen.__main__ import main
 from emrichen.input import parse
@@ -38,3 +39,19 @@ def test_cli_kubernetes_example(examples_dir, capsys):
     )
     out, _ = capsys.readouterr()
     assert 'tracon/kompassi:{tag}'.format(tag=tag) in out
+
+
+def test_custom_tags(examples_dir, capsys):
+    main(
+        [
+            '-m',
+            'tests.custom_tags',
+            os.path.join(examples_dir, 'custom_tags.yml'),
+        ]
+    )
+    out, _ = capsys.readouterr()
+    obj = yaml.safe_load(out)
+    assert sorted(obj["spec"]["template"]["spec"]["env"], key=lambda e: e["name"]) == [
+        {'name': 'FOO', 'value': 'bar'},
+        {'name': 'QUUX', 'value': '1'},
+    ]
