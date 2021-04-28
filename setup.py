@@ -33,6 +33,7 @@ setup(
             'emrichen = emrichen.__main__:main',
         ]
     },
+    python_requires='>=3.6',
     install_requires=["PyYAML", "pyaml", "jsonpath-rw~=1.4.0"],
     extras_require={"dev": dev_requirements},
     tests_require=dev_requirements,
