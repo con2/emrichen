@@ -59,10 +59,13 @@ See below for a table of supported tags. There's a lot of them. If you need one 
 
 ## Installation
 
-Python 3.5+ required. Python 2 is not and will not be supported.
+Python 3.6+ required. Python 2 is not and will not be supported.
 
-    pip3 install emrichen
+    pip install emrichen
 
+If you have cloned Emrichen from GitHub (for development):
+
+    pip install -e .
 ## Supported tags
 
 <!-- This table is updated by `update_readme.py`; please don't edit by hand. -->
@@ -134,6 +137,20 @@ Limitations of the JSON support:
 ### Tag composition
 
 Due to YAML, you can't do `!Base64 !Var foo`. We provide a convenient workaround: `!Base64,Var foo`.
+
+### Custom tags
+
+It is possible to implement your own custom tags in Python. Tags are classes that inherit from the `emrichen.tags.base.BaseTag` class and implement the `enrich(self, context: emrichen.context.Context)` method. For examples of tag implementations, see the built-in tags under `emrichen/tags/` or the example at `tests/custom_tags/`.
+
+Place the implementation in a Python module that is on the `PYTHONPATH`. Same directory as the template is usually fine.
+
+All subclasses of `BaseTag` are automatically registered as long as the module containing them is imported. If you are using the CLI, add `-m your_tags` to the command line where `your_tags` corresponds to `your_tags.py`. If you are using Emrichen programmatically, be sure to import your custom tags (`import your_tags`) before instantiating a template.
+
+There is an example of custom tags that you can try out as follows (provided you have cloned Emrichen from GitHub and installed it using `pip install -e .`). The example is not installed when installing Emrichen from PyPI (`pip install emrichen`).
+
+    emrichen -m tests.custom_tags examples/custom_tags.yml
+
+The example defines a `!KubeEnv` custom tag that turns a dictionary of key—value mappings into a list of environment variables in the format expected by Kubernetes.
 
 ## CLI
 
