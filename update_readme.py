@@ -73,7 +73,7 @@ def main():
 
     table = generate_markdown_table()
 
-    with open('README.md', 'r') as infp:
+    with open('README.md') as infp:
         input_readme = infp.read()
 
     output_readme = replace_marker_segment(

@@ -13,4 +13,4 @@ def parse(data: Union[TextIO, str], format: str):
     if format in PARSERS:
         return PARSERS[format](data)
     else:
-        raise ValueError('No parser for format {format}'.format(format=format))
+        raise ValueError(f'No parser for format {format}')

@@ -28,10 +28,5 @@ from emrichen.void import Void
     ('IsString', Void, False),
 ])
 def test_typeop(tag, val, result):
-    resolved = Template.parse("!%s,Lookup 'a'" % tag).enrich(Context({'a': val}))[0]
-    assert resolved == result, '{tag}({val!r}) returned {resolved}, expected {result}'.format(
-        tag=tag,
-        val=val,
-        resolved=resolved,
-        result=result,
-    )
+    resolved = Template.parse(f"!{tag},Lookup 'a'").enrich(Context({'a': val}))[0]
+    assert resolved == result, f'{tag}({val!r}) returned {resolved}, expected {result}'

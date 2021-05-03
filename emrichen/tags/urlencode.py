@@ -64,7 +64,7 @@ class URLEncode(BaseTag):
                 return urlencode(query)
 
             else:
-                raise TypeError('{self}: needs url, query or both'.format(self=self))
+                raise TypeError(f'{self}: needs url, query or both')
 
         else:
             data = context.enrich(self.data)
@@ -74,4 +74,4 @@ class URLEncode(BaseTag):
                 return quote_plus(data)
 
             else:
-                raise TypeError('{self}: single argument must be a string (got {what})'.format(self=self, what=type(data)))
+                raise TypeError(f'{self}: single argument must be a string (got {type(data)})')

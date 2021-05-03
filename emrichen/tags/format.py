@@ -21,10 +21,7 @@ class JSONPathFormatter(string.Formatter):
         else:
             if selector in self.context:  # direct dotted key in context
                 return self.context[selector]
-        raise KeyError('{self.tag}: {selector} not found in context'.format(
-            self=self,
-            selector=selector,
-        ))
+        raise KeyError(f'{self.tag}: {selector} not found in context')
 
 
 class Format(BaseTag):

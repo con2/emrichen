@@ -7,14 +7,17 @@ from setuptools import find_packages, setup
 source_dir = os.path.abspath(os.path.dirname(__file__))
 
 
-with open(os.path.join(source_dir, 'emrichen', '__init__.py'), 'r') as f:
+with open(os.path.join(source_dir, 'emrichen', '__init__.py')) as f:
     version = re.search("__version__ = ['\"]([^'\"]+)['\"]", f.read()).group(1)
 
 
 with open(os.path.join(source_dir, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-dev_requirements = ["pytest<6.2.0", "pytest-cov==2.10.1"]
+dev_requirements = [
+    "pytest~=6.2.3",
+    "pytest-cov==2.11.1",
+]
 
 setup(
     name='emrichen',
@@ -33,6 +36,7 @@ setup(
             'emrichen = emrichen.__main__:main',
         ]
     },
+    python_requires='>=3.6',
     install_requires=["PyYAML", "pyaml", "jsonpath-rw~=1.4.0"],
     extras_require={"dev": dev_requirements},
     tests_require=dev_requirements,

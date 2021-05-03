@@ -33,7 +33,7 @@ def get_iterable(tag: BaseTag, over, context: Context, index_start: Optional[int
 
         return (enumerate(over, index_start), False)
 
-    raise ValueError('{tag}: over value {over} is not iterable'.format(tag=tag, over=over))
+    raise ValueError(f'{tag}: over value {over} is not iterable')
 
 
 class Loop(BaseTag):
@@ -67,7 +67,7 @@ class Loop(BaseTag):
 
         template = self.data.get('template')
         if template is None:
-            raise ValueError('{self}: missing template'.format(self=self))
+            raise ValueError(f'{self}: missing template')
 
         output = self.output_factory()
         iterable, _ = self.get_iterable(context, index_start)

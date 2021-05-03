@@ -7,7 +7,7 @@ LOOP_TEST_CONTEXT = {'domain_names': ['hernekeit.to', 'vii.na', 'teli.ne', 'joha
 
 
 def test_loop(examples_dir):
-    with open('{examples_dir}/loop.yml'.format(examples_dir=examples_dir), 'r') as inf:
+    with open(f'{examples_dir}/loop.yml') as inf:
         template = Template.parse(inf, 'yaml')
     ctx = Context(LOOP_TEST_CONTEXT)
     output = template.render(ctx)
