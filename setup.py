@@ -8,7 +8,10 @@ source_dir = os.path.abspath(os.path.dirname(__file__))
 
 
 with open(os.path.join(source_dir, 'emrichen', '__init__.py')) as f:
-    version = re.search("__version__ = ['\"]([^'\"]+)['\"]", f.read()).group(1)
+    init_file = f.read()
+    match = re.search("__version__ = ['\"]([^'\"]+)['\"]", init_file)
+    assert match, "Failed to parse version from emrichen/__init__.py"
+    version = match.group(1)
 
 
 with open(os.path.join(source_dir, 'README.md'), encoding='utf-8') as f:
@@ -29,7 +32,7 @@ setup(
     author='Santtu Pajukanta',
     author_email='santtu@pajukanta.fi',
     url='http://github.com/con2/emrichen',
-    packages = find_packages(exclude=["tests"]),
+    packages=find_packages(exclude=["tests"]),
     zip_safe=True,
     entry_points={
         'console_scripts': [
