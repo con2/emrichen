@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import Optional, Union
+from typing import Optional, Type, Union
 
 from ..context import Context
 from ..void import Void, VoidType
@@ -12,8 +12,9 @@ class _BaseIsType(BaseTag):
     example: "`!{name} ...`"
     description: Returns True if the value enriched is of the given type, False otherwise.
     """
-    requisite_type = None
+
     value_types = (object,)
+    requisite_type: Type
 
     def enrich(self, context: Context) -> bool:
         return self.check(context.enrich(self.data))
@@ -67,4 +68,4 @@ class IsNone(_BaseIsType):
     """
 
     def check(self, value: Optional[Union[VoidType, str]]) -> bool:
-        return (value is None or value is Void)
+        return value is None or value is Void
