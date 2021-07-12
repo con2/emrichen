@@ -22,6 +22,7 @@ from .merge import Merge
 from .not_ import Not
 from .op import Op
 from .typeop import IsBoolean, IsDict, IsInteger, IsList, IsNone, IsNumber, IsString
+from .typeconv import ToBoolean, ToInteger, ToFloat, ToString
 from .urlencode import URLEncode
 from .var import Var
 from .void import Void
@@ -64,6 +65,10 @@ __all__ = [
     'Op',
     'SHA1',
     'SHA256',
+    'ToBoolean',
+    'ToFloat',
+    'ToInteger',
+    'ToString',
     'URLEncode',
     'Var',
     'Void',
