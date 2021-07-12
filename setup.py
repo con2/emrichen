@@ -9,7 +9,10 @@ source_dir = os.path.abspath(os.path.dirname(__file__))
 
 
 with open(os.path.join(source_dir, 'emrichen', '__init__.py')) as f:
-    version = re.search("__version__ = ['\"]([^'\"]+)['\"]", f.read()).group(1)
+    init_file = f.read()
+    match = re.search("__version__ = ['\"]([^'\"]+)['\"]", init_file)
+    assert match, "Failed to parse version from emrichen/__init__.py"
+    version = match.group(1)
 
 
 with open(os.path.join(source_dir, 'README.md'), encoding='utf-8') as f:
