@@ -4,7 +4,9 @@ from emrichen import Template
 
 
 def test_index():
-    assert Template.parse('''
+    assert (
+        Template.parse(
+            '''
 !Index
   over:
     - name: manifold
@@ -17,11 +19,16 @@ def test_index():
   by: !Lookup flavour.name
   duplicates: ignore
   template: !Lookup flavour.score
-    ''').enrich({}) == [{'manifold': 7.8, 'John': 9.8}]
+    '''
+        ).enrich({})
+        == [{'manifold': 7.8, 'John': 9.8}]
+    )
 
 
 def test_index_without_template():
-    assert Template.parse('''
+    assert (
+        Template.parse(
+            '''
 !Index
   over:
     - name: manifold
@@ -33,11 +40,16 @@ def test_index_without_template():
   as: flavour
   by: !Lookup flavour.name
   duplicates: ignore
-    ''').enrich({}) == [{'manifold': {'name': 'manifold', 'score': 7.8}, 'John': {'name': 'John', 'score': 9.8}}]
+    '''
+        ).enrich({})
+        == [{'manifold': {'name': 'manifold', 'score': 7.8}, 'John': {'name': 'John', 'score': 9.8}}]
+    )
 
 
 def test_index_result_as():
-    assert Template.parse('''
+    assert (
+        Template.parse(
+            '''
 !Index
   over:
     - name: manifold
@@ -53,12 +65,16 @@ def test_index_result_as():
   result_as: result
   by: !Lookup result.NAME
   duplicates: ignore
-    ''').enrich({}) == [{'manifold': {'NAME': 'manifold', 'SCORE': 7.8}, 'John': {'NAME': 'John', 'SCORE': 9.8}}]
+    '''
+        ).enrich({})
+        == [{'manifold': {'NAME': 'manifold', 'SCORE': 7.8}, 'John': {'NAME': 'John', 'SCORE': 9.8}}]
+    )
 
 
 def test_index_duplicates_error():
     with pytest.raises(ValueError):
-        assert Template.parse('''
+        assert Template.parse(
+            '''
 !Index
   over:
     - name: manifold
@@ -71,4 +87,5 @@ def test_index_duplicates_error():
   by: !Lookup flavour.name
   duplicates: error
   template: !Lookup flavour.score
-        ''').enrich({})
+        '''
+        ).enrich({})

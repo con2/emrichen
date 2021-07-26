@@ -33,5 +33,6 @@ class Format(BaseTag):
         JSONPath supported in variable lookup (eg. `{people[0].first_name}` will do the right thing).
         **NOTE:** When the format string starts with `{`, you need to quote it in order to avoid being interpreted as a YAML object.
     """
+
     def enrich(self, context: Context) -> str:
         return JSONPathFormatter(tag=self, context=context).format(self.data)

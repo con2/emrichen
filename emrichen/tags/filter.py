@@ -13,6 +13,7 @@ class Filter(BaseTag):
     example: See `tests/test_cond.py`
     description: Takes in a list and only returns elements that pass a predicate.
     """
+
     value_types = (dict,)
 
     def enrich(self, context: Context):
@@ -22,7 +23,7 @@ class Filter(BaseTag):
         test = self.data.get('test', Var(as_))
         iterable, is_mapping = get_iterable(self, self.data['over'], context)
 
-        output = (OrderedDict() if is_mapping else [])
+        output = OrderedDict() if is_mapping else []
 
         for index, value in iterable:
             subcontext = {as_: value}

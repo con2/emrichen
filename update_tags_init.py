@@ -92,7 +92,12 @@ def format_tags_init_file(tags_per_module):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--dry-run', '-n', action='store_true', help='do not update tags/__init__, just print the new one')
+    ap.add_argument(
+        '--dry-run',
+        '-n',
+        action='store_true',
+        help='do not update tags/__init__, just print the new one',
+    )
     args = ap.parse_args()
 
     tags_per_module = find_tags_in_modules()

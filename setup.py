@@ -35,7 +35,7 @@ setup(
     author='Santtu Pajukanta',
     author_email='santtu@pajukanta.fi',
     url='http://github.com/con2/emrichen',
-    packages = find_packages(exclude=["tests"]),
+    packages=find_packages(exclude=["tests"]),
     zip_safe=True,
     entry_points={
         'console_scripts': [

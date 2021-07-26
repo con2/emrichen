@@ -15,8 +15,7 @@ class _BaseInclude(BaseTag):
 
     def _absolve_path(self, context: Context, path: str):
         # Named humorously for humor's sake.
-        return os.path.join(
-            os.path.dirname(context['__file__']), path)
+        return os.path.join(os.path.dirname(context['__file__']), path)
 
 
 class Include(_BaseInclude):
@@ -93,6 +92,7 @@ class IncludeGlob(_BaseInclude):
       Expansion results are lexicographically sorted.
       As with Python's `glob.glob()`, use a double star (`**`) for recursion.
     """
+
     value_types = (list, str)
 
     def enrich(self, context: Context):

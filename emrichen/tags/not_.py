@@ -8,6 +8,7 @@ class Not(BaseTag):
     example: "`!Not !Var foo`"
     description: Logically negates the given value (in Python semantics).
     """
+
     value_types = (object,)
 
     def enrich(self, context: Context) -> bool:

@@ -12,6 +12,7 @@ class _BaseIsType(BaseTag):
     example: "`!{name} ...`"
     description: Returns True if the value enriched is of the given type, False otherwise.
     """
+
     requisite_type = None
     value_types = (object,)
 
@@ -67,4 +68,4 @@ class IsNone(_BaseIsType):
     """
 
     def check(self, value: Optional[Union[VoidType, str]]) -> bool:
-        return (value is None or value is Void)
+        return value is None or value is Void

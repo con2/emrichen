@@ -23,7 +23,8 @@ def render_json(data) -> str:
 def render_yaml(data) -> str:
     if isinstance(data, list):
         data = flatten_documents_lists(data)
-    return yaml.dump_all(data,
+    return yaml.dump_all(
+        data,
         Dumper=pyaml.PrettyYAMLDumper,
         allow_unicode=True,
         default_flow_style=False,

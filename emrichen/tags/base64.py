@@ -10,6 +10,7 @@ class Base64(BaseTag):
     example: "`!Base64 foobar`"
     description: Encodes the value (or a string representation thereof) into base64.
     """
+
     value_types = (object,)
 
     def enrich(self, context: Context) -> str:

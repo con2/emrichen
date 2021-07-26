@@ -56,37 +56,47 @@ def test_mixed_format():
 
 def test_include_defaults():
     filename = os.path.join(BASE_DIR, 'test_include_defaults.in.yml')
-    template = Template.parse('''
+    template = Template.parse(
+        '''
 !Include includes/defaults.in.yml
 ---
 foo: !Var foo
-''', filename=filename)
+''',
+        filename=filename,
+    )
     assert template.enrich({}) == [{'foo': 5}]
 
 
 def test_consecutive_include_at_top_level():
     filename = os.path.join(BASE_DIR, 'test_consecutive_include_at_top_level.in.yml')
-    template = Template.parse('''
+    template = Template.parse(
+        '''
 !Include includes/good.in.yml
 ---
 !Include includes/good.in.yml
-''', filename=filename)
+''',
+        filename=filename,
+    )
     assert template.enrich({}) == [{'foo': 5}, {'foo': 5}]
 
 
 def test_include_chained_defaults():
     filename = os.path.join(BASE_DIR, 'test_include_chained_defaults.in.yml')
-    template = Template.parse('''
+    template = Template.parse(
+        '''
 !Include includes/chained_defaults.in.yml
 ---
 foo: !Var foo
-''', filename=filename)
+''',
+        filename=filename,
+    )
     assert template.enrich({}) == [{'foo': 5}]
 
 
 def test_include_text_and_base64():
     filename = os.path.join(BASE_DIR, 'test_include_text_and_base64.in.yml')
-    template = Template.parse('''
+    template = Template.parse(
+        '''
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -94,7 +104,9 @@ metadata:
 data:
   image.png.b64: !IncludeBase64 includes/intense50.png
   config.toml: !IncludeText includes/data.toml
-''', filename=filename)
+''',
+        filename=filename,
+    )
     data = template.enrich({})[0]['data']
     assert data['image.png.b64'].startswith('iVBORw0KGgoAAAANSUhEUgA')
     assert data['config.toml'].startswith('[database]\nserver =')
@@ -102,7 +114,9 @@ data:
 
 def test_include_glob():
     filename = os.path.join(BASE_DIR, 'test_include_glob.yml')
-    template = Template.parse('!IncludeGlob ["includes/globhierarchy/**", "includes/multi*yml"]', filename=filename)
+    template = Template.parse(
+        '!IncludeGlob ["includes/globhierarchy/**", "includes/multi*yml"]', filename=filename
+    )
     greeting = "Hello"
     salutation = "Fare thee well"
     result = template.enrich({"greeting": greeting, "salutation": salutation})[0]

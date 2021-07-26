@@ -9,10 +9,12 @@ CONTEXT = {'thing': 'world'}
 
 
 def test_compose_tag():
-    comp = Compose({
-        'tags': ['Base64', 'Format'],
-        'value': 'hello {thing}',
-    })
+    comp = Compose(
+        {
+            'tags': ['Base64', 'Format'],
+            'value': 'hello {thing}',
+        }
+    )
     ctx = Context(CONTEXT)
     output = comp.enrich(ctx)
     assert base64.b64decode(output).decode() == 'hello world'
@@ -36,19 +38,22 @@ def test_compose_context():
     to not propagate `as`, `index_as` etc within `template`. Prior to fixing of that bug,
     this test would `KeyError: item`.
     """
-    template = Template.parse('''
+    template = Template.parse(
+        '''
 !Concat,Loop
   over:
     - [1, 2, 3]
     - [4, 5, 6]
   as: item
   template: !Var item
-''')
+'''
+    )
     assert template.enrich({}) == [[1, 2, 3, 4, 5, 6]]
 
 
 def test_compose_context_json():
-    template = Template.parse('''
+    template = Template.parse(
+        '''
 {
     "!Concat": {
         "!Loop": {
@@ -63,5 +68,7 @@ def test_compose_context_json():
         }
     }
 }
-''', 'json')
+''',
+        'json',
+    )
     assert template.enrich({}) == [[1, 2, 3, 4, 5, 6]]

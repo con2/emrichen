@@ -6,14 +6,14 @@ from ..documents_list import DocumentsList
 from .base import BaseTag
 
 
-def get_iterable(tag: BaseTag, over, context: Context, index_start: Optional[int] = None) -> Iterable[Any]:
+def get_iterable(
+    tag: BaseTag, over, context: Context, index_start: Optional[int] = None
+) -> Iterable[Any]:
     if isinstance(over, str) and over in context:
         # This does mean you can't explicitly iterate over strings that are keys
         # in the context, but if you really do need to do that, you may need to
         # rethink your approach anyway.
-        raise ValueError(
-            f'{tag}: `over` value exists within the context; did you mean `!Var {over}`?'
-        )
+        raise ValueError(f'{tag}: `over` value exists within the context; did you mean `!Var {over}`?')
 
     if hasattr(over, 'enrich'):
         over = over.enrich(context)
@@ -46,6 +46,7 @@ class Loop(BaseTag):
     example: See `examples/loop/`.
     description: Loops over a list or dict and renders a template for each iteration. The output is always a list.
     """
+
     value_types = (dict,)
     output_factory = list
 

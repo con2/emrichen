@@ -10,6 +10,7 @@ class With(BaseTag):
     example: See `examples/with/`.
     description: Binds local variables that are only visible within `template`. Useful for giving a name for common sub-expressions.
     """
+
     value_types = (dict,)
 
     def enrich(self, context: Context) -> int:

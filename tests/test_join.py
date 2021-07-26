@@ -6,7 +6,9 @@ def test_simple_join():
 
 
 def test_join_with_separator():
-    assert emrichen('''
+    assert (
+        emrichen(
+            '''
 !Defaults
 flavors:
     - pea soup
@@ -17,4 +19,7 @@ flavors:
 foo: !Join
     items: !Var flavors
     separator: ' -> '
-''').strip() == 'foo: pea soup -> hard liquor -> manifold -> John'
+'''
+        ).strip()
+        == 'foo: pea soup -> hard liquor -> manifold -> John'
+    )

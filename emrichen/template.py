@@ -15,7 +15,7 @@ def determine_format(filename: Optional[str], choices: Dict[str, Callable], defa
 
 
 class Template:
-    def __init__(self, template, filename: Optional[str]=None) -> None:
+    def __init__(self, template, filename: Optional[str] = None) -> None:
         if not isinstance(template, list):
             raise TypeError(
                 f'`template` must be a list of objects; {template!r} is not. Are you maybe looking for Template.parse()?'
@@ -28,13 +28,19 @@ class Template:
         context = Context(self.defaults, context, __file__=self.filename)
         return context.enrich(self.template)
 
-    def render(self, context: Union[dict, Context], format: str='yaml') -> str:
+    def render(self, context: Union[dict, Context], format: str = 'yaml') -> str:
         enriched = self.enrich(context)
         return render(enriched, format)
 
     @classmethod
-    def parse(cls, data: Union[TextIOWrapper, str], format: Optional[str]=None, filename: Optional[str]=None) -> 'Template':
+    def parse(
+        cls,
+        data: Union[TextIOWrapper, str],
+        format: Optional[str] = None,
+        filename: Optional[str] = None,
+    ) -> 'Template':
         from .input import PARSERS, parse
+
         if filename is None and hasattr(data, 'name') and data.name:
             filename = data.name
 
@@ -46,6 +52,7 @@ class Template:
 
 def extract_defaults(template, filename: Optional[str]) -> Tuple[list, dict]:
     from .tags import Defaults, Include
+
     defaults = {}
 
     for doc in template:

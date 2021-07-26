@@ -10,6 +10,7 @@ class Merge(BaseTag):
     example: '`!Merge [{a: 5}, {b: 6}]`'
     description: Merges objects. For overlapping keys the last one takes precedence.
     """
+
     value_types = (list, BaseTag)
 
     def enrich(self, context: Context) -> OrderedDict:

@@ -22,22 +22,10 @@ flavours: !Loop
 
 FLAVORTOWN_RESULT = {
     "flavours": [
-        {
-            "available": True,
-            "flavour_name": "peasoup"
-        },
-        {
-            "available": True,
-            "flavour_name": "hard liquor"
-        },
-        {
-            "available": False,
-            "flavour_name": "manifold"
-        },
-        {
-            "available": True,
-            "flavour_name": "John"
-        }
+        {"available": True, "flavour_name": "peasoup"},
+        {"available": True, "flavour_name": "hard liquor"},
+        {"available": False, "flavour_name": "manifold"},
+        {"available": True, "flavour_name": "John"},
     ]
 }
 
