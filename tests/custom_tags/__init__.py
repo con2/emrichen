@@ -1,1 +1,1 @@
-from . import kube_env
+from . import kube_env  # noqa

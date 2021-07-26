@@ -1,5 +1,3 @@
-import pytest
-
 from emrichen import Template
 
 

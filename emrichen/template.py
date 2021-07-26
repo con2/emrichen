@@ -1,6 +1,6 @@
 import os
 from io import TextIOWrapper
-from typing import Any, Callable, Dict, Optional, Tuple, Union
+from typing import Callable, Dict, Optional, Tuple, Union
 
 from .context import Context
 from .output import render
