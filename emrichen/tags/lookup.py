@@ -25,7 +25,7 @@ class Lookup(BaseTag):
     def enrich(self, context: Context):
         matches = find_jsonpath_in_context(self.data, context)
         if not matches:
-            raise KeyError('{self}: no matches for {self.data}'.format(self=self))
+            raise KeyError(f'{self}: no matches for {self.data}')
         return context.enrich(matches[0].value)
 
 

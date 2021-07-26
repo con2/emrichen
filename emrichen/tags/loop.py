@@ -12,10 +12,7 @@ def get_iterable(tag: BaseTag, over, context: Context, index_start: Optional[int
         # in the context, but if you really do need to do that, you may need to
         # rethink your approach anyway.
         raise ValueError(
-            '{tag}: `over` value exists within the context; did you mean `!Var {over}`?'.format(
-                tag=tag,
-                over=over,
-            )
+            f'{tag}: `over` value exists within the context; did you mean `!Var {over}`?'
         )
 
     if hasattr(over, 'enrich'):
