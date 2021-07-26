@@ -19,6 +19,12 @@ test_requirements = [
     "pytest-cov==2.11.1",
 ]
 
+lint_requirements = [
+    "black>=21.7b0",
+    "flake8>=3.9.2",
+    "mypy>=0.910",
+]
+
 setup(
     name='emrichen',
     version=version,
@@ -38,5 +44,5 @@ setup(
     },
     python_requires='>=3.6',
     install_requires=["PyYAML", "pyaml", "jsonpath-rw~=1.4.0"],
-    extras_require={"test": test_requirements},
+    extras_require={"test": test_requirements, "lint": lint_requirements},
 )
