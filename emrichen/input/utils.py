@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Union
+from typing import TYPE_CHECKING, Any, List, Union
 
 from ..exceptions import NoSuchTag
 from ..tags.base import tag_registry
@@ -7,7 +7,7 @@ if TYPE_CHECKING:
     from ..tags.compose import Compose
 
 
-def make_compose(names: Union[str, List[str]], value: Union[str, dict]) -> 'Compose':
+def make_compose(names: Union[str, List[str]], value: Any) -> 'Compose':
     if isinstance(names, str):
         names = [name.strip() for name in names.split(',')]
     for name in names:

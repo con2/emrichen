@@ -44,6 +44,8 @@ class Op(BaseTag):
             a = context.enrich(self.data[0])
             op_name = context.enrich(self.data[1])
             b = context.enrich(self.data[2])
+        else:
+            raise TypeError(f"{self.data!r} can't be interpreted as a binary operation")
 
         op = operators[op_name]
 

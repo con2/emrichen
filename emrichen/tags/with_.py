@@ -13,7 +13,7 @@ class With(BaseTag):
 
     value_types = (dict,)
 
-    def enrich(self, context: Context) -> int:
+    def enrich(self, context: Context):
         vars_ = self.data['vars']
         template = self.data['template']
 
