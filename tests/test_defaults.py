@@ -4,8 +4,10 @@ import pytest
 
 from emrichen import emrichen
 
-
-with open(os.path.join(os.path.dirname(__file__), '..', 'examples', 'defaults', 'template.yml'), encoding='utf-8') as input_file:
+with open(
+    os.path.join(os.path.dirname(__file__), '..', 'examples', 'defaults', 'template.yml'),
+    encoding='utf-8',
+) as input_file:
     TEMPLATE = input_file.read()
 
 BAD_TEMPLATE = """

@@ -52,6 +52,7 @@ class Context(dict):
         variables.
         """
         from .input import parse
+
         for variables in variable_sources:
             if isinstance(variables, Mapping):
                 self.update(variables)

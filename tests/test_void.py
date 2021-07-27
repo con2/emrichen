@@ -2,15 +2,17 @@ import json
 
 from emrichen import Template, emrichen
 
-
-TEMPLATE = Template.parse("""
+TEMPLATE = Template.parse(
+    """
 Smile: !Void
 Sweet: !Void
 Sister: !Void
 Sadistic: !Void
 Surprise: true
 Service: !Void
-""", 'yaml')
+""",
+    'yaml',
+)
 
 
 def test_void_yaml():

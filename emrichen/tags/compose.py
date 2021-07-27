@@ -14,6 +14,7 @@ class Compose(BaseTag):
         Usually not used in the spelt-out form.
         See _Tag composition_ below.
     '''
+
     value_types = (dict,)
 
     def enrich(self, context: Context):

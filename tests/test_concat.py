@@ -1,6 +1,5 @@
 from emrichen import Context, Template
 
-
 TEMPLATE = """
 !Defaults
 a:
@@ -27,11 +26,13 @@ def test_concat_var():
     Concat must also support concatenating non-literal lists, ie. return values
     of list-valued tags.
     """
-    assert Template.parse('''
+    assert Template.parse(
+        '''
 !Defaults
 a:
   - [1, 2, 3]
   - [4, 5, 6]
 ---
 !Concat,Var a
-''')
+'''
+    )

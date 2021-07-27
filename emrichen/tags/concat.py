@@ -8,6 +8,7 @@ class Concat(BaseTag):
     example: "`!Concat [[1, 2], [3, 4]]`"
     description: Concatenates lists.
     """
+
     value_types = (list, BaseTag)
 
     def enrich(self, context: Context) -> list:

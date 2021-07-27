@@ -15,6 +15,7 @@ class Defaults(BaseTag):
 
     This is just a holder for the defaults. The actual implementation is in `emrichen.template:enrich`.
     """
+
     value_types = (dict,)
 
     def enrich(self, context: Context):

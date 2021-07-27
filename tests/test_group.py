@@ -2,7 +2,9 @@ from emrichen import Template
 
 
 def test_group():
-    assert Template.parse('''
+    assert (
+        Template.parse(
+            '''
 !Group
   over:
     - name: manifold
@@ -14,4 +16,7 @@ def test_group():
   as: flavour
   by: !Lookup flavour.name
   template: !Lookup flavour.score
-    ''').enrich({}) == [{'manifold': [7.8], 'John': [9.9, 9.8]}]
+    '''
+        ).enrich({})
+        == [{'manifold': [7.8], 'John': [9.9, 9.8]}]
+    )

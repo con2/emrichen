@@ -9,6 +9,7 @@ class If(BaseTag):
     example: "See `tests/test_cond.py`"
     description: Returns one of two values based on a condition.
     """
+
     value_types = (dict,)
 
     def enrich(self, context: Context):
@@ -26,5 +27,3 @@ class If(BaseTag):
             return context.enrich(true_template)
         else:
             return context.enrich(false_template)
-
-

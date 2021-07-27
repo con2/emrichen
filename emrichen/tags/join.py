@@ -28,5 +28,6 @@ class Join(BaseTag):
             items = context.enrich(self.data)
             if not isinstance(items, list):
                 raise TypeError(f'{self}: must resolve to a list')
-
+        if not isinstance(separator, str):
+            raise TypeError(f'{self}: separator {separator!r} is not a string')
         return separator.join(str(i) for i in items)

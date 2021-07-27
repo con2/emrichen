@@ -1,4 +1,4 @@
-from typing import Any, Dict, Type
+from typing import Any, Dict, Tuple, Type
 
 tag_registry = {}
 
@@ -13,15 +13,12 @@ class BaseMeta(type):
 
 class BaseTag(metaclass=BaseMeta):
     __slots__ = ['data']
-    value_types = (str,)
+    value_types: Tuple[Type, ...] = (str,)
 
     def __init__(self, data) -> None:
         self.data = data
         if not isinstance(data, self.value_types):
-            raise TypeError('{self}: data not of valid type (valid types are {self.value_types}'.format(self=self))
+            raise TypeError(f'{self}: data not of valid type (valid types are {self.value_types}')
 
     def __str__(self) -> str:
-        return '{classname}.{data}'.format(
-            classname=self.__class__.__name__,
-            data=repr(self.data),
-        )
+        return f'{self.__class__.__name__}.{self.data!r}'

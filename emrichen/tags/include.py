@@ -1,7 +1,7 @@
 import base64
 import glob
 import os
-from typing import TextIO
+from typing import BinaryIO, TextIO
 
 from ..context import Context
 from ..template import Template
@@ -10,13 +10,24 @@ from .base import BaseTag
 
 
 class _BaseInclude(BaseTag):
+    def _open_text(self, context: Context) -> TextIO:
+        return open(self._absolve_path(context, self.data), 'rt')
+
+    def _open_binary(self, context: Context) -> BinaryIO:
+        return open(self._absolve_path(context, self.data), 'rb')
+
     def _open_file(self, context: Context, mode: str = 'r') -> TextIO:
-        return open(self._absolve_path(context, self.data), mode)
+        if mode != "r":
+            raise ValueError("_open_file legacy wrapper must be used with mode=r")
+        return self._open_text(context)
 
     def _absolve_path(self, context: Context, path: str):
         # Named humorously for humor's sake.
-        return os.path.join(
-            os.path.dirname(context['__file__']), path)
+        return os.path.join(os.path.dirname(context['__file__']), path)
+
+    def _get_binary_data(self, context: Context) -> bytes:
+        with self._open_binary(context) as include_file:
+            return include_file.read()
 
 
 class Include(_BaseInclude):
@@ -29,7 +40,7 @@ class Include(_BaseInclude):
     def get_template(self, context: Context) -> Template:
         from ..template import Template
 
-        with self._open_file(context) as include_file:
+        with self._open_text(context) as include_file:
             return Template.parse(include_file)
 
     def enrich(self, context: Context):
@@ -51,15 +62,11 @@ class IncludeText(_BaseInclude):
     description: Loads the given UTF-8 text file and returns the contents as a string.
     """
 
-    def get_data(self, context: Context) -> bytes:
-        with self._open_file(context, 'rb') as include_file:
-            return include_file.read()
-
     def enrich(self, context: Context) -> str:
-        return self.get_data(context).decode('UTF-8')
+        return self._get_binary_data(context).decode('UTF-8')
 
 
-class IncludeBase64(IncludeText):
+class IncludeBase64(_BaseInclude):
     """
     arguments: Path to a binary file
     example: "`!IncludeBase64 ../foo.pdf`"
@@ -67,11 +74,10 @@ class IncludeBase64(IncludeText):
     """
 
     def enrich(self, context: Context) -> str:
-        data = super().get_data(context)
-        return base64.b64encode(data).decode('UTF-8')
+        return base64.b64encode(self._get_binary_data(context)).decode('UTF-8')
 
 
-class IncludeBinary(IncludeText):
+class IncludeBinary(_BaseInclude):
     """
     arguments: Path to a binary file
     example: "`!IncludeBinary ../foo.pdf`"
@@ -79,7 +85,7 @@ class IncludeBinary(IncludeText):
     """
 
     def enrich(self, context: Context) -> bytes:
-        return super().get_data(context)
+        return self._get_binary_data(context)
 
 
 class IncludeGlob(_BaseInclude):
@@ -93,6 +99,7 @@ class IncludeGlob(_BaseInclude):
       Expansion results are lexicographically sorted.
       As with Python's `glob.glob()`, use a double star (`**`) for recursion.
     """
+
     value_types = (list, str)
 
     def enrich(self, context: Context):

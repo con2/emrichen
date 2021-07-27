@@ -2,21 +2,32 @@
 
 import os
 import re
+
 from setuptools import find_packages, setup
 
 source_dir = os.path.abspath(os.path.dirname(__file__))
 
 
 with open(os.path.join(source_dir, 'emrichen', '__init__.py')) as f:
-    version = re.search("__version__ = ['\"]([^'\"]+)['\"]", f.read()).group(1)
+    init_file = f.read()
+    match = re.search("__version__ = ['\"]([^'\"]+)['\"]", init_file)
+    assert match, "Failed to parse version from emrichen/__init__.py"
+    version = match.group(1)
 
 
 with open(os.path.join(source_dir, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-dev_requirements = [
+test_requirements = [
     "pytest~=6.2.3",
     "pytest-cov==2.11.1",
+]
+
+lint_requirements = [
+    "black>=21.7b0",
+    "flake8>=3.9.2",
+    "mypy>=0.910",
+    "isort>=5.9.2",
 ]
 
 setup(
@@ -29,7 +40,7 @@ setup(
     author='Santtu Pajukanta',
     author_email='santtu@pajukanta.fi',
     url='http://github.com/con2/emrichen',
-    packages = find_packages(exclude=["tests"]),
+    packages=find_packages(exclude=["tests"]),
     zip_safe=True,
     entry_points={
         'console_scripts': [
@@ -38,7 +49,5 @@ setup(
     },
     python_requires='>=3.6',
     install_requires=["PyYAML", "pyaml", "jsonpath-rw~=1.4.0"],
-    extras_require={"dev": dev_requirements},
-    tests_require=dev_requirements,
-    setup_requires=["pytest-runner"],
+    extras_require={"test": test_requirements, "lint": lint_requirements},
 )

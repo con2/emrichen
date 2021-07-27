@@ -1,4 +1,4 @@
-from emrichen import Template, Context
+from emrichen import Context, Template
 
 FLAVORTOWN_YAML = """
 flavours: !Loop
@@ -12,7 +12,7 @@ flavours: !Loop
         flavour_name: !Lookup a
       else:
         !Lookup a
-  over: 
+  over:
   - peasoup
   - hard liquor
   - flavour_name: manifold
@@ -22,22 +22,10 @@ flavours: !Loop
 
 FLAVORTOWN_RESULT = {
     "flavours": [
-        {
-            "available": True,
-            "flavour_name": "peasoup"
-        },
-        {
-            "available": True,
-            "flavour_name": "hard liquor"
-        },
-        {
-            "available": False,
-            "flavour_name": "manifold"
-        },
-        {
-            "available": True,
-            "flavour_name": "John"
-        }
+        {"available": True, "flavour_name": "peasoup"},
+        {"available": True, "flavour_name": "hard liquor"},
+        {"available": False, "flavour_name": "manifold"},
+        {"available": True, "flavour_name": "John"},
     ]
 }
 

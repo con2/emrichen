@@ -2,7 +2,6 @@ import pytest
 
 from emrichen import emrichen
 
-
 TEMPLATE = """
 ---
 foo:

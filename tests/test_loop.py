@@ -48,18 +48,21 @@ def test_loop_user_friendliness():
 
 
 def test_loop_index_start():
-    template = Template.parse('''
+    template = Template.parse(
+        '''
 !Loop
   over: [1, 2, 3]
   index_start: 5
   index_as: index
   template: !Var index
-''')
+'''
+    )
     assert template.enrich({}) == [[5, 6, 7]]
 
 
 def test_loop_over_dict():
-    template = Template.parse('''
+    template = Template.parse(
+        '''
 !Loop
   over:
     a: 5
@@ -68,24 +71,30 @@ def test_loop_over_dict():
   template:
     item: !Var item
     index: !Var index
-''')
-    assert template.render({}).strip() == '''
+'''
+    )
+    assert (
+        template.render({}).strip()
+        == '''
 - item: 5
   index: a
 - item: 6
   index: b
 '''.strip()
+    )
 
 
 def test_no_index_start_with_dict():
-    template = Template.parse('''
+    template = Template.parse(
+        '''
 !Loop
   over:
     a: 5
   index_as: index
   index_start: 5
   template: 1
-''')
+'''
+    )
     with pytest.raises(ValueError) as nope:
         template.render({})
 
@@ -93,27 +102,37 @@ def test_no_index_start_with_dict():
 
 
 def test_previous_as():
-    assert Template.parse('''
+    assert (
+        Template.parse(
+            '''
 !Loop
   over: [1, 2, 3]
   as: item
   previous_as: previous_item
   template: [!Var previous_item, !Var item]
-''').enrich({}) == [[[None, 1], [1, 2], [2,3]]]
+'''
+        ).enrich({})
+        == [[[None, 1], [1, 2], [2, 3]]]
+    )
 
 
 def test_as_documents():
-    template = Template.parse('''
+    template = Template.parse(
+        '''
 !Loop
   over: !Var domain_names
   as: item
   as_documents: true
   template:
     name: !Var item
-''', 'yaml')
+''',
+        'yaml',
+    )
     output = template.render(Context(LOOP_TEST_CONTEXT))
 
-    assert (output.strip() == '''
+    assert (
+        output.strip()
+        == '''
 name: hernekeit.to
 ---
 name: vii.na
@@ -121,4 +140,5 @@ name: vii.na
 name: teli.ne
 ---
 name: johann.es
-'''.strip())
+'''.strip()
+    )

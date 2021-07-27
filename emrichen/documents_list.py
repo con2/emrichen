@@ -8,7 +8,7 @@ class DocumentsList(list):
 
 
 def flatten_documents_lists(input_list: List[Any]) -> List[Any]:
-    output_list = []
+    output_list: List[Any] = []
     for item in input_list:
         if isinstance(item, DocumentsList):
             output_list.extend(item)

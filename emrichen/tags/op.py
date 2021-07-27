@@ -31,6 +31,7 @@ class Op(BaseTag):
     example: See `tests/test_cond.py`
     description: Performs binary operators. Especially useful with `!If` to implement greater-than etc.
     """
+
     value_types = (dict, list)
 
     def enrich(self, context: Context):
@@ -43,6 +44,8 @@ class Op(BaseTag):
             a = context.enrich(self.data[0])
             op_name = context.enrich(self.data[1])
             b = context.enrich(self.data[2])
+        else:
+            raise TypeError(f"{self.data!r} can't be interpreted as a binary operation")
 
         op = operators[op_name]
 

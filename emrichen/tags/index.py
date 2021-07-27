@@ -29,6 +29,7 @@ class Index(_BaseIndex):
     example: TBD
     description: Makes a dict out of a list. Keys are determined by `by`.
     """
+
     def __init__(self, data: dict) -> None:
         if 'template' not in data:
             as_ = data.get('as', 'item')
@@ -69,6 +70,7 @@ class Group(_BaseIndex):
     example: TBD
     description: Makes a dict out of a list. Keys are determined by `by`. Items with the same key are grouped in a list.
     """
+
     def process_item(self, context: Context, output: dict, value, result) -> None:
 
         by = self.data['by']

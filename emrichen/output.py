@@ -1,5 +1,6 @@
 import json
 from pprint import pformat
+from typing import Any, Callable, Dict
 
 import pyaml
 import yaml
@@ -23,14 +24,16 @@ def render_json(data) -> str:
 def render_yaml(data) -> str:
     if isinstance(data, list):
         data = flatten_documents_lists(data)
-    return yaml.dump_all(data,
+    return yaml.dump_all(
+        data,
         Dumper=pyaml.PrettyYAMLDumper,
         allow_unicode=True,
         default_flow_style=False,
     )
 
 
-RENDERERS = {
+Renderer = Callable[[Any], str]
+RENDERERS: Dict[str, Renderer] = {
     'yaml': render_yaml,
     'json': render_json,
     'pprint': pformat,

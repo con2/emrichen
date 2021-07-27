@@ -70,7 +70,8 @@ def test_lookup_no_match():
 
 @pytest.mark.xfail
 def test_late_enrich():
-    template = Template.parse('''
+    template = Template.parse(
+        '''
 !Defaults
 x:
   y: 5
@@ -78,7 +79,9 @@ z: !Var x
 ---
 workie: !Lookup x.y
 no_workie: !Lookup z.y
-''', format='yaml')
+''',
+        format='yaml',
+    )
     assert template.enrich({}) == [{'workie': 5, 'no_workie': 5}]
 
 
@@ -86,7 +89,8 @@ def test_lookup_enrich():
     """
     Lookup should enrich whatever it returns.
     """
-    template = Template.parse('''
+    template = Template.parse(
+        '''
 !Defaults
 x: [5]
 y: !Var x
@@ -96,5 +100,6 @@ should_contain_5: !Loop
   over: !Var z
   as: item
   template: !Var item
-''')
+'''
+    )
     assert template.enrich({}) == [{'should_contain_5': [5]}]
