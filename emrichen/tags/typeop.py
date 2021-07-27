@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import Optional, Union
+from typing import Optional, Union, Type, Tuple
 
 from ..context import Context
 from ..void import Void, VoidType
@@ -13,7 +13,7 @@ class _BaseIsType(BaseTag):
     description: Returns True if the value enriched is of the given type, False otherwise.
     """
 
-    requisite_type = None
+    requisite_type: Union[Type, Tuple[Type, ...]]
     value_types = (object,)
 
     def enrich(self, context: Context) -> bool:
@@ -35,7 +35,7 @@ class IsDict(_BaseIsType):
 
 class IsInteger(_BaseIsType):
     __doc__ = _BaseIsType.__doc__
-    requisite_type = int
+    requisite_type: Type = int
 
     def check(self, value: Union[int, float, bool]) -> bool:
         # Special case: True and False are integers as far as

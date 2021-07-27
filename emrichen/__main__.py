@@ -9,11 +9,11 @@ from .output import RENDERERS
 from .template import Template, determine_format
 
 
-def main(args: Optional[List[str]] = None) -> None:
-    if args is None:
-        args = sys.argv[1:]
+def main(arg_list: Optional[List[str]] = None) -> None:
+    if arg_list is None:
+        arg_list = sys.argv[1:]
     parser = get_parser()
-    args = parser.parse_args(args)
+    args = parser.parse_args(arg_list)
 
     for module_path in args.import_module:
         import_module(module_path)

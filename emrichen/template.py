@@ -1,12 +1,11 @@
 import os
-from io import TextIOWrapper
-from typing import Callable, Dict, Optional, Tuple, Union
+from typing import Optional, Tuple, Union, TextIO, Mapping
 
 from .context import Context
-from .output import render
+from .output import render, Renderer
 
 
-def determine_format(filename: Optional[str], choices: Dict[str, Callable], default: str) -> str:
+def determine_format(filename: Optional[str], choices: Mapping[str, Renderer], default: str) -> str:
     if filename:
         ext = os.path.splitext(filename)[1].lstrip('.').lower()
         if ext in choices:
@@ -35,14 +34,14 @@ class Template:
     @classmethod
     def parse(
         cls,
-        data: Union[TextIOWrapper, str],
+        data: Union[TextIO, str],
         format: Optional[str] = None,
         filename: Optional[str] = None,
     ) -> 'Template':
         from .input import PARSERS, parse
 
-        if filename is None and hasattr(data, 'name') and data.name:
-            filename = data.name
+        if filename is None and hasattr(data, 'name') and data.name:  # type: ignore
+            filename = data.name  # type: ignore
 
         if format is None:
             format = determine_format(filename, PARSERS, 'yaml')
@@ -59,7 +58,8 @@ def extract_defaults(template, filename: Optional[str]) -> Tuple[list, dict]:
         if isinstance(doc, Defaults):
             defaults.update(doc.data)
         elif isinstance(doc, Include):
-            temp_context = dict(defaults, __file__=filename)
+            temp_context = Context()
+            temp_context.update(defaults, __file__=filename)
             defaults.update(doc.get_template(temp_context).defaults)
 
     template = [doc for doc in template if not isinstance(doc, Defaults)]

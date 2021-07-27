@@ -1,7 +1,8 @@
 import hashlib
+from typing import Any
 
-from ..context import Context
 from .base import BaseTag
+from ..context import Context
 
 
 class _BaseHash(BaseTag):
@@ -11,7 +12,7 @@ class _BaseHash(BaseTag):
     description: Hashes the given data using the {name} algorithm. If the data is not binary, it is converted to UTF-8 bytes.
     """
 
-    hasher = None
+    hasher: Any = None  # TODO: what's the proper type for a hasher factory?
 
     def enrich(self, context: Context) -> str:
         data = self.data

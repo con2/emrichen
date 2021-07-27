@@ -1,5 +1,6 @@
 import json
 from pprint import pformat
+from typing import Callable, Any, Dict
 
 import pyaml
 import yaml
@@ -31,7 +32,8 @@ def render_yaml(data) -> str:
     )
 
 
-RENDERERS = {
+Renderer = Callable[[Any], str]
+RENDERERS: Dict[str, Renderer] = {
     'yaml': render_yaml,
     'json': render_json,
     'pprint': pformat,

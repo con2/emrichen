@@ -1,4 +1,4 @@
-from typing import Any, Dict, Type
+from typing import Any, Dict, Type, Tuple
 
 tag_registry = {}
 
@@ -13,7 +13,7 @@ class BaseMeta(type):
 
 class BaseTag(metaclass=BaseMeta):
     __slots__ = ['data']
-    value_types = (str,)
+    value_types: Tuple[Type, ...] = (str,)
 
     def __init__(self, data) -> None:
         self.data = data

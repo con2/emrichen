@@ -25,8 +25,8 @@ def _hydrate_json_object(pairs) -> Union[BaseTag, OrderedDict]:
 
 def json_load_or_loads(str_or_stream: Union[TextIO, str], **kwargs):
     if hasattr(str_or_stream, 'read'):
-        str_or_stream = str_or_stream.read()
-    return json.loads(str_or_stream, **kwargs)
+        str_or_stream = str_or_stream.read()  # type: ignore
+    return json.loads(str_or_stream, **kwargs)  # type: ignore
 
 
 def load_json(data: Union[TextIO, str]) -> List[Any]:

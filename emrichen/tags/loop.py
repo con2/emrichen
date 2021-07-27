@@ -1,14 +1,14 @@
 from collections.abc import Mapping, Sequence
-from typing import Any, Iterable, Optional, Tuple
+from typing import Any, Iterable, Optional, Tuple, List, Type
 
+from .base import BaseTag
 from ..context import Context
 from ..documents_list import DocumentsList
-from .base import BaseTag
 
 
 def get_iterable(
     tag: BaseTag, over, context: Context, index_start: Optional[int] = None
-) -> Iterable[Any]:
+) -> Tuple[Iterable[Any], bool]:
     if isinstance(over, str) and over in context:
         # This does mean you can't explicitly iterate over strings that are keys
         # in the context, but if you really do need to do that, you may need to
@@ -48,7 +48,7 @@ class Loop(BaseTag):
     """
 
     value_types = (dict,)
-    output_factory = list
+    output_factory: Type[Any] = list  # TODO: un-any?
 
     def enrich(self, context: Context):
         from ..context import Context
@@ -67,7 +67,7 @@ class Loop(BaseTag):
         if template is None:
             raise ValueError(f'{self}: missing template')
 
-        output = self.output_factory()
+        output: List[Any] = self.output_factory()
         iterable, _ = self.get_iterable(context, index_start)
         previous_value = None
         for index, value in iterable:
@@ -88,7 +88,7 @@ class Loop(BaseTag):
         return output
 
     def get_iterable(self, context: Context, index_start: Optional[int]) -> Tuple[enumerate, bool]:
-        return get_iterable(self, self.data.get('over'), context, index_start)
+        return get_iterable(self, self.data.get('over'), context, index_start)  # type: ignore
 
     def process_item(self, context: Context, output, value, result) -> None:
         '''

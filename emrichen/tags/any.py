@@ -10,5 +10,5 @@ class Any(BaseTag):
 
     value_types = (list, BaseTag)
 
-    def enrich(self, context):
+    def enrich(self, context) -> bool:
         return any(context.enrich(item) for item in self.data)

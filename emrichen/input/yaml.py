@@ -12,12 +12,12 @@ from .utils import make_compose
 def construct_tagless_yaml(loader: yaml.Loader, node: yaml.Node):
     # From yaml.constructor.BaseConstructor#construct_object
     if isinstance(node, yaml.ScalarNode):
-        constructor = loader.construct_scalar
+        return loader.construct_scalar(node)
     elif isinstance(node, yaml.SequenceNode):
-        constructor = loader.construct_sequence
+        return loader.construct_sequence(node)
     elif isinstance(node, yaml.MappingNode):
-        constructor = loader.construct_mapping
-    return constructor(node)
+        return loader.construct_mapping(node)
+    raise NotImplementedError('invalid node')
 
 
 def construct_tagged_object(loader: yaml.Loader, node: yaml.Node) -> BaseTag:
