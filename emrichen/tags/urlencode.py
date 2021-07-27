@@ -11,7 +11,7 @@ class URLEncode(BaseTag):
         A string to encode
         **OR**
         `url`: The URL to combine query parameters into
-        `query`: An object of query string parameters to add.
+        `query`: An object of query string parameters to add OR a string of query string parameters
     example: |
         `!URLEncode "foo+bar"`
         `!URLEncode { url: "https://example.com/", query: { foo: bar } }`
@@ -32,12 +32,20 @@ class URLEncode(BaseTag):
 
         -> "foo=bar"
 
-    3. Combine a base URL and query string parameters
+    3a. Combine a base URL and query string parameters
 
         !URLEncode
             url: "https://example.com/?foo=x"
             query:
                 bar: xyzzy
+
+        -> "https://example.com/?foo=x&bar=xyzzy"
+
+    3b. Combine a base URL and query string parameters
+
+        !URLEncode
+            url: "https://example.com/?foo=x"
+            query: "bar=xyzzy"
 
         -> "https://example.com/?foo=x&bar=xyzzy"
 
@@ -51,11 +59,17 @@ class URLEncode(BaseTag):
             url = context.enrich(self.data.get('url'))
             query = context.enrich(self.data.get('query'))
 
+            if isinstance(query, dict):
+                query = list(query.items())
+            elif isinstance(query, str):
+                query = parse_qsl(query)
+
             if url is not None:  # empty string ok!
+                if not isinstance(url, str):
+                    raise TypeError(f"{self}: `url` {url!r} is not a string")
                 # 3. Combine a base URL and query string parameters
                 url = urlparse(url)
-                query = query or {}
-                query = parse_qsl(url.query) + list(query.items())
+                query = parse_qsl(url.query) + (query or [])
                 url = url._replace(query=urlencode(query))
                 return urlunparse(url)
 
