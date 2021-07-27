@@ -2,6 +2,7 @@
 
 import os
 import re
+
 from setuptools import find_packages, setup
 
 source_dir = os.path.abspath(os.path.dirname(__file__))
@@ -23,6 +24,7 @@ lint_requirements = [
     "black>=21.7b0",
     "flake8>=3.9.2",
     "mypy>=0.910",
+    "isort>=5.9.2",
 ]
 
 setup(

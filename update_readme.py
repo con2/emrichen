@@ -1,8 +1,8 @@
 import argparse
 import io
+import re
 import sys
 import textwrap
-import re
 
 import yaml
 

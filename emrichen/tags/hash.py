@@ -1,8 +1,8 @@
 import hashlib
 from typing import Any
 
-from .base import BaseTag
 from ..context import Context
+from .base import BaseTag
 
 
 class _BaseHash(BaseTag):

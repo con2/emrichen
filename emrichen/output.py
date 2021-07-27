@@ -1,6 +1,6 @@
 import json
 from pprint import pformat
-from typing import Callable, Any, Dict
+from typing import Any, Callable, Dict
 
 import pyaml
 import yaml

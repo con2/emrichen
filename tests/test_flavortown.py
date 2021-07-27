@@ -1,4 +1,4 @@
-from emrichen import Template, Context
+from emrichen import Context, Template
 
 FLAVORTOWN_YAML = """
 flavours: !Loop

@@ -4,7 +4,6 @@ import pytest
 
 from emrichen import emrichen
 
-
 with open(
     os.path.join(os.path.dirname(__file__), '..', 'examples', 'defaults', 'template.yml'),
     encoding='utf-8',

@@ -1,4 +1,4 @@
-from typing import Any, Dict, Type, Tuple
+from typing import Any, Dict, Tuple, Type
 
 tag_registry = {}
 

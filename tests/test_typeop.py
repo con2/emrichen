@@ -1,6 +1,6 @@
 import pytest
 
-from emrichen import Template, Context
+from emrichen import Context, Template
 from emrichen.void import Void
 
 

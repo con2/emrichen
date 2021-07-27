@@ -1,9 +1,9 @@
 import json
 from collections import OrderedDict
-from typing import List, TextIO, Union, Any
+from typing import Any, List, TextIO, Union
 
 from ..exceptions import NoSuchTag
-from ..tags.base import tag_registry, BaseTag
+from ..tags.base import BaseTag, tag_registry
 from .utils import make_compose
 
 

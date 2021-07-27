@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Union, List
+from typing import TYPE_CHECKING, List, Union
 
 from ..exceptions import NoSuchTag
 from ..tags.base import tag_registry

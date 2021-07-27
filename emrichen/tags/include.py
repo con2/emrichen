@@ -1,12 +1,12 @@
 import base64
 import glob
 import os
-from typing import TextIO, BinaryIO
+from typing import BinaryIO, TextIO
 
-from .base import BaseTag
 from ..context import Context
 from ..template import Template
 from ..void import Void
+from .base import BaseTag
 
 
 class _BaseInclude(BaseTag):

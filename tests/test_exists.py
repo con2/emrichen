@@ -1,6 +1,5 @@
 from emrichen import emrichen
 
-
 TEMPLATE = """
 !Defaults
 foo: bar

@@ -1,8 +1,8 @@
 import os
-from typing import Optional, Tuple, Union, TextIO, Mapping
+from typing import Mapping, Optional, TextIO, Tuple, Union
 
 from .context import Context
-from .output import render, Renderer
+from .output import Renderer, render
 
 
 def determine_format(filename: Optional[str], choices: Mapping[str, Renderer], default: str) -> str:

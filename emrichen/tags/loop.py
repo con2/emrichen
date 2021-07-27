@@ -1,9 +1,9 @@
 from collections.abc import Mapping, Sequence
-from typing import Any, Iterable, Optional, Tuple, List, Type
+from typing import Any, Iterable, List, Optional, Tuple, Type
 
-from .base import BaseTag
 from ..context import Context
 from ..documents_list import DocumentsList
+from .base import BaseTag
 
 
 def get_iterable(

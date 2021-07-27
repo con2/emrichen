@@ -4,7 +4,6 @@ import pytest
 
 from emrichen import Template
 
-
 BASE_DIR = os.path.realpath(os.path.dirname(__file__))
 
 

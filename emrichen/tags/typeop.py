@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import Optional, Union, Type, Tuple
+from typing import Optional, Tuple, Type, Union
 
 from ..context import Context
 from ..void import Void, VoidType

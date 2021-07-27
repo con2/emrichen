@@ -2,7 +2,6 @@ import json
 
 from emrichen import Template, emrichen
 
-
 TEMPLATE = Template.parse(
     """
 Smile: !Void

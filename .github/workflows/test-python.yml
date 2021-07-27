@@ -41,3 +41,4 @@ jobs:
         black --check emrichen
         flake8 emrichen
         mypy --incremental --install-types --non-interactive emrichen
+        isort --check .

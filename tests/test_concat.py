@@ -1,6 +1,5 @@
 from emrichen import Context, Template
 
-
 TEMPLATE = """
 !Defaults
 a:
