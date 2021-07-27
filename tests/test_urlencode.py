@@ -51,6 +51,19 @@ url: "https://example.com/?foo=x"
     assert template.enrich({}) == ['https://example.com/?foo=x&bar=xyzzy']
 
 
+def test_urlencode_enrich_url_string():
+    template = Template.parse("""
+!Defaults
+qs: bar=xyzzy
+url: "https://example.com/?foo=x"
+---
+!URLEncode
+    url: !Var url
+    query: !Var qs
+""")
+    assert template.enrich({}) == ['https://example.com/?foo=x&bar=xyzzy']
+
+
 def test_urlencode_enrich_query():
     template = Template.parse("""
 !Defaults
