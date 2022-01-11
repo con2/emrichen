@@ -211,8 +211,8 @@ TODO
 
     The MIT License (MIT)
 
-    Copyright © 2018–2021 Santtu Pajukanta
-    Copyright © 2018–2021 Aarni Koskela
+    Copyright © 2018–2022 Santtu Pajukanta
+    Copyright © 2018–2022 Aarni Koskela
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
