@@ -32,6 +32,8 @@ def main(arg_list: Optional[List[str]] = None) -> None:
     template = Template.parse(args.template_file, format=args.template_format)
     output = template.render(context, format=args.output_format)
 
+    args.output_file.seek(0)
+    args.output_file.truncate()
     args.output_file.write(output)
 
 
