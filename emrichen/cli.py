@@ -61,7 +61,7 @@ def get_parser(with_pargs=True) -> argparse.ArgumentParser:
     parser.add_argument(
         '--output-file',
         '-o',
-        type=argparse.FileType('w'),
+        type=argparse.FileType('a'),  # NOTE: will be truncated JIT before writing
         default=sys.stdout,
         help='Output file. If unspecified, the template output is written into stdout.',
     )
