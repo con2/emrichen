@@ -1,12 +1,11 @@
 # https://github.com/con2/emrichen/issues/54
 
-from tempfile import TemporaryDirectory
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import yaml
 
 from emrichen.__main__ import main
-
 
 ORIGINAL_YAML = """
 a: 1
