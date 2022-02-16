@@ -1,4 +1,5 @@
 import os
+import uuid
 
 import pytest
 import yaml
@@ -55,3 +56,24 @@ def test_custom_tags(examples_dir, capsys):
         {'name': 'FOO', 'value': 'bar'},
         {'name': 'QUUX', 'value': '1'},
     ]
+
+
+def test_same_input_output(tmp_path):
+    secret = str(uuid.uuid4())
+    data_path = (tmp_path / "data.yaml")
+    data_path.write_text("""
+blep: flerp
+blop: !Var FOO
+""")
+    main(
+        [
+            "-o", str(data_path),
+            "-D", f"FOO={secret}",
+            str(data_path),
+        ]
+    )
+
+    assert yaml.safe_load(data_path.read_text()) == {
+        "blep": "flerp",
+        "blop": secret,
+    }

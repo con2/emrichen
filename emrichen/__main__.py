@@ -24,17 +24,28 @@ def main(arg_list: Optional[List[str]] = None) -> None:
     if args.include_env:
         variable_sources.append(os.environ)
 
-    args.output_format = args.output_format or determine_format(
-        getattr(args.output_file, 'name', None), RENDERERS, 'yaml'
-    )
+    output_filename = args.output_file
+    args.output_format = args.output_format or determine_format(output_filename, RENDERERS, 'yaml')
 
     context = Context(*variable_sources, **override_variables)
     template = Template.parse(args.template_file, format=args.template_format)
     output = template.render(context, format=args.output_format)
+    write_output(output_filename, output)
 
-    args.output_file.seek(0)
-    args.output_file.truncate()
-    args.output_file.write(output)
+
+def write_output(filename: Optional[str], content: str) -> None:
+    if filename in (None, "-"):
+        fd = sys.stdout
+        close_fd = False
+    else:
+        assert filename
+        fd = open(filename, "wt")
+        close_fd = True
+    try:
+        fd.write(content)
+    finally:
+        if close_fd:
+            fd.close()
 
 
 if __name__ == '__main__':
