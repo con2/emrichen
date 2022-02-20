@@ -1,6 +1,6 @@
 import pytest
 
-from emrichen import Template
+from emrichen import Context, Template
 
 HASHES = {
     'MD5': '8b1a9953c4611296a827abf8c47804d7',
@@ -8,6 +8,15 @@ HASHES = {
     'SHA256': '185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969',
 }
 
+@pytest.mark.parametrize('h', sorted(HASHES.items()), ids=sorted(HASHES))
+def test_hash_variable(h):
+    algo, expected = h
+
+    VARIABLES = """
+    helloVar: Hello
+    """
+
+    assert Template.parse(f'!{algo},Var helloVar').enrich(Context(VARIABLES)) == [expected]
 
 @pytest.mark.parametrize('h', sorted(HASHES.items()), ids=sorted(HASHES))
 def test_hash(h):
