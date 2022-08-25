@@ -4,7 +4,7 @@ from .context import Context
 from .tags import Var
 from .template import Template
 
-__version__ = '0.2.3'
+__version__ = '0.3.0'
 
 
 __all__ = ['Context', 'Template', 'Var', 'emrichen']
