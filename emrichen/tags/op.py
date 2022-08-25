@@ -1,9 +1,12 @@
 import operator
+from typing import Any, Callable, Dict, List, Tuple
 
 from ..context import Context
 from .base import BaseTag
 
-operator_list = [
+OpFunc = Callable[[Any, Any], Any]
+
+operator_list: List[Tuple[Tuple[str, ...], OpFunc]] = [
     (('=', '==', '===', 'eq'), operator.eq),
     (('≠', '!=', '!==', 'ne'), operator.ne),
     (('>=', 'ge', 'gte'), operator.ge),
@@ -19,7 +22,7 @@ operator_list = [
     (('//', 'floordiv'), operator.floordiv),
 ]
 
-operators = {}
+operators: Dict[str, OpFunc] = {}
 for aliases, func in operator_list:
     for alias in aliases:
         operators[alias] = func
