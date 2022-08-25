@@ -9,8 +9,8 @@ OpFunc = Callable[[Any, Any], Any]
 operator_list: List[Tuple[Tuple[str, ...], OpFunc]] = [
     (('=', '==', '===', 'eq'), operator.eq),
     (('≠', '!=', '!==', 'ne'), operator.ne),
+    (('<=', 'le', 'lte'), operator.le),
     (('>=', 'ge', 'gte'), operator.ge),
-    (('>', 'gt'), operator.gt),
     (('<', 'lt'), operator.lt),
     (('>', 'gt'), operator.gt),
     (('in', '∈'), operator.contains),
