@@ -8,6 +8,7 @@ HASHES = {
     'SHA256': '185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969',
 }
 
+
 @pytest.mark.parametrize('h', sorted(HASHES.items()), ids=sorted(HASHES))
 def test_hash_variable(h):
     algo, expected = h
@@ -17,6 +18,7 @@ def test_hash_variable(h):
     """
 
     assert Template.parse(f'!{algo},Var helloVar').enrich(Context(VARIABLES)) == [expected]
+
 
 @pytest.mark.parametrize('h', sorted(HASHES.items()), ids=sorted(HASHES))
 def test_hash(h):
