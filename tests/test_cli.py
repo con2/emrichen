@@ -60,15 +60,19 @@ def test_custom_tags(examples_dir, capsys):
 
 def test_same_input_output(tmp_path):
     secret = str(uuid.uuid4())
-    data_path = (tmp_path / "data.yaml")
-    data_path.write_text("""
+    data_path = tmp_path / "data.yaml"
+    data_path.write_text(
+        """
 blep: flerp
 blop: !Var FOO
-""")
+"""
+    )
     main(
         [
-            "-o", str(data_path),
-            "-D", f"FOO={secret}",
+            "-o",
+            str(data_path),
+            "-D",
+            f"FOO={secret}",
             str(data_path),
         ]
     )
