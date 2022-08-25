@@ -17,3 +17,8 @@ def test_op():
 def test_op_list():
     template = Template.parse('!Op [1, +, 1]')
     assert template.enrich({}) == [2]
+
+
+def test_le():
+    template = Template.parse('!Op [1, le, 2]')
+    assert template.enrich({}) == [True]
