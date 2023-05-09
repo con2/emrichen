@@ -1,9 +1,66 @@
 [build-system]
-# Version 59 is the last to support Python 3.6.
-requires = ["setuptools>=59.0"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "emrichen"
+dynamic = ["version"]
+description = "Template engine for YAML & JSON"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.6"
+authors = [
+    { name = "Santtu Pajukanta", email = "santtu@pajukanta.fi" },
+]
+dependencies = [
+    "jsonpath-rw~=1.4.0",
+    "pyaml~=21.10",
+    "PyYAML",
+]
+
+[project.optional-dependencies]
+lint = [
+    "black==23.3.0",
+    "flake8>=3.9.2",
+    "isort>=5.9.2",
+    "mypy>=0.971",
+]
+test = [
+    "pytest-cov~=2.0",
+    "pytest~=6.2.3",
+]
+
+[project.scripts]
+emrichen = "emrichen.__main__:main"
+
+[project.urls]
+Homepage = "http://github.com/con2/emrichen"
+
+[tool.hatch.version]
+path = "emrichen/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/emrichen",
+]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
 
 [tool.black]
 line-length = 105
 py36 = true
 skip-string-normalization = true
+
+[[tool.mypy.overrides]]
+module = "pyaml.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "jsonpath_rw.*"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = ["--verbose"]
+python_files = "tests/*.py"
