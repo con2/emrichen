@@ -39,7 +39,7 @@ def write_output(filename: Optional[str], content: str) -> None:
         close_fd = False
     else:
         assert filename
-        fd = open(filename, "wt")
+        fd = open(filename, "w")
         close_fd = True
     try:
         fd.write(content)

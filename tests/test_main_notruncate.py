@@ -40,7 +40,7 @@ def test_main_notruncate(tmp_path: Path):
         ]
     )
 
-    with open(original_path, "r", encoding="UTF-8") as input_file:
+    with open(original_path, encoding="UTF-8") as input_file:
         actual = yaml.safe_load(input_file)
 
     assert actual == {"a": 1, "b": 3}
