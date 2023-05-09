@@ -59,7 +59,7 @@ See below for a table of supported tags. There's a lot of them. If you need one 
 
 ## Installation
 
-Python 3.6+ required. Python 2 is not and will not be supported.
+Python 3.7+ required.
 
     pip install emrichen
 
