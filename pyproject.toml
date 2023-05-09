@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = "Template engine for YAML & JSON"
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.6"
+requires-python = ">=3.7"
 authors = [
     { name = "Santtu Pajukanta", email = "santtu@pajukanta.fi" },
 ]
