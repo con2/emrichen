@@ -18,7 +18,6 @@ class Filter(BaseTag):
     value_types = (dict,)
 
     def enrich(self, context: Context):
-
         as_ = str(self.data.get('as', 'item'))
         index_as = str(self.data.get('index_as') or '')
         test = self.data.get('test', Var(as_))

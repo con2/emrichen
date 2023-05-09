@@ -38,7 +38,6 @@ class Index(_BaseIndex):
         super().__init__(data)
 
     def process_item(self, context: Context, output: dict, value, result) -> None:
-
         by = self.data['by']
         result_as = self.data.get('result_as')
 
@@ -72,7 +71,6 @@ class Group(_BaseIndex):
     """
 
     def process_item(self, context: Context, output: dict, value, result) -> None:
-
         by = self.data['by']
         result_as = self.data.get('result_as')
 
