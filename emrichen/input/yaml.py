@@ -56,7 +56,7 @@ class RichLoader(yaml.SafeLoader):
         self.yaml_constructors[None] = construct_tagged_object
 
     @staticmethod
-    def _make_ordered_dict(loader: yaml.Loader, node: yaml.Node) -> OrderedDict:
+    def _make_ordered_dict(loader: yaml.Loader, node: yaml.MappingNode) -> OrderedDict:
         loader.flatten_mapping(node)
         return OrderedDict(loader.construct_pairs(node))
 
