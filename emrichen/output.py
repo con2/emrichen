@@ -2,10 +2,10 @@ import json
 from pprint import pformat
 from typing import Any, Callable, Dict
 
-import pyaml
 import yaml
 
 from .documents_list import flatten_documents_lists
+from .pretty_yaml import PrettyYAMLDumper
 
 
 def render_json(data) -> str:
@@ -26,7 +26,7 @@ def render_yaml(data) -> str:
         data = flatten_documents_lists(data)
     return yaml.dump_all(
         data,
-        Dumper=pyaml.PrettyYAMLDumper,
+        Dumper=PrettyYAMLDumper,
         allow_unicode=True,
         default_flow_style=False,
     )
