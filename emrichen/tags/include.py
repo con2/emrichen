@@ -11,7 +11,7 @@ from .base import BaseTag
 
 class _BaseInclude(BaseTag):
     def _open_text(self, context: Context) -> TextIO:
-        return open(self._absolve_path(context, self.data), 'rt')
+        return open(self._absolve_path(context, self.data))
 
     def _open_binary(self, context: Context) -> BinaryIO:
         return open(self._absolve_path(context, self.data), 'rb')

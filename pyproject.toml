@@ -21,9 +21,8 @@ dependencies = [
 [project.optional-dependencies]
 lint = [
     "black==23.3.0",
-    "flake8>=3.9.2",
-    "isort>=5.9.2",
     "mypy>=0.971",
+    "ruff==0.0.265",
 ]
 test = [
     "pytest-cov~=2.0",
@@ -44,13 +43,20 @@ include = [
     "/emrichen",
 ]
 
-[tool.isort]
-profile = "black"
-multi_line_output = 3
+
+[tool.ruff]
+target-version = "py37"
+ignore = ["E501"]
+select = [
+    "E",
+    "F",
+    "I",
+    "UP",
+    "W",
+]
 
 [tool.black]
 line-length = 105
-py36 = true
 skip-string-normalization = true
 
 [[tool.mypy.overrides]]
