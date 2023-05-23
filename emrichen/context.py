@@ -61,3 +61,25 @@ class Context(dict):
                     self.update(yaml_document)
 
         self.update(override_variables)
+
+
+class EnrichingProxy:
+    __slots__ = ('_context', '_target')
+
+    def __init__(self, context, target):
+        self._context = context
+        self._target = target
+
+    def __getitem__(self, key):
+        return EnrichingProxy(
+            context=self._context,
+            target=self._context.enrich(self._target[key]),
+        )
+
+    def __len__(self):
+        return len(self._target)
+
+    @classmethod
+    def unwrap(cls, obj):
+        assert isinstance(obj, cls)
+        return obj._target
